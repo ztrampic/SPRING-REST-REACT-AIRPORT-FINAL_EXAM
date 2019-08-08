@@ -29,8 +29,14 @@ public class AirportController {
             Airport airport  = airportMapper.convertAirportDTOtoAirport(a);
             listaSaIdAerodroma.add(airport);
         }
-
-        return new ResponseEntity<String>("" ,HttpStatus.OK);
+        List<AirportDTO>listaForFront = new ArrayList<>();
+        for (Airport air : listaSaIdAerodroma){
+            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(air);
+            listaForFront.add(airportDTO);
+        }
+        return new ResponseEntity<List<AirportDTO>>(listaForFront ,HttpStatus.OK);
     }
+
+
 
 }

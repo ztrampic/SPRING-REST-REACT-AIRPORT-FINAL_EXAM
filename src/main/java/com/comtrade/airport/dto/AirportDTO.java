@@ -1,7 +1,7 @@
 package com.comtrade.airport.dto;
 
 public class AirportDTO {
-    private int id;
+    private String id;
     private String code;
     private String lat;
     private String lon;
@@ -21,11 +21,11 @@ public class AirportDTO {
     private String direct_flights;
     private String carriers;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

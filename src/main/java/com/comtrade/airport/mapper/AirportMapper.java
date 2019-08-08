@@ -5,4 +5,6 @@ import com.comtrade.airport.entity.Airport;
 
 public interface AirportMapper {
     Airport convertAirportDTOtoAirport(AirportDTO airportDTO);
+
+    AirportDTO convertAirportToAirportDTO(Airport air);
 }

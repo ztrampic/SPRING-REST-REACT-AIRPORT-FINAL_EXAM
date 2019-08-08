@@ -31,4 +31,15 @@ public class AirportMapperImpl implements AirportMapper{
         Airport  a1 = airportService.newAirport(airport);
         return a1;
     }
+
+    @Override
+    public AirportDTO convertAirportToAirportDTO(Airport air) {
+        AirportDTO aDTO = new AirportDTO();
+        aDTO.setId(String.valueOf(air.getId()));
+        aDTO.setName(air.getName());
+        aDTO.setCity(air.getCity());
+        aDTO.setCountry(air.getCountry());
+        aDTO.setCode(air.getCode());
+        return aDTO;
+    }
 }
