@@ -1,0 +1,6 @@
+.navbar{
+    background-color: silver;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(255, 255, 255);
+}
