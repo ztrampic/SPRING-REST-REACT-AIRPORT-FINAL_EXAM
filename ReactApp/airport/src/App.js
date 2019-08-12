@@ -18,7 +18,6 @@ function App() {
                 <Route path = "/aerodrom" component = {PretragaAerodromaPage}/>
             </div>
        </BrowserRouter>
-      
     </div>
   );
 }

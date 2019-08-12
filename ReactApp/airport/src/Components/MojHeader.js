@@ -1,50 +1,24 @@
-import React, { Component } from 'react'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import '../Css/navbar.css';
+import React from 'react';
+import { Header ,Dropdown,Icon,Menu,Input, Button} from 'semantic-ui-react';
 
-export class MojHeader extends Component {
-    constructor(props) {
-        super(props);
+const MojHeader = () =>(
+<div>
+<Header>
+    <Menu pointing>
+        <Menu.Item href='/' name='Home'/>
+        <Menu.Item href='/aerodrom' name='Airports'/>
+        <Menu.Item/>
+        <Menu.Menu position='right'>
+            <Menu.Item>
+              <Input placeholder='Search Airport' />
+            </Menu.Item>
+            <Menu.Item>
+                <Button>Search</Button>
+            </Menu.Item>
+        </Menu.Menu>
+    </Menu>
+</Header>
+</div>
 
-        this.toggleNavbar = this.toggleNavbar.bind(this);
-        this.state = {
-            collapsed: true
-        };
-    }
-
-    toggleNavbar() {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <Navbar color="faded" light>
-                    <NavbarBrand href="/" className="mr-auto"> <img src="https://fontmeme.com/permalink/190811/1aba789026f70db5b744433a31fa8f9a.png"></img></NavbarBrand>
-                   
-                    <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-                    <Collapse isOpen={!this.state.collapsed} navbar>
-                        <Nav navbar>
-                            <NavItem>
-                                <NavLink href="/pocetna">Pocetna</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/admin">Admin</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/registracija">Registracija</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/aerodrom">Aerodromi</NavLink>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
-                </Navbar>
-            </div>
-        )
-    }
-}
-
-export default MojHeader
+)
+export default MojHeader;
