@@ -1,5 +1,6 @@
 import React from 'react';
-import { Header ,Dropdown,Icon,Menu,Input, Button} from 'semantic-ui-react';
+import { Header,Menu,Input, Button} from 'semantic-ui-react';
+
 
 const MojHeader = () =>(
 <div>
@@ -14,6 +15,9 @@ const MojHeader = () =>(
             </Menu.Item>
             <Menu.Item>
                 <Button>Search</Button>
+            </Menu.Item>
+            <Menu.Item>
+                <Button style={{'backgroundColor':'red'}} href='/admin'>Login</Button>
             </Menu.Item>
         </Menu.Menu>
     </Menu>
