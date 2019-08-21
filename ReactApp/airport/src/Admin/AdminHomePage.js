@@ -10,16 +10,19 @@ export class AdminHomePage extends Component {
         super(props)
     this.state = {
         airports: [],
-    }        
+    }
+         
 }
 
-// componentDidMount(){
-//    axios.get('https://localhost:8080/api/airport/getAllAirports')
-//    .then(res => {
-//        const persons = res.data;
-//        this.setState({persons});
-//    })
-// }
+
+componentDidMount(){
+  axios.get('http://localhost:8080/api/airport/getAllAirports')
+  .then(res => {
+      const airports = res.data;
+      this.setState({airports});
+      console.log('airportdssssssss',airports)
+  })  
+}
 
     render() {
         return (
@@ -40,7 +43,8 @@ export class AdminHomePage extends Component {
               <Grid.Column>
                 <Segment>
                     <div>
-                        <DropDownAirports></DropDownAirports>
+                        <DropDownAirports airports={this.state.airports} >
+                        </DropDownAirports>
                     </div>
                 </Segment>
                 <Segment>

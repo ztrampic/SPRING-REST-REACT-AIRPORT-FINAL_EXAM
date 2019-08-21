@@ -1,22 +1,19 @@
-import { Dropdown } from "semantic-ui-react";
-import React, { Component } from 'react';
 
-let airport={};
-const airportOptions = [
-    airport={}
-]
+import React from 'react'
 
 
-
-
-const DropDownAirports = () => ( 
-
-    <Dropdown 
-    placeholder='Airport'
-    fluid
-    selection
-    options={airportOptions}
-    />
+const DropDownAirports = ({airports}) => {
     
-)
+
+    return (
+        <div> 
+          {airports? <select id="userlist" value={airports}>
+            {airports.map((airport) => <option key = {airport.id}>{airport.name};{airport.city}</option>)}
+          </select> : ''}
+        </div>
+                
+    )
+}
+
 export default DropDownAirports;
+

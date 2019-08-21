@@ -3,7 +3,6 @@ import MojHeader from './Components/MojHeader';
 import {
   BrowserRouter,
   Route,
-  Link
 } from "react-browser-router";
 import AdminHomePage from './Admin/AdminHomePage';
 import PretragaAerodromaPage from './User/PretragaAerodromaPage';
