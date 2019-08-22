@@ -3,6 +3,7 @@ package com.comtrade.airport.controller;
 import com.comtrade.airport.dto.AirportDTO;
 import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.mapper.AirportMapper;
+import com.comtrade.airport.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,11 @@ import java.util.List;
 public class AirportController {
 
     private final AirportMapper airportMapper;
+    private final AirportService airportService;
     @Autowired
-    public AirportController(AirportMapper airportMapper) {
+    public AirportController(AirportMapper airportMapper, AirportService airportService) {
         this.airportMapper = airportMapper;
+        this.airportService = airportService;
     }
 
     @PostMapping("/iniEntry")
@@ -36,9 +39,23 @@ public class AirportController {
         }
         return new ResponseEntity<List<AirportDTO>>(listaForFront ,HttpStatus.OK);
     }
+    @PostMapping("/airportEntry")
+    public ResponseEntity<?>airportEntry(@RequestBody AirportDTO airportDTO){
+        Airport airport = new Airport();
+        airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
+        airportDTO = airportMapper.convertAirportToAirportDTO(airport);
+        return new ResponseEntity<AirportDTO>(airportDTO,HttpStatus.OK);
+    }
 
-    
+    @GetMapping("/getAllAirports")
+    public ResponseEntity<?>getAllAirports(){
+        List<AirportDTO>listAirportsDTO = new ArrayList<>();
+        List<Airport> listAirports = airportService.getAllAirports();
+        for(Airport a: listAirports){
+            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(a);
+            listAirportsDTO.add(airportDTO);
+        }
 
-
-
+        return new ResponseEntity<List<AirportDTO>>(listAirportsDTO,HttpStatus.OK);
+    }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class AirportServiceImpl implements AirportService{
 
@@ -21,4 +23,12 @@ public class AirportServiceImpl implements AirportService{
         Airport airport1 = airportRepository.save(airport);
         return airport1;
     }
+
+    @Override
+    @Transactional
+    public List<Airport> getAllAirports() {
+        List<Airport> list = airportRepository.findAll();
+        return list;
+    }
+
 }
