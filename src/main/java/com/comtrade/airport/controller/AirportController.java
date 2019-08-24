@@ -30,6 +30,7 @@ public class AirportController {
         List<Airport> listaSaIdAerodroma= new ArrayList<>();
         for(AirportDTO a: listaAerodromaJSON){
             Airport airport  = airportMapper.convertAirportDTOtoAirport(a);
+            airport= airportService.newAirport(airport);
             listaSaIdAerodroma.add(airport);
         }
         List<AirportDTO>listaForFront = new ArrayList<>();
@@ -43,6 +44,7 @@ public class AirportController {
     public ResponseEntity<?>airportEntry(@RequestBody AirportDTO airportDTO){
         Airport airport = new Airport();
         airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
+        airport= airportService.newAirport(airport);
         airportDTO = airportMapper.convertAirportToAirportDTO(airport);
         return new ResponseEntity<AirportDTO>(airportDTO,HttpStatus.OK);
     }
@@ -57,5 +59,28 @@ public class AirportController {
         }
 
         return new ResponseEntity<List<AirportDTO>>(listAirportsDTO,HttpStatus.OK);
+    }
+    @PostMapping("/getSearchAirports")
+    public ResponseEntity<?>getSearchAirports(@RequestBody AirportDTO airportDTO){
+        List<Airport> searchList = new ArrayList<>();
+        List<AirportDTO> searchListDTO = new ArrayList<>();
+        searchList = airportService.getSearchAirports(airportDTO);
+        for(Airport a: searchList){
+            AirportDTO airportDTO1 = airportMapper.convertAirportToAirportDTO(a);
+            searchListDTO.add(airportDTO1);
+        }
+        return new ResponseEntity<List<AirportDTO>>(searchListDTO,HttpStatus.OK);
+    }
+    @PutMapping("/updateAirport")
+    public ResponseEntity<?>updateAirport(@RequestBody AirportDTO airportDTO){
+        List<AirportDTO> listDto = new ArrayList<>();
+        List<Airport>updatedList =new ArrayList<>();
+        Airport airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
+        updatedList = airportService.updateAirport(airport);
+        for(Airport a: updatedList){
+            AirportDTO airportDTO1 =airportMapper.convertAirportToAirportDTO(a);
+            listDto.add(airportDTO1);
+        }
+        return new ResponseEntity<List<AirportDTO>>(listDto,HttpStatus.OK);
     }
 }

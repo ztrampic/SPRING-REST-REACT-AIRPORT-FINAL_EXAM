@@ -17,19 +17,27 @@ public class AirportMapperImpl implements AirportMapper{
     }
 
     @Override
-    @Transactional
     public Airport convertAirportDTOtoAirport(AirportDTO airportDTO) {
         String naziv = airportDTO.getName();
         String grad  = airportDTO.getCity();
         String code = airportDTO.getCode();
         String drzava = airportDTO.getCountry();
+        String idAirport = airportDTO.getId();
         Airport airport = new Airport();
+        if (idAirport == null) {
+            airport.setCity(grad);
+            airport.setCode(code);
+            airport.setCountry(drzava);
+            airport.setName(naziv);
+            return airport;
+        }
         airport.setCity(grad);
         airport.setCode(code);
         airport.setCountry(drzava);
         airport.setName(naziv);
-        Airport  a1 = airportService.newAirport(airport);
-        return a1;
+        airport.setId(Long.parseLong(idAirport));
+
+        return airport;
     }
 
     @Override
