@@ -57,5 +57,9 @@ public class AirportServiceImpl implements AirportService{
         return updatedList;
     }
 
-
+    @Override
+    @Transactional
+    public void hardDeleteAirport(Long idDel) {
+        airportRepository.deleteById(idDel);
+    }
 }

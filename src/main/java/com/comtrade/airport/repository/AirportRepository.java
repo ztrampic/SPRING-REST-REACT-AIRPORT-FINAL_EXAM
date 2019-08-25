@@ -9,8 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AirportRepository extends JpaRepository<Airport,Integer> {
+public interface AirportRepository extends JpaRepository<Airport,Long> {
 
     @Query(value = "SELECT * FROM airport WHERE Lower(airport.name) LIKE ('%?%') and Lower(airport.city) LIKE ('%?%') ", nativeQuery = true)
     List<Airport> findSearchAirports(String name, String city);
+
 }

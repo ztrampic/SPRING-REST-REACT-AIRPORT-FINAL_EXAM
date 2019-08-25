@@ -10,4 +10,6 @@ public interface AirportService {
     List<Airport> getAllAirports();
     List<Airport> getSearchAirports(AirportDTO airportDTO);
     List<Airport> updateAirport(Airport airport);
+
+    void hardDeleteAirport(Long idDel);
 }

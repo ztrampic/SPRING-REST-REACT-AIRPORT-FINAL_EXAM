@@ -43,10 +43,17 @@ public class AirportController {
     @PostMapping("/airportEntry")
     public ResponseEntity<?>airportEntry(@RequestBody AirportDTO airportDTO){
         Airport airport = new Airport();
+        List<AirportDTO>listDTO = new ArrayList<>();
+        List<Airport>listAirport = new ArrayList<>();
         airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
         airport= airportService.newAirport(airport);
-        airportDTO = airportMapper.convertAirportToAirportDTO(airport);
-        return new ResponseEntity<AirportDTO>(airportDTO,HttpStatus.OK);
+        listAirport = airportService.getAllAirports();
+        for(Airport a: listAirport){
+            airportDTO = airportMapper.convertAirportToAirportDTO(a);
+            listDTO.add(airportDTO);
+        }
+
+        return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
     }
 
     @GetMapping("/getAllAirports")
@@ -82,5 +89,18 @@ public class AirportController {
             listDto.add(airportDTO1);
         }
         return new ResponseEntity<List<AirportDTO>>(listDto,HttpStatus.OK);
+    }
+    @GetMapping("/hardDeleteAirport/{id}")
+    public ResponseEntity<?>hardDeleteAirport(@PathVariable(value = "id") String id){
+        String value = id.replaceAll("[^0-9]","");
+        Long idDel = Long.parseLong(value);
+        airportService.hardDeleteAirport(idDel);
+        List<Airport> list = airportService.getAllAirports();
+        List<AirportDTO>listDTO = new ArrayList<>();
+        for(Airport a:list){
+            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(a);
+            listDTO.add(airportDTO);
+        }
+        return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
     }
 }

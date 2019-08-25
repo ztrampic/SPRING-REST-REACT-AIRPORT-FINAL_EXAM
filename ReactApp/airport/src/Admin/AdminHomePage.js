@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Segment} from 'semantic-ui-react';
+import { Grid, Segment, Label, Placeholder} from 'semantic-ui-react';
 import ModalInsertAirports from '../Components/ModalInsertAirport';
 import axios from 'axios';
 import _ from 'lodash';
@@ -25,7 +25,8 @@ export class AdminHomePage extends Component {
   componentDidMount() {
     this.getAllAirports();
   }
-
+  
+ 
   handleSelectChange = (event) => {
     const airports  = this.state.airports;
     const airportId = event.target.value;
@@ -40,9 +41,12 @@ export class AdminHomePage extends Component {
     axios.get('http://localhost:8080/api/airport/getAllAirports')
       .then(res => {
         let airports = res.data;
-        // airports =_.sortBy(airports,'name')
+        //airports =_.sortBy(airports,'name')
         this.setState({ airports });
       })
+  }
+  updateAirports(airports,airport){
+    this.setState({airports:airports, airport:airport})
   }
 
 
@@ -51,6 +55,7 @@ export class AdminHomePage extends Component {
    
   render() {
     let airports = this.state.airports
+    const updateAirports = this.updateAirports.bind(this)
     
     let airport = this.state.airport;
     console.log("aaaaaaaaaairport for modal" ,airport)
@@ -70,16 +75,18 @@ export class AdminHomePage extends Component {
               <Segment>2</Segment>
             </Grid.Column>
             <Grid.Column>
-              <Segment>
+              <Segment style={{backgroundColor:'aliceblue'}}>
                <div> 
+                 <Label style={{marginBottom: '10px'}}>Select Airport from DropBox</Label>
                 <div> 
-                    {airports? <select onChange={this.handleSelectChange} style={{marginBottom:'20px',maxWidth:'200px'}}>
-                      {airports.map((airport) => <option value={airport.id}>{airport.name}</option>)}
+                    {airports? <select onChange={this.handleSelectChange} style={{marginBottom:'20px',width:'100%'}}>
+                      {airports.map((airport) => <option key={airport.id} value={airport.id}>{airport.name}</option>)}
                     </select> : ''}
                 </div>
                   <div style={{ 'display': 'flex' }}>
                     <ModalInsertAirports
                       airport = {airport}
+                      updateAirports = {updateAirports}
                     >
                     </ModalInsertAirports>
                   </div>
