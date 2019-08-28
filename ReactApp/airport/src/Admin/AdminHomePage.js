@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Grid, Segment, Label, Placeholder} from 'semantic-ui-react';
+import { Grid, Segment, Label} from 'semantic-ui-react';
 import ModalInsertAirports from '../Components/ModalInsertAirport';
 import axios from 'axios';
-import _ from 'lodash';
+
 
 
 
@@ -68,7 +68,7 @@ export class AdminHomePage extends Component {
           <Grid.Row stretched>
             <Grid.Column>
               <Segment>1
-                </Segment>
+              </Segment>
             </Grid.Column>
             <Grid.Column>
               <Segment>1</Segment>
