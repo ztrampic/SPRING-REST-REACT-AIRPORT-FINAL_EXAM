@@ -4,7 +4,21 @@ import { Header,Menu,Input, Button, Form} from 'semantic-ui-react';
 
 
 export class MojHeader extends Component {
-   
+   constructor(){
+       super()
+       this.state = {
+           time:new Date()
+       }
+   }
+
+   currentTime(){
+       this.setState({
+           time:new Date()
+       })
+   }
+   componentWillMount(){
+       setInterval(() => this.currentTime(), 1000)
+   }
     render() {
         return (
             <div>       
@@ -12,11 +26,12 @@ export class MojHeader extends Component {
                 <Menu pointing style={{backgroundColor:'#6351ce'}}>
                     <Menu.Item href='/home' name='Home'/>
                     <Menu.Item href='/aerodrom' name='Airports'/>
-                    <Menu.Item/>
+                    <Menu.Item name={this.state.time.toLocaleTimeString()}/>
+                    {/* // .replace(/:\d\d([ ap]|$)/,'$1')   samo sati i minuti   */}
                     <Menu.Menu position='right'>
                     <Form style={{display:'flex'}}>
                         <Menu.Item>   
-                        <Input placeholder='Search Flight' />
+                        <Input placeholder='Search Flyth'/>
                         </Menu.Item>
                         <Menu.Item>
                             <Button>Search</Button>

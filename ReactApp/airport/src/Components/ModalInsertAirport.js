@@ -15,13 +15,17 @@ class ModalInsertAirports extends React.Component {
                 city: '',
                 code: '',
                 country: '',
-                name: ''
+                name: '',
+                lat:'',
+                lon:'',
             },
             newAirport: {
                 city: '',
                 code: '',
                 country: '',
-                name: ''
+                name: '',
+                lat:'',
+                lon:'',
             },
 
         };
@@ -106,10 +110,10 @@ class ModalInsertAirports extends React.Component {
     setNewAirportNameForUpdate = (e) => {
         let { airportForUpdate } = this.state;
         airportForUpdate.id = document.getElementById('idHidden').value
+        airportForUpdate.name = e.target.value;
         if (e.target.value === undefined) {
             airportForUpdate.name = document.getElementById('nameUpdate').defaultValue;
         }
-        airportForUpdate.name = e.target.value;
         this.setState({
             airportForUpdate
         })
@@ -118,10 +122,10 @@ class ModalInsertAirports extends React.Component {
     setNewAirportCityForUpdate = (e) => {
         let { airportForUpdate } = this.state;
         airportForUpdate.id = document.getElementById('idHidden').value
+        airportForUpdate.city = e.target.value;
         if (e.target.value === undefined) {
             airportForUpdate.city =document.getElementById('cityUpdate').defaultValue;
-        }
-        airportForUpdate.city = e.target.value;
+        }  
         this.setState({
             airportForUpdate
         })
@@ -129,10 +133,10 @@ class ModalInsertAirports extends React.Component {
     setNewAirportCodeForUpdate = (e) => {
         let { airportForUpdate } = this.state;
         airportForUpdate.id = document.getElementById('idHidden').value
+        airportForUpdate.code = e.target.value;
         if (e.target.value === undefined) {
             airportForUpdate.code =document.getElementById('codeUpdate').defaultValue;
         }
-        airportForUpdate.code = e.target.value;
         this.setState({
             airportForUpdate
         })

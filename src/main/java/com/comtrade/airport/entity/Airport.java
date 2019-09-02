@@ -1,10 +1,9 @@
 package com.comtrade.airport.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class Airport {
@@ -15,15 +14,36 @@ public class Airport {
     private String name;
     private String city;
     private String country;
+    private double latitude;
+    private double longitute;
+    private String email;
+    @OneToOne(mappedBy = "airport",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private UserAirport userAirport;
 
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public double getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+    public double getLongitute() {
+        return longitute;
+    }
+    public void setLongitute(double longitute) {
+        this.longitute = longitute;
+    }
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getCode() {
         return code;
     }

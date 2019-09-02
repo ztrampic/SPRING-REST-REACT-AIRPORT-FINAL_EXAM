@@ -2,12 +2,13 @@ import React from 'react'
 import { Table } from 'semantic-ui-react'
 
 const HomePageTableArrivals = () => (
-  <Table celled fixed singleLine>
+  <Table celled inverted selectable>
     <Table.Header>
       <Table.Row>
-        <Table.HeaderCell>Name</Table.HeaderCell>
+      <Table.HeaderCell>Time</Table.HeaderCell>
+        <Table.HeaderCell>Flight</Table.HeaderCell>
+        <Table.HeaderCell>From</Table.HeaderCell>
         <Table.HeaderCell>Status</Table.HeaderCell>
-        <Table.HeaderCell>Description</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
 
@@ -15,25 +16,18 @@ const HomePageTableArrivals = () => (
       <Table.Row>
         <Table.Cell>John</Table.Cell>
         <Table.Cell>Approved</Table.Cell>
-        <Table.Cell
-          title={[
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-            'et dolore magna aliqua.',
-          ].join(' ')}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell>Arrived</Table.Cell>
       </Table.Row>
       <Table.Row>
         <Table.Cell>Jamie</Table.Cell>
         <Table.Cell>Approved</Table.Cell>
-        <Table.Cell>Shorter description</Table.Cell>
+        <Table.Cell>Requires call</Table.Cell>
       </Table.Row>
       <Table.Row>
         <Table.Cell>Jill</Table.Cell>
         <Table.Cell>Denied</Table.Cell>
-        <Table.Cell>Shorter description</Table.Cell>
+        <Table.Cell>None</Table.Cell>
       </Table.Row>
     </Table.Body>
   </Table>

@@ -31,7 +31,7 @@ public class AirportController {
         for(AirportDTO a: listaAerodromaJSON){
             Airport airport  = airportMapper.convertAirportDTOtoAirport(a);
             airport= airportService.newAirport(airport);
-            listaSaIdAerodroma.add(airport);
+                listaSaIdAerodroma.add(airport);
         }
         List<AirportDTO>listaForFront = new ArrayList<>();
         for (Airport air : listaSaIdAerodroma){
@@ -41,7 +41,7 @@ public class AirportController {
         return new ResponseEntity<List<AirportDTO>>(listaForFront ,HttpStatus.OK);
     }
     @PostMapping("/airportEntry")
-    public ResponseEntity<?>airportEntry(@RequestBody AirportDTO airportDTO){
+    public ResponseEntity<List<AirportDTO>>airportEntry(@RequestBody AirportDTO airportDTO){
         Airport airport = new Airport();
         List<AirportDTO>listDTO = new ArrayList<>();
         List<Airport>listAirport = new ArrayList<>();
