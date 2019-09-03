@@ -21,6 +21,9 @@ export class AdminHomePage extends Component {
         name:'',
         lat:'',
         long:'',
+        direct_flights:'',
+        carriers:''
+
       },
     }
   }
@@ -150,7 +153,7 @@ export class AdminHomePage extends Component {
                       {airports.map((airport) => <option key={airport.id} value={airport.id}>{airport.name}</option>)}
                     </select> : ''}
                 </div>
-                  <div style={{ 'display': 'flex' }}>
+                  <div style={{ display: 'flex' }}>
                     <ModalInsertAirports
                       airport = {airport}
                       updateAirports = {updateAirports}

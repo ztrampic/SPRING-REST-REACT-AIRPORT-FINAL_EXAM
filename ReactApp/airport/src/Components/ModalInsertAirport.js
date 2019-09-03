@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormGroup, Form, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Button } from 'semantic-ui-react';
+import { Button, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 
 class ModalInsertAirports extends React.Component {
@@ -18,6 +18,8 @@ class ModalInsertAirports extends React.Component {
                 name: '',
                 lat:'',
                 lon:'',
+                direct_flights:'',
+                carriers:''
             },
             newAirport: {
                 city: '',
@@ -26,6 +28,8 @@ class ModalInsertAirports extends React.Component {
                 name: '',
                 lat:'',
                 lon:'',
+                direct_flights:'',
+                carriers:''
             },
 
         };
@@ -88,8 +92,34 @@ class ModalInsertAirports extends React.Component {
         this.setState({
             newAirport
         })
-
-
+    }
+    setNewAirportLatitude = (e) => {
+        let { newAirport } = this.state;
+        newAirport.lat = e.target.value;
+        this.setState({
+            newAirport
+        })
+    }
+    setNewAirportLongatude = (e) => {
+        let { newAirport } = this.state;
+        newAirport.lon = e.target.value;
+        this.setState({
+            newAirport
+        })
+    }
+    setNewAirportMaxDepartures = (e) => {
+        let { newAirport } = this.state;
+        newAirport.carriers = e.target.value;
+        this.setState({
+            newAirport
+        })
+    }
+    setNewAirportMaxArrivals = (e) => {
+        let { newAirport } = this.state;
+        newAirport.direct_flights = e.target.value;
+        this.setState({
+            newAirport
+        })
     }
 
     insertNewAirport = (e) => {
@@ -151,18 +181,73 @@ class ModalInsertAirports extends React.Component {
         this.setState({
             airportForUpdate
         })
-
+    }
+    setNewAirportLatitudeForUpdate = (e) => {
+        let { airportForUpdate } = this.state;
+        airportForUpdate.id = document.getElementById('idHidden').value
+        if(e.target.value === undefined){
+            airportForUpdate.lat = document.getElementById('latitudeUpdate').defaultValue;
+        }
+        airportForUpdate.lat = e.target.value;
+        this.setState({
+            airportForUpdate
+        })
+    }
+    setNewAirportLongatudeForUpdate = (e) => {
+        let { airportForUpdate } = this.state;
+        airportForUpdate.id = document.getElementById('idHidden').value
+        if(e.target.value === undefined){
+            airportForUpdate.lon = document.getElementById('longatudeUpdate').defaultValue;
+        }
+        airportForUpdate.lon = e.target.value;
+        this.setState({
+            airportForUpdate
+        })
+    }
+    setNewAirportMaxArrivalsForUpdate = (e) => {
+        let { airportForUpdate } = this.state;
+        airportForUpdate.id = document.getElementById('idHidden').value
+        if(e.target.value === undefined){
+            airportForUpdate.direct_flights = document.getElementById('maxArrivalsUpdate').defaultValue;
+        }
+        airportForUpdate.direct_flights = e.target.value;
+        this.setState({
+            airportForUpdate
+        })
+    }
+    setNewAirportMaxDepartureForUpdate = (e) => {
+        let { airportForUpdate } = this.state;
+        airportForUpdate.id = document.getElementById('idHidden').value
+        if(document.getElementById('maxArrivalsUpdate'.value === '')){
+            airportForUpdate.direct_flights = document.getElementById('maxArrivalsUpdate').defaultValue;
+        }
+        airportForUpdate.direct_flights = e.target.value;
+        this.setState({
+            airportForUpdate
+        })
+    }
+    setNewAirportMaxDepartureForUpdate = (e) => {
+        let { airportForUpdate } = this.state;
+        airportForUpdate.id = document.getElementById('idHidden').value
+        if(e.target.value === undefined){
+            airportForUpdate.carriers = document.getElementById('maxDeparturesUpdate').defaultValue;
+        }
+        airportForUpdate.carriers = e.target.value;
+        this.setState({
+            airportForUpdate
+        })
     }
 
     updateAirport = (e) => {
         axios.put('http://localhost:8080/api/airport/updateAirport', this.state.airportForUpdate)
             .then((response) => {
                 let airports = response.data;
-                let airportForUpdate = this.state.airportForUpdate;
+                let airportForUpdate ={};
                 this.props.updateAirports(airports, airportForUpdate);
                 this.toggleUpdate();
             })
-
+        console.log("UPDATE",this.state.airportForUpdate);
+        
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////   D E L E T E    A I R P O R T       /////////////////////////////////////////////////
@@ -200,15 +285,29 @@ class ModalInsertAirports extends React.Component {
                     <ModalHeader toggle={this.toggle}>New Airport</ModalHeader>
                     <ModalBody>
                         <Form>
-                            <FormGroup>
-                                <Label for="exampleEmail">City</Label>
-                                <Input id="city" value={this.state.value} onChange={this.setNewAirportCity} />
-                                <Label for="exampleEmail">Code</Label>
-                                <Input id="code" value={this.state.value} onChange={this.setNewAirportCode} />
-                                <Label for="exampleEmail">Country</Label>
-                                <Input id="country" value={this.state.value} onChange={this.setNewAirportCountry} />
-                                <Label for="exampleEmail">Name</Label>
-                                <Input id="name" value={this.state.value} onChange={this.setNewAirportName} />
+                            <FormGroup style = {{display:'flex'}}>
+                                <Grid width={16} style = {{display:'contents'}}>     
+                                    <Grid.Column width={8}>
+                                        <Label>City</Label>
+                                        <Input required id="city" value={this.state.value} onChange={this.setNewAirportCity} />
+                                        <Label>Code</Label>
+                                        <Input required id="code" value={this.state.value} onChange={this.setNewAirportCode} />
+                                        <Label>Country</Label>
+                                        <Input required id="country" value={this.state.value} onChange={this.setNewAirportCountry} />
+                                        <Label>Name</Label>
+                                        <Input required id="name" value={this.state.value} onChange={this.setNewAirportName} />
+                                    </Grid.Column>    
+                                    <Grid.Column width={8}>
+                                        <Label>Latitute</Label>
+                                        <Input type='number' required id="latitude" value={this.state.value} onChange={this.setNewAirportLatitude} />
+                                        <Label>Longatude</Label>
+                                        <Input  type='number' required id="longatute" value={this.state.value} onChange={this.setNewAirportLongatude} />
+                                        <Label>Max arrivals</Label>
+                                        <Input  type='number' required id="maxArrivals" value={this.state.value} onChange={this.setNewAirportMaxArrivals} />
+                                        <Label>Max departures</Label>
+                                        <Input  type='number' required id="maxDepartures" value={this.state.value} onChange={this.setNewAirportMaxDepartures} />
+                                    </Grid.Column>
+                                </Grid>    
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -221,16 +320,30 @@ class ModalInsertAirports extends React.Component {
                     <ModalHeader toggle={this.toggleUpdate}>Update Airport</ModalHeader>
                     <ModalBody>
                         <Form>
-                            <FormGroup>
-                                <Label for="exampleEmail">City</Label>
-                                <Input id="cityUpdate" defaultValue={airport.city} onChange={this.setNewAirportCityForUpdate}></Input>
-                                <Label for="exampleEmail">Code</Label>
-                                <Input id="codeUpdate" defaultValue={airport.code} onChange={this.setNewAirportCodeForUpdate}></Input>
-                                <Label for="exampleEmail">Country</Label>
-                                <Input id="countryUpdate" defaultValue={airport.country} onChange={this.setNewAirportCountryForUpdate}></Input>
-                                <Label for="exampleEmail">Name</Label>
-                                <Input id="nameUpdate" defaultValue={airport.name} onChange={this.setNewAirportNameForUpdate}></Input>
-                                <Input id='idHidden' type={"hidden"} value={airport.id}></Input>
+                            <FormGroup style = {{display:'flex'}}>
+                                <Grid width={16} style = {{display:'contents'}}>
+                                    <Grid.Column width={8}>
+                                        <Label>City</Label>
+                                        <Input id="cityUpdate" defaultValue={airport.city} onChange={this.setNewAirportCityForUpdate}></Input>
+                                        <Label>Code</Label>
+                                        <Input id="codeUpdate" defaultValue={airport.code} onChange={this.setNewAirportCodeForUpdate}></Input>
+                                        <Label>Country</Label>
+                                        <Input id="countryUpdate" defaultValue={airport.country} onChange={this.setNewAirportCountryForUpdate}></Input>
+                                        <Label>Name</Label>
+                                        <Input id="nameUpdate" defaultValue={airport.name} onChange={this.setNewAirportNameForUpdate}></Input>
+                                        <Input id='idHidden' type={"hidden"} value={airport.id}></Input>
+                                    </Grid.Column>
+                                    <Grid.Column width={8}>
+                                        <Label>Latitude</Label>
+                                        <Input type='number' id="latitudeUpdate" defaultValue={airport.lat} onChange={this.setNewAirportLatitudeForUpdate}></Input>
+                                        <Label>Longatude</Label>
+                                        <Input type='number' id="longatudeUpdate" defaultValue={airport.lon} onChange={this.setNewAirportLongatudeForUpdate}></Input>
+                                        <Label>Max Arrivals</Label>
+                                        <Input type='number' id="maxArrivalsUpdate" defaultValue={airport.direct_flights} onChange={this.setNewAirportMaxArrivalsForUpdate}></Input>
+                                        <Label>Max Departures</Label>
+                                        <Input type='number' id="maxDeparturesUpdate" defaultValue={airport.carriers} onChange={this.setNewAirportMaxDepartureForUpdate}></Input>
+                                    </Grid.Column>
+                                </Grid>
                             </FormGroup>
                         </Form>
                     </ModalBody>
