@@ -28,6 +28,8 @@ public class AirportMapperImpl implements AirportMapper{
         String idAirport = airportDTO.getId();
         Double latitude;
         Double longitude;
+        int sletanja;
+        int poletanja;
         if (airportDTO.getLat() == null || airportDTO.getLat().equals("")) {
             latitude = Double.parseDouble("0");
         }else {
@@ -37,6 +39,15 @@ public class AirportMapperImpl implements AirportMapper{
             longitude =  Double.parseDouble("0");
         }else {
             longitude = Double.parseDouble(airportDTO.getLon());
+        }
+        if(airportDTO.getDirect_flights() == null || airportDTO.getDirect_flights().equals("")){
+            sletanja = Integer.parseInt("0");
+        }else{
+            sletanja = Integer.parseInt((airportDTO.getDirect_flights()));
+        } if(airportDTO.getCarriers() == null || airportDTO.getCarriers().equals("")){
+            poletanja = Integer.parseInt("0");
+        }else{
+            poletanja = Integer.parseInt(airportDTO.getCarriers());
         }
         String email = airportDTO.getEmail();
         Airport airport = new Airport();
@@ -48,6 +59,8 @@ public class AirportMapperImpl implements AirportMapper{
             airport.setLatitude(latitude);
             airport.setLongitute(longitude);
             airport.setEmail(email);
+            airport.setNumberOfMaxArrivals(sletanja);
+            airport.setNumberOfMaxDepartures(poletanja);
             return airport;
         }
         airport.setCity(grad);
@@ -58,6 +71,8 @@ public class AirportMapperImpl implements AirportMapper{
         airport.setLatitude(latitude);
         airport.setLongitute(longitude);
         airport.setEmail(email);
+        airport.setNumberOfMaxArrivals(sletanja);
+        airport.setNumberOfMaxDepartures(poletanja);
         return airport;
     }
 
@@ -80,6 +95,8 @@ public class AirportMapperImpl implements AirportMapper{
             aDTO.setLon(String.valueOf(air.getLongitute()));
         }
         aDTO.setEmail(air.getEmail());
+        aDTO.setCarriers(String.valueOf(air.getNumberOfMaxDepartures()));
+        aDTO.setDirect_flights(String.valueOf(air.getNumberOfMaxArrivals()));
         return aDTO;
     }
 }

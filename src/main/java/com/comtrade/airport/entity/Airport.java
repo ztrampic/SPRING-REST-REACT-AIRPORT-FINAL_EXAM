@@ -1,9 +1,8 @@
 package com.comtrade.airport.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Airport {
@@ -17,8 +16,12 @@ public class Airport {
     private double latitude;
     private double longitute;
     private String email;
+    private int numberOfMaxDepartures;
+    private int numberOfMaxArrivals;
     @OneToOne(mappedBy = "airport",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private UserAirport userAirport;
+    @ManyToMany(mappedBy = "airportList")
+    private Set<AirCompany>airCompanySet;
 
     public String getEmail() {
         return email;
@@ -74,5 +77,50 @@ public class Airport {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public int getNumberOfMaxDepartures() {
+        return numberOfMaxDepartures;
+    }
+
+    public void setNumberOfMaxDepartures(int numberOfMaxDepartures) {
+        this.numberOfMaxDepartures = numberOfMaxDepartures;
+    }
+
+    public int getNumberOfMaxArrivals() {
+        return numberOfMaxArrivals;
+    }
+
+    public void setNumberOfMaxArrivals(int numberOfMaxArrivals) {
+        this.numberOfMaxArrivals = numberOfMaxArrivals;
+    }
+
+    public UserAirport getUserAirport() {
+        return userAirport;
+    }
+
+    public void setUserAirport(UserAirport userAirport) {
+        this.userAirport = userAirport;
+    }
+
+    public Set<AirCompany> getAirCompanySet() {
+        return airCompanySet;
+    }
+
+    public void setAirCompanySet(Set<AirCompany> airCompanySet) {
+        this.airCompanySet = airCompanySet;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Airport)) return false;
+        Airport airport = (Airport) o;
+        return getId().equals(airport.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
     }
 }
