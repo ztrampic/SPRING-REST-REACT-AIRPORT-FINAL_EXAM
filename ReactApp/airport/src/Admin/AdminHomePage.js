@@ -26,6 +26,8 @@ export class AdminHomePage extends Component {
 
       },
     }
+    this.getDataFromFormUserAirport = this.getDataFromFormUserAirport.bind(this)
+    this.updateAirports = this.updateAirports.bind(this)
   }
 
   componentDidMount() {
@@ -89,11 +91,8 @@ export class AdminHomePage extends Component {
 
    
   render() {
-    let airports = this.state.airports
-    const updateAirports = this.updateAirports.bind(this)
-    let airport = this.state.airport;
-    const getDataFromFormUserAirport = this.getDataFromFormUserAirport.bind(this)
-   
+    const {airports,airport} = this.state;
+
     return (
       <div>
         <div>
@@ -104,7 +103,7 @@ export class AdminHomePage extends Component {
             <Grid.Column>
               <Segment style={{backgroundColor: 'aliceblue'}}>
               <Label>Company Info</Label>  
-                <Form onSubmit={getDataFromFormUserAirport}>
+                <Form onSubmit={this.getDataFromFormUserAirport}>
                   <TextArea onChange={this.updateApplicationUserAirport} id='description' placeholder='Describe your company!' style={{ minHeight: 100}} /> 
                   <FormGroup style={{display:'inline-grid'}}> 
                     <Input
@@ -156,7 +155,7 @@ export class AdminHomePage extends Component {
                   <div style={{ display: 'flex' }}>
                     <ModalInsertAirports
                       airport = {airport}
-                      updateAirports = {updateAirports}
+                      updateAirports = {this.updateAirports}
                     >
                     </ModalInsertAirports>
                   </div>

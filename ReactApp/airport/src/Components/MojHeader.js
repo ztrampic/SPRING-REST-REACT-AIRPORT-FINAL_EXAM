@@ -34,11 +34,11 @@ export class MojHeader extends Component {
                         <Input placeholder='Search Flyth'/>
                         </Menu.Item>
                         <Menu.Item>
-                            <Button>Search</Button>
+                            <Button href = '/airCompanyAdmin'>Temp Admin AirCompany</Button>
                         </Menu.Item>
                     </Form>
                         <Menu.Item>
-                            <Button style={{'backgroundColor':'red'}} href='/admin'>Login</Button>
+                            <Button style={{'backgroundColor':'red'}} href='/admin'>Temp Admin</Button>
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>

@@ -8,6 +8,7 @@ import {
 import AdminHomePage from './Admin/AdminHomePage';
 import PretragaAerodromaPage from './User/PretragaAerodromaPage';
 import MojFooter from './Components/MojFooter';
+import AirCompanyAdminPage from './Admin/AirCompanyAdminPage';
 
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/admin" component={AdminHomePage} />
           <Route path="/aerodrom" component={PretragaAerodromaPage} />
           <Route path="/home" component={HomePage} />
+          <Route path="/airCompanyAdmin" component = {AirCompanyAdminPage}/>
         </BrowserRouter>
       </div>
       <div className='mojFooter'>
