@@ -62,4 +62,12 @@ public class AirportServiceImpl implements AirportService{
     public void hardDeleteAirport(Long idDel) {
         airportRepository.deleteById(idDel);
     }
+
+    @Override
+    @Transactional
+    public List<Airport> getSearchAirportBycity(String cityName) {
+        List<Airport>searchList = new ArrayList<>();
+        searchList = airportRepository.findAirportByCityName(cityName);
+        return searchList;
+    }
 }

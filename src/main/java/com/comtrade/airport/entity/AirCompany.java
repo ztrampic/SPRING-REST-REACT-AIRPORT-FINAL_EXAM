@@ -1,6 +1,7 @@
 package com.comtrade.airport.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,12 +13,21 @@ public class AirCompany {
     private String pib;
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "AirCompany_Airport",
-            joinColumns = @JoinColumn(name = "aircompany_idAirCompany"),
+            joinColumns = @JoinColumn(name = "aircompanyId"),
             inverseJoinColumns = @JoinColumn(name = "airport_id"))
     private Set<Airport>airportList;
     @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Flight> flightList;
+    @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Airplane> fleet ;
 
+    public Set<Airplane> getFleet() {
+        return fleet;
+    }
+
+    public void setFleet(Set<Airplane> fleet) {
+        this.fleet = fleet;
+    }
 
     public Long getIdAirCompany() {
         return idAirCompany;
@@ -66,6 +76,14 @@ public class AirCompany {
     public void remove(Flight flight){
         flightList.remove(flight);
         flight.setAirCompany(null);
+    }
+    public void addAirplanetoFleet(Airplane airplane){
+        fleet.add(airplane);
+        airplane.setAirCompany(this);
+    }
+    public void removeAirplaneFromFleet(Airplane airplane){
+        fleet.remove(airplane);
+        airplane.setAirCompany(null);
     }
 
     @Override

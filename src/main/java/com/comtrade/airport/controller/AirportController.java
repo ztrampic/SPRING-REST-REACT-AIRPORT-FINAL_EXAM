@@ -1,5 +1,6 @@
 package com.comtrade.airport.controller;
 
+import com.comtrade.airport.dto.AirportAdminSearchDTO;
 import com.comtrade.airport.dto.AirportDTO;
 import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.mapper.AirportMapper;
@@ -102,5 +103,16 @@ public class AirportController {
             listDTO.add(airportDTO);
         }
         return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
+    }
+    @PostMapping("/searchByCity")
+    public ResponseEntity<List<AirportAdminSearchDTO>>searchByCity(@RequestBody String searchString){
+        String cityName = searchString.replace("=","");
+        List<AirportAdminSearchDTO>searchListDto = new ArrayList<>();
+        List<Airport>listAirports = airportService.getSearchAirportBycity(cityName);
+        for(Airport a:listAirports){
+            AirportAdminSearchDTO airportAdminSearchDTO = airportMapper.convertAirportToAirportAdminSearchDTO(a);
+            searchListDto.add(airportAdminSearchDTO);
+        }
+        return new ResponseEntity<List<AirportAdminSearchDTO>>(searchListDto,HttpStatus.OK);
     }
 }

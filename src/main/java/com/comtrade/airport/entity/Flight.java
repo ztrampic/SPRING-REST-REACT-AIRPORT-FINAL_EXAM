@@ -12,7 +12,7 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idFlight;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "airCompany_idAirCompany")
+    @JoinColumn(name = "idAirCompany")
     private AirCompany airCompany;
     private String flightName;
     private Double distance;

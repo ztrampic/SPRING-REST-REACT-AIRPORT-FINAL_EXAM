@@ -1,5 +1,6 @@
 package com.comtrade.airport.mapper;
 
+import com.comtrade.airport.dto.AirportAdminSearchDTO;
 import com.comtrade.airport.dto.AirportDTO;
 import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.service.AirportService;
@@ -98,5 +99,39 @@ public class AirportMapperImpl implements AirportMapper{
         aDTO.setCarriers(String.valueOf(air.getNumberOfMaxDepartures()));
         aDTO.setDirect_flights(String.valueOf(air.getNumberOfMaxArrivals()));
         return aDTO;
+    }
+
+    @Override
+    public AirportAdminSearchDTO convertAirportToAirportAdminSearchDTO(Airport airport) {
+        AirportAdminSearchDTO airportAdminSearchDTO = new AirportAdminSearchDTO();
+        AirportDTO airportDTO = convertAirportToAirportDTO(airport);
+        double lat1 = 44.8192; //promeniti hardcodes
+        double lat2 = airport.getLatitude();
+        double lon1 = 20.3122; //promeniti hardcode
+        double lon2 = airport.getLongitute();
+        String distance = String.valueOf(calculateDistance(lat1,lat2,lon1,lon2,"K"));
+        airportAdminSearchDTO.setDistance(distance);
+        airportAdminSearchDTO.setAirportDTO(airportDTO);
+        return airportAdminSearchDTO;
+    }
+
+    public double calculateDistance(double lat1, double lat2, double lon1, double lon2, String unit){
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            double theta = lon1 - lon2;
+            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+            dist = Math.acos(dist);
+            dist = Math.toDegrees(dist);
+            dist = dist * 60 * 1.1515;
+            if (unit == "K") {
+                dist = dist * 1.609344;
+            } else if (unit == "N") {
+                dist = dist * 0.8684;
+            }
+            dist = Math.round(dist * 100.0) / 100.0;
+            return (dist);
+        }
     }
 }

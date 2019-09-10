@@ -12,4 +12,6 @@ public interface AirportService {
     List<Airport> updateAirport(Airport airport);
 
     void hardDeleteAirport(Long idDel);
+
+    List<Airport> getSearchAirportBycity(String cityName);
 }
