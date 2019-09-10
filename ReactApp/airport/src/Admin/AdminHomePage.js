@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Grid, Segment, Label, Form, TextArea, Input, FormGroup, Button} from 'semantic-ui-react';
 
-import ModalInsertAirports from '../Components/ModalInsertAirport';
 import axios from 'axios';
+import ModalInsertAirports from '../Components/AirportAdmin/ModalInsertAirport';
 
 
 
@@ -101,41 +101,6 @@ export class AdminHomePage extends Component {
         <Grid columns={3} divided>
           <Grid.Row stretched>
             <Grid.Column>
-              <Segment style={{backgroundColor: 'aliceblue'}}>
-              <Label>Company Info</Label>  
-                <Form onSubmit={this.getDataFromFormUserAirport}>
-                  <TextArea onChange={this.updateApplicationUserAirport} id='description' placeholder='Describe your company!' style={{ minHeight: 100}} /> 
-                  <FormGroup style={{display:'inline-grid'}}> 
-                    <Input
-                        onChange={this.updateApplicationUserAirport}
-                        required
-                        style={{display:'grid'}} 
-                        placeholder="edit Company address"
-                        name = 'adress'
-                        label ='contact Adress' size='mini'
-                        id = 'adress'
-                        />
-                    <Input 
-                        required
-                        style={{display:'grid'}} 
-                        placeholder="edit Company tel."
-                        name = 'tel'
-                        label ='Tel' size='mini'
-                        type = 'number'
-                        id = 'tel'
-                        />
-                    <Input
-                        required
-                        style={{display:'grid'}}  
-                        placeholder="edit company name"
-                        name = 'companyName'
-                        label='Company Name' size='mini'
-                        id = 'companyName'
-                        />   
-                    <Button  style={{marginTop:'1rem'}}>Update</Button>         
-                  </FormGroup>
-                </Form>  
-              </Segment>
             </Grid.Column>
             <Grid.Column>             
               <Segment style={{backgroundColor:'aliceblue'}}>
@@ -144,23 +109,53 @@ export class AdminHomePage extends Component {
               </Segment>          
             </Grid.Column>
             <Grid.Column>
+              <Segment.Group vertical>
               <Segment style={{backgroundColor:'aliceblue'}}>
-               <div> 
                  <Label style={{marginBottom: '10px'}}>Select Airport from DropBox</Label>
-                <div> 
                     {airports? <select onChange={this.handleSelectChange} style={{marginBottom:'20px',width:'100%'}}>
                       {airports.map((airport) => <option key={airport.id} value={airport.id}>{airport.name}</option>)}
                     </select> : ''}
-                </div>
-                  <div style={{ display: 'flex' }}>
-                    <ModalInsertAirports
-                      airport = {airport}
-                      updateAirports = {this.updateAirports}
-                    >
-                    </ModalInsertAirports>
-                  </div>
-                </div>
+                  <ModalInsertAirports
+                    airport = {airport}
+                    updateAirports = {this.updateAirports}
+                  />
               </Segment>
+              <Segment style={{backgroundColor: 'aliceblue', display:'flex'}}>
+                <Form onSubmit={this.getDataFromFormUserAirport}>
+                  <Label style={{width:'100%'}}>Company Info</Label>  
+                  <TextArea id='description' placeholder='Describe your company!' style={{ minHeight: 100}} /> 
+                  <FormGroup style={{display:'inline-grid', margin:'0'}}> 
+                    <Input
+                        required
+                        style={{display:'grid',marginTop:'1rem'}} 
+                        placeholder="edit Company address"
+                        name = 'adress'
+                        label ='contact Adress' size='mini'
+                        id = 'adress'
+                        />
+                    <Input 
+                        required
+                        style={{display:'grid',marginTop:'1rem'}} 
+                        placeholder="edit Company tel."
+                        name = 'tel'
+                        label ='Tel' size='mini'
+                        type = 'number'
+                        id = 'tel'
+                        />
+                    <Input
+                        required
+                        style={{display:'grid',marginTop:'1rem'}}  
+                        placeholder="edit company name"
+                        name = 'companyName'
+                        label='Company Name' size='mini'
+                        id = 'companyName'
+                        />   
+                    <Button  style={{marginTop:'1rem'}}>Update</Button>
+                    <Button  style={{marginTop:'1rem'}}>Set first time User of Application</Button>          
+                  </FormGroup>
+                </Form>  
+              </Segment>
+              </Segment.Group>
               <Segment>4
               </Segment>
               <Segment>3</Segment>
