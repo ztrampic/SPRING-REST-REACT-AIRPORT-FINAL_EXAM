@@ -22,11 +22,16 @@ export default class AirCompanyTabs extends React.Component {
       dateForRequest: new Date(),
       airportCityName:'',
       searchResultAirports:[],
+      airCompanyDTO:{},
+      avion:{},
+      airplanes:[],
     };
     this.toggle = this.toggle.bind(this); 
     this.handleChangeDate = this.handleChangeDate.bind(this)
     this.sendFlightRequest = this.sendFlightRequest.bind(this)
     this.searchAirportByAirportCity = this.searchAirportByAirportCity.bind(this)
+    this.insertAirplane = this.insertAirplane.bind(this)
+    this.getAllAirplanes = this.getAllAirplanes.bind(this)
   }
 
   toggle(tab) {
@@ -39,6 +44,33 @@ export default class AirCompanyTabs extends React.Component {
   handleChangeDate = date => {
     this.setState({
       dateForRequest: date
+    })
+  }
+
+  insertAirplane(){
+    const airCompanyDTO = {idAirCompany:"1"}
+    const mark = document.getElementById('mark').value;
+    const seatingCapacity = document.getElementById('numberOfSeats').value;
+    const maxFlyDistance = document.getElementById('maxFlyDistance').value;
+    const avion = {airCompanyDTO, mark, seatingCapacity, maxFlyDistance}
+    axios.post('http://localhost:8080/api/airplane/insert', avion)
+    .then(res=>{
+      const api = res.data;
+      window.location.reload();
+    })
+    
+  }
+
+  getAllAirplanes(){
+    const id = 1;
+    axios.get('http://localhost:8080/api/airplane/getAllAirplanes/'+id)
+    .then(res=>{
+      const apiAirplanes = res.data;
+      this.setState({
+        airplanes:apiAirplanes
+        
+      })
+      console.log("AVION",this.state.airplanes);
     })
   }
 
@@ -70,7 +102,7 @@ export default class AirCompanyTabs extends React.Component {
  
 
   render() {
-    const{ searchResultAirports
+    const{ searchResultAirports, airplanes 
      } = this.state
    
     return (
@@ -170,7 +202,7 @@ export default class AirCompanyTabs extends React.Component {
                             style={{display:'grid',marginTop:'1rem'}} 
                             name = ''
                             label ='Mark of airplane' size='mini'
-                            id = ''
+                            id = 'mark'
                             />
                         <Input 
                             required
@@ -188,7 +220,7 @@ export default class AirCompanyTabs extends React.Component {
                             label='Max fly distance' size='mini'
                             id = 'maxFlyDistance'
                             />   
-                        <Button color='blue' style={{width:'100%',marginTop:'1rem'}}>Insert</Button>{' '}                                        
+                        <Button onClick={this.insertAirplane} color='blue' style={{width:'100%',marginTop:'1rem'}}>Insert</Button>{' '}                                        
                         </FormGroup> 
                       </Form>
                     </Segment>
@@ -200,7 +232,10 @@ export default class AirCompanyTabs extends React.Component {
                     </Segment>
                   </Segment.Group>
                   <Segment>
-                    <AirCompanyTabsAirplaneTable/>
+                  <Button onClick={this.getAllAirplanes} color='blue' style={{width:'50%%',marginBottom:'1rem',backgroundColor:'black'}}>Get All Airplanes</Button>{' '} 
+                    <AirCompanyTabsAirplaneTable
+                      airplanes = {airplanes}
+                    />
                   </Segment>
                 </Grid.Column>
                 <Grid.Column width={8} style={{marginTop: '1rem'}}>
@@ -245,17 +280,15 @@ export default class AirCompanyTabs extends React.Component {
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell>Airplane Mark</Table.HeaderCell>
-                                <Table.HeaderCell>Destination Code</Table.HeaderCell>
+                                <Table.HeaderCell>Airport Name</Table.HeaderCell>
                                 <Table.HeaderCell>Date of Flight</Table.HeaderCell>
-                                <Table.HeaderCell>Status</Table.HeaderCell>   
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
                             <Table.Row>
                                 <Table.Cell id=''>YU097</Table.Cell>
-                                <Table.Cell id=''>205</Table.Cell>
-                                <Table.Cell id=''>1005 km</Table.Cell>
-                                <Table.Cell id=''>Pennding</Table.Cell>
+                                <Table.Cell id=''>Canada</Table.Cell>
+                                <Table.Cell id=''>10/12/2019</Table.Cell>
                             </Table.Row>
                         </Table.Body>    
                       </Table>

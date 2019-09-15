@@ -1,6 +1,9 @@
 package com.comtrade.airport.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Airplane {
@@ -9,10 +12,11 @@ public class Airplane {
     private Long idAirplane;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idAirCompany")
-        private AirCompany airCompany;
-        private String mark;
-        private Long seatingCapacity;
-        private Double maxDistance;
+    private AirCompany airCompany;
+    private String mark;
+    private Long seatingCapacity;
+    private Double maxDistance;
+    @OneToMany(mappedBy = "airplane",cascade = CascadeType.ALL,orphanRemoval = true)
 
 
     public Long getIdAirplane() {
@@ -54,4 +58,5 @@ public class Airplane {
     public void setMaxDistance(Double maxDistance) {
         this.maxDistance = maxDistance;
     }
+
 }

@@ -26,7 +26,12 @@ public class UserAirportMapperImpl implements UserAirportMapper{
     public UserAirport convertUserAirportDTOtoUserAirport(UserAirportDTO userAirportDTO) {
         AirportDTO airportDTO = userAirportDTO.getAirportDTO();
         Airport airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
-        Long idUserAirport = Long.parseLong(userAirportDTO.getId());
+        Long idUserAirport;
+        if(userAirportDTO.getId().equals("")){
+            idUserAirport = null;
+        }else{
+            idUserAirport = Long.parseLong(userAirportDTO.getId());
+        }
         String description = userAirportDTO.getDescription();
         String phoneNumber = userAirportDTO.getPhoneNumber();
         String contact = userAirportDTO.getContact();

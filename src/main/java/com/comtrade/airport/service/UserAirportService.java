@@ -8,4 +8,6 @@ public interface UserAirportService {
     UserAirport updateUserAirport(UserAirport userAirport);
 
     Long getIdAirportForIdUserairport(long parseLong);
+
+    UserAirport saveFirstTime(UserAirport userAirportConverted);
 }

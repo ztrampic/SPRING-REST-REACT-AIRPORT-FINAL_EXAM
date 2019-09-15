@@ -32,8 +32,16 @@ public class UserAirportServiceImpl implements UserAirportService{
     }
 
     @Override
+    @Transactional
     public Long getIdAirportForIdUserairport(long idUserAirport) {
         Long id = userAirportRepository.getIdAirport(idUserAirport);
         return id;
+    }
+
+    @Override
+    @Transactional
+    public UserAirport saveFirstTime(UserAirport userAirport) {
+        UserAirport userAirportResponse=userAirportRepository.save(userAirport);
+        return userAirportResponse;
     }
 }

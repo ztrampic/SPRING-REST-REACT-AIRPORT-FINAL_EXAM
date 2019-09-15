@@ -26,9 +26,7 @@ getUserAirportData(){
       .then(res => {
         let userAirportDataApi = res.data;
         //airports =_.sortBy(airports,'name')
-        this.setState({ userAirportData: userAirportDataApi });    
-        console.log("ASDASDASDASD", userAirportDataApi);
-        
+        this.setState({ userAirportData: userAirportDataApi });       
       })
    }      
     

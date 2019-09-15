@@ -42,6 +42,13 @@ public class UserAirportController {
         UserAirport userAirportResponse = userAirportService.updateUserAirport(userAirport);
         return new ResponseEntity<String>(HttpStatus.OK);
     }
+    @PostMapping("/firstTimeUserOfApplication")
+    public ResponseEntity<UserAirportDTO>insertFirstTime(@RequestBody UserAirportDTO userAirportDTO){
+        UserAirport userAirportConverted = userAirportMapper.convertUserAirportDTOtoUserAirport(userAirportDTO);
+        UserAirport userAirport = userAirportService.saveFirstTime(userAirportConverted);
+        UserAirportDTO userAirportDTOResponse = userAirportMapper.convertUserAirportToUserAirportDTO(userAirport);
+        return new ResponseEntity<UserAirportDTO>(userAirportDTOResponse,HttpStatus.OK);
+    }
 
 
 }
