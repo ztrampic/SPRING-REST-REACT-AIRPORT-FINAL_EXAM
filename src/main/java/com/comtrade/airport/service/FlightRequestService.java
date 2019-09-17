@@ -4,8 +4,13 @@ import com.comtrade.airport.entity.FlightRequest;
 
 import java.util.List;
 
-public interface FlightRequestService {
-    List<FlightRequest> getAll();
 
+public interface FlightRequestService {
     void insertNewFR(FlightRequest flightRequest);
+    List<FlightRequest> getAll();
+    List<FlightRequest> getAllPennding();
+    List<FlightRequest> declineFlightRequest(Long id);
+    List<FlightRequest> acceptFlightRequst(Long id);
+    List<FlightRequest> getAllAccepted();
+    List<FlightRequest> getAllDeclined();
 }

@@ -4,9 +4,10 @@ import com.comtrade.airport.enums.FlightRequestStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class FlightRequest {
+public class FlightRequest implements Serializable   {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,6 +18,7 @@ public class FlightRequest {
     @JoinColumn(name = "destinationAirportId", referencedColumnName = "id")
     private Airport destinationAirport;
     private String datum;
+    @Enumerated(EnumType.STRING)
     private FlightRequestStatus status;
     @Column(length = 500)
     private String description;

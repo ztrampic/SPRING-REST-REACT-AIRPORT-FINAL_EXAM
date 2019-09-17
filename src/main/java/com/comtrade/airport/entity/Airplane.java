@@ -16,8 +16,17 @@ public class Airplane {
     private String mark;
     private Long seatingCapacity;
     private Double maxDistance;
-    @OneToMany(mappedBy = "airplane",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "airplane",orphanRemoval = true)
+    private Set<FlightRequest>flightRequestSet;
 
+    public Set<FlightRequest> getFlightRequestSet() {
+        return flightRequestSet;
+    }
+
+    public void setFlightRequestSet(Set<FlightRequest> flightRequestSet) {
+        this.flightRequestSet = flightRequestSet;
+    }
 
     public Long getIdAirplane() {
         return idAirplane;

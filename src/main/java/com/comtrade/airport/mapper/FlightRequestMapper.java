@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface FlightRequestMapper {
     List<FlightRequestDTO> convertToListDTOs(List<FlightRequest> list);
-
     FlightRequest convertDTOtoEntity(FlightRequestDTO flightRequestDTO);
 }

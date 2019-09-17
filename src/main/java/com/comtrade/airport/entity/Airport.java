@@ -1,6 +1,8 @@
 package com.comtrade.airport.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,6 +24,17 @@ public class Airport {
     private UserAirport userAirport;
     @ManyToMany(mappedBy = "airportList")
     private Set<AirCompany>airCompanySet;
+    @JsonIgnore
+    @OneToMany(mappedBy = "destinationAirport",orphanRemoval = true)
+    private Set<FlightRequest>flightRequestSet;
+
+    public Set<FlightRequest> getFlightRequestSet() {
+        return flightRequestSet;
+    }
+
+    public void setFlightRequestSet(Set<FlightRequest> flightRequestSet) {
+        this.flightRequestSet = flightRequestSet;
+    }
 
     public String getEmail() {
         return email;

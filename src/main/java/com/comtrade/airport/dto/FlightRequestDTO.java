@@ -6,6 +6,15 @@ public class FlightRequestDTO {
     private AirportDTO destinationAirportDTO;
     private String datum;
     private String description;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getIdFR() {
         return idFR;

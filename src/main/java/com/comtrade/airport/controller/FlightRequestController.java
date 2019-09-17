@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("api/flightRequest")
 @CrossOrigin
@@ -24,7 +25,6 @@ public class FlightRequestController {
         this.flightRequestService = flightRequestService;
         this.flightRequestMapper = flightRequestMapper;
     }
-
     @PostMapping("/insertNewFR")
     public ResponseEntity<?>insertNewFlightRequest(@RequestBody FlightRequestDTO flightRequestDTO){
         FlightRequest flightRequest = flightRequestMapper.convertDTOtoEntity(flightRequestDTO);
@@ -33,9 +33,40 @@ public class FlightRequestController {
     }
     @GetMapping("/getAll")
     public ResponseEntity<?>getAllFR(){
-        List<FlightRequest> list = flightRequestService.getAll();
-        List<FlightRequestDTO> listDtos = flightRequestMapper.convertToListDTOs(list);
-        return new ResponseEntity<List<FlightRequest>>(list, HttpStatus.OK);
+        List<FlightRequest> flightRequests = flightRequestService.getAll();
+        List<FlightRequestDTO> listDtos = flightRequestMapper.convertToListDTOs(flightRequests);
+        return new ResponseEntity<List<FlightRequestDTO>>(listDtos, HttpStatus.OK);
     }
+    @GetMapping("/getAllPennding")
+    public ResponseEntity<?>getAllPendding(){
+        List<FlightRequest> flightRequests = flightRequestService.getAllPennding();
+        List<FlightRequestDTO> flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequests);
+        return  new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+    }
+    @GetMapping("/getAllAccepted")
+    public ResponseEntity<?>getAllAccepted(){
+        List<FlightRequest> flightRequests = flightRequestService.getAllAccepted();
+        List<FlightRequestDTO> flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequests);
+        return  new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+    }
+    @GetMapping("/getAllDeclined")
+    public ResponseEntity<?>getAllDeclined() {
+        List<FlightRequest> flightRequests = flightRequestService.getAllDeclined();
+        List<FlightRequestDTO> flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequests);
+        return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS, HttpStatus.OK);
+    }
+    @PutMapping("/declineFlightRequest/{id}")
+    public ResponseEntity<?>declineFlightRequest(@PathVariable(value = "id") Long id){
+        List<FlightRequest>flightRequestList = flightRequestService.declineFlightRequest(id);
+        List<FlightRequestDTO>flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequestList);
+        return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+    }
+    @PutMapping("/acceptFlightRequest/{id}")
+    public ResponseEntity<?>acceptFlightRequest(@PathVariable(value = "id") Long id){
+        List<FlightRequest>flightRequestList = flightRequestService.acceptFlightRequst(id);
+        List<FlightRequestDTO>flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequestList);
+        return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+    }
+
 
 }
