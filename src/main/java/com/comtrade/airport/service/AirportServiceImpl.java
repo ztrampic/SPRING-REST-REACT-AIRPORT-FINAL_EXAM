@@ -53,7 +53,7 @@ public class AirportServiceImpl implements AirportService{
     public List<Airport> updateAirport(Airport airport) {
         List<Airport>updatedList = new ArrayList<>();
         airportRepository.save(airport);
-        updatedList = airportRepository.findAll();
+            updatedList = airportRepository.findAll();
         return updatedList;
     }
 

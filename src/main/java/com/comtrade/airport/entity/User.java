@@ -1,6 +1,9 @@
 package com.comtrade.airport.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -10,11 +13,34 @@ public class User {
     private String firstName;
     private String lastName;
     @Column(unique = true)
+    @Email
     private String email;
     private String password;
     private String username;
     private String phoneNumber;
-    private byte status;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "userRoles", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+    private Set<Role> roleSet = new HashSet<>();
+
+    public User(String firstName, String lastName, @Email String email, String password, String username, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User() {
+    }
+
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
+    }
 
     public Long getUserId() {
         return userId;
@@ -70,13 +96,5 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(byte status) {
-        this.status = status;
     }
 }

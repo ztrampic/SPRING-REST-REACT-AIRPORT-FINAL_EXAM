@@ -25,7 +25,7 @@ public class Airport {
     @ManyToMany(mappedBy = "airportList")
     private Set<AirCompany>airCompanySet;
     @JsonIgnore
-    @OneToMany(mappedBy = "destinationAirport",orphanRemoval = true)
+    @OneToMany(mappedBy = "destinationAirport")
     private Set<FlightRequest>flightRequestSet;
 
     public Set<FlightRequest> getFlightRequestSet() {

@@ -44,6 +44,7 @@ public class FlightRequestMapperImpl implements FlightRequestMapper {
             airCompanyDTO.setName(airCompanyName);
             airplaneDTO.setAirCompanyDTO(airCompanyDTO);
             airplaneDTO.setIdAirplane(String.valueOf(f.getAirplane().getIdAirplane()));
+            airplaneDTO.setMark(f.getAirplane().getMark());
             airportDTO.setId(String.valueOf(f.getDestinationAirort().getId()));
             airportDTO.setName(f.getDestinationAirort().getName());
             flightRequestDTO.setIdFR(id);

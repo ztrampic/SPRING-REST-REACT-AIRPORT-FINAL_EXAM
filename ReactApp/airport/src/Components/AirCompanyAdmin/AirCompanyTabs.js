@@ -9,6 +9,7 @@ import moment from 'moment';
 import axios from 'axios';
 import AirCompanyTabsAirplaneTable from './AirCompanyTabsAirplaneTable';
 import AirCompanyTabsAirportSearchTable from './AirCompanyTabsAirportSearchTable';
+import AirCompanyFlightRequestsTable from './AirCompanyFlightRequestsTable';
 
 
 
@@ -25,6 +26,7 @@ export default class AirCompanyTabs extends React.Component {
       airCompanyDTO:{},
       avion:{},
       airplanes:[],
+      flightRequests:[],
     };
     this.toggle = this.toggle.bind(this); 
     this.handleChangeDate = this.handleChangeDate.bind(this)
@@ -32,6 +34,9 @@ export default class AirCompanyTabs extends React.Component {
     this.searchAirportByAirportCity = this.searchAirportByAirportCity.bind(this)
     this.insertAirplane = this.insertAirplane.bind(this)
     this.getAllAirplanes = this.getAllAirplanes.bind(this)
+    this.loadAllApprovedFlights = this.loadAllApprovedFlights.bind(this)
+    this.loadAllDeclinedFlights = this.loadAllDeclinedFlights.bind(this)
+    this.loadAllPendingFlights = this.loadAllPendingFlights.bind(this)
   }
 
   toggle(tab) {
@@ -98,11 +103,32 @@ export default class AirCompanyTabs extends React.Component {
       this.setState({searchResultAirports:apiAirports})  
     })
   }
+  loadAllApprovedFlights(){
+    axios.get('http://localhost:8080/api/flightRequest/getAllAccepted')
+    .then(res => {
+      const apiFlightRequests = res.data;
+      this.setState({flightRequests:apiFlightRequests})  
+    })
+  }
+  loadAllDeclinedFlights(){
+    axios.get('http://localhost:8080/api/flightRequest/getAllDeclined')
+    .then(res => {
+      const apiFlightRequests = res.data;
+      this.setState({flightRequests:apiFlightRequests})  
+    })
+  }
+  loadAllPendingFlights(){
+    axios.get('http://localhost:8080/api/flightRequest/getAllPennding')
+    .then(res => {
+      const apiFlightRequests = res.data;
+      this.setState({flightRequests:apiFlightRequests})  
+    })
+  }
 
  
 
   render() {
-    const{ searchResultAirports, airplanes 
+    const{ searchResultAirports, airplanes, flightRequests 
      } = this.state
    
     return (
@@ -160,13 +186,18 @@ export default class AirCompanyTabs extends React.Component {
                 </Card>
               </Col>
               <Col sm="6">
-                <Card body>
-                  <CardTitle>Provera Slobodnog leta za izabrani datum</CardTitle>
-                    <Grid width={16}>
-                      
-                   </Grid>
-                
-                </Card>
+              <Segment.Group>
+                <Segment>
+                  <Button onClick={this.loadAllApprovedFlights}>Load All Approved</Button>
+                  <Button onClick={this.loadAllDeclinedFlights}>Load All Declined</Button>
+                  <Button onClick={this.loadAllPendingFlights}>Load All Pending</Button>
+                </Segment>
+                <Segment>
+                  <AirCompanyFlightRequestsTable
+                      flightRequests={flightRequests}
+                  /> 
+                </Segment>
+              </Segment.Group>
               </Col>
             </Row>
           </TabPane>
