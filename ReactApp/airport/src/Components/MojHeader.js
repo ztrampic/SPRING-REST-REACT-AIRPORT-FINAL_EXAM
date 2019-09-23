@@ -40,6 +40,9 @@ export class MojHeader extends Component {
                         <Menu.Item>
                             <Button style={{'backgroundColor':'red'}} href='/admin'>Temp Admin</Button>
                         </Menu.Item>
+                        <Menu.Item>   
+                            <Button href="/loginForm">Login</Button>
+                        </Menu.Item>
                     </Menu.Menu>
                 </Menu>
             </Header>

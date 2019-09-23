@@ -23,6 +23,8 @@
     "react-scripts": "3.1.0",
     "react-sticky-footer": "0.1.0-rc3",
     "reactstrap": "^8.0.1",
+    "reselect": "^4.0.0",
+    "selectors": "0.0.1",
     "semantic-ui-calendar-react": "^0.15.3",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.87.3"
