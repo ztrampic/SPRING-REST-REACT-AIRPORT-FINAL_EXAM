@@ -52,7 +52,7 @@ public class AuthRestApi {
 
         String jwt = jwtProvider.generateJwtToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),userDetails.getAuthorities()));
     }
     @PostMapping("/singup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SingUpDTO singUpDTO) {
