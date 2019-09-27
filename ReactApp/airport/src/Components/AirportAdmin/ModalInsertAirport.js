@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormGroup, Form, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Button, Grid } from 'semantic-ui-react';
-import axios from 'axios';
+import { select } from '../../Helpers/DataUtilsHelper';
 
 class ModalInsertAirports extends React.Component {
     constructor(props) {
@@ -123,7 +123,7 @@ class ModalInsertAirports extends React.Component {
     }
 
     insertNewAirport = (e) => {
-        axios.post('http://localhost:8080/api/airport/airportEntry', this.state.newAirport)
+       select('insertNewAirportAdmin', this.state.newAirport)
             .then((response) => {
                 let airports = response.data;
                 let newAirport = {};
@@ -239,7 +239,7 @@ class ModalInsertAirports extends React.Component {
     }
 
     updateAirport = (e) => {
-        axios.put('http://localhost:8080/api/airport/updateAirport', this.state.airportForUpdate)
+       select('updateAirportAdmin', this.state.airportForUpdate)
             .then((response) => {
                 let airports = response.data;
                 let airportForUpdate ={};
@@ -255,7 +255,7 @@ class ModalInsertAirports extends React.Component {
 
     hardDeleteAirport = (e) => {
         const id = document.getElementById('idHiddenForDelete').value;
-        axios.get('http://localhost:8080/api/airport/hardDeleteAirport/'+id)
+      select('deleteAirportAdmin', id)
             .then((response) => {
                 let airports = response.data;
                 let airport = this.state.newAirport;

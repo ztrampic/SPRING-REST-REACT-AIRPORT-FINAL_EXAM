@@ -4,6 +4,7 @@ import { Grid, Segment, Label, Form, TextArea, Input, FormGroup, Button} from 's
 import axios from 'axios';
 import ModalInsertAirports from '../Components/AirportAdmin/ModalInsertAirport';
 import AirportTabs from '../Components/AirportAdmin/AirportTabs';
+import { select } from '../Helpers/DataUtilsHelper';
 
 
 
@@ -32,7 +33,8 @@ export class AdminHomePage extends Component {
         phoneNumber:'',
         contact:'',
         companyName:''
-      }
+      },
+      isLoggedIn:false,
     }
     this.getDataFromFormUserAirport = this.getDataFromFormUserAirport.bind(this)
     this.updateAirports = this.updateAirports.bind(this)
@@ -76,13 +78,15 @@ export class AdminHomePage extends Component {
   }
 
   getAllAirports(){
-    axios.get('http://localhost:8080/api/airport/getAllAirports')
-      .then(res => {
-        let airports = res.data;
-        //airports =_.sortBy(airports,'name')
-        this.setState({ airports });
-      })
-  }
+    select('getAllAirportsAdmin')
+        .then(res => {
+          let airports = res.data;
+          //airports =_.sortBy(airports,'name')
+          this.setState({ airports });
+        })
+    }
+
+    
   updateAirports(airports,airport){
     this.setState({airports:airports, airport:airport})
   }

@@ -4,7 +4,6 @@ import DataUtils from "../DataUtils";
 
 export const getAuthUser = async function(userDTO, options) {
     const token = getTokenFromSessionStorage()
-    console.log(":TOKEN",token);   
     const headers = {
         'Authorization': token,
         'Content-Type': 'application/json'

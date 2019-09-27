@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { select } from './Helpers/DataUtilsHelper'
-import { checkIsAuth, setTokenToSessionStorage, setAuthUserToSessionStorage, isAdmin } from './Helpers/AuthHelper'
+import { checkIsAuth, setTokenToSessionStorage, setAuthUserToSessionStorage, isAdmin, isAdminAirport } from './Helpers/AuthHelper'
 
 class LoginForm extends React.Component{
     constructor(props){
@@ -17,12 +17,12 @@ class LoginForm extends React.Component{
   
     getAuthUserInformation(loginDTO) {
       select('getAuthUser', loginDTO).then(data => {
-          console.log("USERRRRRRRRRRRR",data); 
-          const { firstName, lastName } = data;
           setAuthUserToSessionStorage(data)
-          this.setState({ isLogged: true, firstName, lastName, authInProgress: false, isHovering: false }, () => {
+          this.setState({ isLogged: true, authInProgress: false, isHovering: false }, () => {
               if (isAdmin()) {
                   this.props.history.push('/admin')
+              }else if(isAdminAirport()){
+                this.props.history.push('/airCompanyAdmin')
               }
           })
       })
@@ -46,7 +46,7 @@ class LoginForm extends React.Component{
 
     render() {
         return (
-            <Grid textAlign='center' style={{ height: '100vh',backgroundColor:'red' }} verticalAlign='middle'>
+            <Grid textAlign='center' style={{ height: '100vh'}} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
               <Header as='h2' color='teal' textAlign='center'>
               </Header>

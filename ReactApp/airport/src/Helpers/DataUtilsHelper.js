@@ -1,7 +1,6 @@
 import Selectors from './selectorsHelper'
 import { createBrowserHistory } from 'history';
-import { checkIfTokenExpire, getRefreshTokenFromSessionStorage, setTokenToSessionStorage, logOut } from './AuthHelper';
-import _ from 'lodash'
+import { checkIfTokenExpire, getRefreshTokenFromSessionStorage, logOut } from './AuthHelper';
 import moment from 'moment'
 
 export const select = async function(id,data,defValue){
@@ -19,7 +18,7 @@ export const tokenValidation = async () => {
         console.log('expire')
         const refreshToken = getRefreshTokenFromSessionStorage();
         const response = await select('getRefreshToken', refreshToken)
-        if (response.status == 200) {
+        if (response.status === 200) {
           const { expires_in } = response.data;
           const expireDate = moment().add(expires_in, 's')
           sessionStorage.setItem('token', JSON.stringify({ ...response.data, expires_in: expireDate }))

@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { Header,Menu,Input, Button, Form} from 'semantic-ui-react';
+import { logOut } from '../Helpers/AuthHelper';
 
 
 
@@ -9,6 +10,7 @@ export class MojHeader extends Component {
        this.state = {
            time:new Date()
        }
+       this.logout = this.logout.bind(this)
    }
 
    currentTime(){
@@ -19,13 +21,17 @@ export class MojHeader extends Component {
   UNSAFE_componentWillMount(){
        setInterval(() => this.currentTime(), 1000)
    }
+   logout(){
+       logOut();
+
+   }
     render() {
         return (
             <div>       
             <Header>
                 <Menu pointing style={{backgroundColor:'#6351ce'}}>
-                    <Menu.Item href='/home' name='Home'/>
-                    <Menu.Item href='/aerodrom' name='Airports'/>
+                    <Menu.Item href='/' name='Home'/>
+                    <Menu.Item href='/admin/aerodrom' name='Airports'/>
                     <Menu.Item name={this.state.time.toLocaleTimeString()}/>
                     {/* // .replace(/:\d\d([ ap]|$)/,'$1')   samo sati i minuti   */}
                     <Menu.Menu position='right'>
@@ -42,6 +48,9 @@ export class MojHeader extends Component {
                         </Menu.Item>
                         <Menu.Item>   
                             <Button href="/loginForm">Login</Button>
+                        </Menu.Item>
+                        <Menu.Item>   
+                            <Button onClick={this.logout} href="/">Logout</Button>
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>

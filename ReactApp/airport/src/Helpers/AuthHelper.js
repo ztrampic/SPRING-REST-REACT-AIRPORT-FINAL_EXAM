@@ -15,8 +15,9 @@ export const checkIsAuth = function () {
 
     return true
 }
-export const checkIfTokenExpire = function () {
 
+
+export const checkIfTokenExpire = function () {
     try {
         if (checkIsAuth()) {
             const token = JSON.parse(sessionStorage.getItem('token'));
@@ -32,9 +33,11 @@ export const checkIfTokenExpire = function () {
         console.log('ERROR', e.toString())
     }
 }
+
 export const setTokenToSessionStorage = function (token) {
     sessionStorage.setItem('token', JSON.stringify(token));   
 }
+
 
 export const logOut = function (callback) {
     try {
@@ -48,6 +51,7 @@ export const logOut = function (callback) {
     }
 }
 
+
 export const getTokenFromSessionStorage = function () {
      if (checkIsAuth()) {
         const token = JSON.parse(sessionStorage.getItem('token'));
@@ -55,11 +59,15 @@ export const getTokenFromSessionStorage = function () {
         return currentToken
      }
 }
+
+
 export const getRefreshTokenFromSessionStorage = function () {
     const token = JSON.parse(sessionStorage.getItem('token'));
     const { refresh_token } = token;
     return refresh_token
 }
+
+
 export const removeTokenFromSessionStorage = function () {
     try {
         sessionStorage.removeItem('token')
@@ -67,18 +75,21 @@ export const removeTokenFromSessionStorage = function () {
         console.log('ERROR', e.toString())
     }
 }
+
+
 export const setAuthUserToSessionStorage = function (user) {
-    const { firstName, lastName, role, address, mail, phone, username, permissions, userType } = user;
-    const userInfo = { firstName, lastName, role, address, mail, phone, username, permissions, userType }
+    const { email, firstName, lastName, phoneNumber, roleSet:[{id,roleName}], userId, username} = user;
+    const userInfo = { email, firstName, lastName, phoneNumber, roleSet:[{id,roleName}], userId, username }
     try {
         if (checkIsAuth()) {
             sessionStorage.setItem('user', JSON.stringify(userInfo));
         }
-
     } catch (e) {
         console.log('ERROR', e.toString())
     }
 }
+
+
 export const getAuthUserFromSessionStorage = function () {
     try {
         if (checkIsAuth()) {
@@ -92,6 +103,8 @@ export const getAuthUserFromSessionStorage = function () {
         console.log('ERROR', e.toString())
     }
 }
+
+
 export const deleteAuthUserFromSessionStorage = function () {
     try {
         sessionStorage.removeItem('user')
@@ -100,18 +113,34 @@ export const deleteAuthUserFromSessionStorage = function () {
     }
 }
 
+
 export const isAdmin = function () {
     try {
         if (checkIsAuth()) {
-            const userRole = getAuthUserFromSessionStorage().role.name;
-            const isAdmin = userRole === 'ROLE_ADMIN' || userRole === 'ROLE_ADMIN' ? true : false
+            const userRole = getAuthUserFromSessionStorage()
+            const isAdmin = userRole.roleSet[0].roleName === 'ROLE_ADMIN' ? true : false
 
             return isAdmin
-        } else {
+        } else {     
             return false
         }
     } catch (e) {
         console.log('ERROR', e.toString())
     }
 }
+export const isAdminAirport = function () {
+    try {
+        if (checkIsAuth()) {
+            const userRole = getAuthUserFromSessionStorage()
+            const isAdmin = userRole.roleSet[0].roleName === 'ROLE_ADMIN_AIRCOMPANY' ? true : false
+
+            return isAdminAirport
+        } else {     
+            return false
+        }
+    } catch (e) {
+        console.log('ERROR', e.toString())
+    }
+}
+
 
