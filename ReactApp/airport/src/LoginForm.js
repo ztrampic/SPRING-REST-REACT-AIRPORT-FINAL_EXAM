@@ -54,6 +54,7 @@ class LoginForm extends React.Component{
                 <Segment stacked>
                   <Form.Input  id='username' required fluid icon='user' iconPosition='left' placeholder='Username' />
                   <Form.Input
+                    autocomplete="current-password"
                     id='password'
                     required
                     fluid

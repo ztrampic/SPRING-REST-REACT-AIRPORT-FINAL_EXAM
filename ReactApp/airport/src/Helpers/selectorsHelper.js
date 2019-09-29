@@ -6,6 +6,11 @@ import getAllAirportsAdmin from '../apiSelectors/airport/GetAllAirportsAdmin'
 import updateAirportAdmin from '../apiSelectors/airport/UpdateAirportAdmin'
 import deleteAirportAdmin from '../apiSelectors/airport/DeleteAirportAdmin'
 import insertNewAirportAdmin from '../apiSelectors/airport/InsertNewAirportAdmin'
+import getUserOfAppInfo from '../apiSelectors/userOfApllication/GetUserOfAppInfo'
+import getUserOfAppInfoAdmin from '../apiSelectors/airport/GetUserOfAppInfoAdmin'
+import updateUserOfAppAdmin from '../apiSelectors/airport/UpdateUserOfAppAdmin'
+import setFirstTimeUserOfApp from '../apiSelectors/airport/SetFirstTimeUserOfApp'
+import getAllRoles from '../apiSelectors/roles/GetAllRoles'
 
 export default{
     userSingUp,
@@ -16,4 +21,9 @@ export default{
     updateAirportAdmin,
     deleteAirportAdmin,
     insertNewAirportAdmin,
+    getUserOfAppInfo,
+    getUserOfAppInfoAdmin,
+    updateUserOfAppAdmin,
+    setFirstTimeUserOfApp,
+    getAllRoles,
 }

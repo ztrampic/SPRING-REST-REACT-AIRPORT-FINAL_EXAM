@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { Grid, Segment, Label, Form, TextArea, Input, FormGroup, Button} from 'semantic-ui-react';
-
-import axios from 'axios';
 import ModalInsertAirports from '../Components/AirportAdmin/ModalInsertAirport';
 import AirportTabs from '../Components/AirportAdmin/AirportTabs';
 import { select } from '../Helpers/DataUtilsHelper';
@@ -49,10 +47,9 @@ export class AdminHomePage extends Component {
   }
   getUserAirportData(){
     const  idUserAirport = 1;
-    axios.get('http://localhost:8080/api/userAirport/getUserOfApplication/'+idUserAirport)
-      .then(res => {
-        let userAirportDataApi = res.data;   
-        //airports =_.sortBy(airports,'name')
+    select('getUserOfAppInfoAdmin',idUserAirport)
+      .then(res => {  
+        let userAirportDataApi = res;   
         this.setState({ userOfApplicationData : userAirportDataApi });      
         this.setUserOfApplicationButtonDisabled();
       })   
@@ -113,7 +110,7 @@ export class AdminHomePage extends Component {
         contact,
         companyName
     }
-    axios.put('http://localhost:8080/api/userAirport/updateUserOfApplicationData', userOfApplicationData)
+   select('updateUserOfAppAdmin', userOfApplicationData)
         .then(res => {
           let apiUserOfApplicationData = res.data;
           this.setState({userOfApplicationData:apiUserOfApplicationData})
@@ -137,11 +134,9 @@ export class AdminHomePage extends Component {
         contact:'',
         companyName:''
     }
-      console.log('SETOVANJE',userOfApplicationData);
-      
-      axios.post('http://localhost:8080/api/userAirport/firstTimeUserOfApplication', userOfApplicationData)
+     select('setFirstTimeUserOfApp', userOfApplicationData)
       .then(res=>{
-        let apiUserAirport = res.data;
+        let apiUserAirport = res;
       })
     }
   }

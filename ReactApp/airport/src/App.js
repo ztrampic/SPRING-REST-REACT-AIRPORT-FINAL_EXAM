@@ -6,7 +6,6 @@ import {
   Route,
 } from "react-browser-router";
 import MojFooter from './Components/MojFooter';
-import AirCompanyAdminPage from './Admin/AirCompanyAdminPage';
 import LoginForm from './LoginForm';
 import SingUpForm from './SingUpForm';
 import CheckLoggedIn from './Components/AirportAdmin/CheckLoggedIn';
@@ -23,7 +22,7 @@ function App() {
           <BrowserRouter  >
             <Route path="/" component={PublicRouter} />
             <Route path="/admin" component={CheckLoggedIn} />
-            <Route path="/airCompanyAdmin" component = {AdminAircompanyRouter}/>
+            <Route path="/airCompanyAdmin" component = {CheckLoggedIn}/>
           </BrowserRouter>
         </div>
         <div className='mojFooter'>
@@ -40,11 +39,6 @@ const PublicRouter = ({ match }) => (
     <Route exact={true} path="/singUpForm" component={SingUpForm} />
     <Route exact={true} path="/loginForm" component={LoginForm} />
   </div>
-   );
-const AdminAircompanyRouter = ({ match }) => (
-  <div>
-      <Route exact path={match.url} component={AirCompanyAdminPage} />
-  </div>
-      );     
+   );    
 
 export default App;

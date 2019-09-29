@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'semantic-ui-react';
-import Axios from 'axios';
+import { Button, Form } from 'semantic-ui-react';
+import { select } from '../Helpers/DataUtilsHelper';
 
 export class MojFooter extends Component {
     constructor(props){
@@ -22,10 +22,9 @@ componentDidMount() {
 }
 getUserAirportData(){
     const  idUserAirport = 1;
-    Axios.get('http://localhost:8080/api/userAirport/getUserOfApplication/'+idUserAirport)
+  select('getUserOfAppInfo',idUserAirport)
       .then(res => {
-        let userAirportDataApi = res.data;
-        //airports =_.sortBy(airports,'name')
+        let userAirportDataApi = res;
         this.setState({ userAirportData: userAirportDataApi });       
       })
    }      

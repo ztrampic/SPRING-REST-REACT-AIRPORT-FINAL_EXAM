@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Segment, Menu, Button } from 'semantic-ui-react';
 import AirCompanyTabs from '../Components/AirCompanyAdmin/AirCompanyTabs';
+import { getAuthUserFromSessionStorage } from '../Helpers/AuthHelper';
 
 
 
@@ -18,6 +19,12 @@ class AirCompanyAdminPage extends Component {
              showingAirportTable:false,
         }
         
+    }
+
+    componentDidMount(){
+      const user = getAuthUserFromSessionStorage()
+      console.log(user);
+      
     }
  
     render() {

@@ -2,8 +2,6 @@ import React from 'react'
 import { Table } from 'semantic-ui-react'
 
 const AirCompanyFlightRequestsTable = ({flightRequests}) => {
-    console.log("ASDASD",flightRequests);
-    
     let tableFlights = flightRequests.map((flightReq)=>{
         return (
             <Table.Row>
