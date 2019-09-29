@@ -3,7 +3,6 @@ package com.comtrade.airport.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,6 +22,17 @@ public class AirCompany {
     @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     private Set<Airplane> fleet ;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "AircompanyUsers", joinColumns = @JoinColumn(name = "idAirCompany"), inverseJoinColumns = @JoinColumn(name = "userId"))
+    private Set<User>setUsers;
+
+    public Set<User> getSetUsers() {
+        return setUsers;
+    }
+
+    public void setSetUsers(Set<User> setUsers) {
+        this.setUsers = setUsers;
+    }
 
     public Set<Airplane> getFleet() {
         return fleet;

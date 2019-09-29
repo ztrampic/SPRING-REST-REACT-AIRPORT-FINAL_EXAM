@@ -2,13 +2,17 @@ package com.comtrade.airport.controller.auth;
 
 import com.comtrade.airport.dto.LoginDTO;
 import com.comtrade.airport.dto.SingUpDTO;
+import com.comtrade.airport.dto.UserAirportDTO;
 import com.comtrade.airport.dto.responseLogin.JwtResponse;
 import com.comtrade.airport.dto.responseLogin.ResponseMessage;
 import com.comtrade.airport.entity.User;
+import com.comtrade.airport.entity.UserAirport;
+import com.comtrade.airport.mapper.UserAirportMapper;
 import com.comtrade.airport.mapper.UserMapper;
 import com.comtrade.airport.repository.UserRepository;
 import com.comtrade.airport.security.jwt1.JwtProvider;
 import com.comtrade.airport.security.services.RoleService;
+import com.comtrade.airport.service.UserAirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +43,10 @@ public class AuthRestApi {
     private JwtProvider jwtProvider;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserAirportService userAirportService;
+    @Autowired
+    private UserAirportMapper userAirportMapper;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginDTO){
@@ -68,6 +76,12 @@ public class AuthRestApi {
          userRepository.save(user);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+    }
+    @GetMapping("/getUserOfApplication/{id}")
+    public ResponseEntity<UserAirportDTO> getUserOfApplication(@PathVariable Long id){
+        UserAirport userAirport = userAirportService.getUserAirport(id);
+        UserAirportDTO userAirportDTO = userAirportMapper.convertUserAirportToUserAirportDTO(userAirport);
+        return new ResponseEntity<UserAirportDTO>(userAirportDTO, HttpStatus.OK);
     }
 
 
