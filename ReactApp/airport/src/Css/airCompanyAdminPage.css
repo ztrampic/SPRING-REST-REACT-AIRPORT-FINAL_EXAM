@@ -1,3 +1,9 @@
 .butt{
     background-color: bisque;
 }
+
+.addUserCardLabel{
+    color:'white';
+    background-color: #2185d0;
+    size: 'mini';
+}

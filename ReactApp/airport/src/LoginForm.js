@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { select } from './Helpers/DataUtilsHelper'
 import { checkIsAuth, setTokenToSessionStorage, setAuthUserToSessionStorage, isAdmin, isAdminAirport } from './Helpers/AuthHelper'
+import HomeImg from './resources/img/home.jpg'
 
 class LoginForm extends React.Component{
     constructor(props){
@@ -46,10 +47,10 @@ class LoginForm extends React.Component{
 
     render() {
         return (
-            <Grid textAlign='center' style={{ height: '100vh'}} verticalAlign='middle'>
+          <div>
+          <img style={{position:'absolute', width:'100%',marginBottom:'1rem',height:'59%'}} src ={HomeImg} alt={HomeImg}/>
+            <Grid textAlign='center' style={{ height: '60vh'}} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
-              <Header as='h2' color='teal' textAlign='center'>
-              </Header>
               <Form size='large' onSubmit={this.login}>
                 <Segment stacked>
                   <Form.Input  id='username' required fluid icon='user' iconPosition='left' placeholder='Username' />
@@ -63,7 +64,7 @@ class LoginForm extends React.Component{
                     placeholder='Password'
                     type='password'
                   />
-                  <Button color='teal' fluid size='large'>
+                  <Button style={{backgroundColor:'#5cb5ed', color:'white'}} fluid size='large'>
                     Login
                   </Button>
                 </Segment>
@@ -73,6 +74,7 @@ class LoginForm extends React.Component{
               </Message>
             </Grid.Column>
           </Grid>
+          </div>
         );
     }
 }

@@ -94,9 +94,7 @@ export default class AirCompanyTabs extends React.Component {
   }
 
   searchAirportByAirportCity(){
-    const airportCityName = document.getElementById('airportCityName').value;  
-    console.log('CITYNAME',airportCityName);
-    
+    const airportCityName = document.getElementById('airportCityName').value;
     axios.post('http://localhost:8080/api/airport/searchByCity', airportCityName)
     .then(res => {
       const apiAirports = res.data;

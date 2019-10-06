@@ -1,61 +1,47 @@
-import React, { Component} from 'react'
-import { Header,Menu,Input, Button, Form} from 'semantic-ui-react';
+import React, { Component } from 'react'
 import { logOut } from '../Helpers/AuthHelper';
+import '../Css/Header.css'
 
 
 
 export class MojHeader extends Component {
-   constructor(){
-       super()
-       this.state = {
-           time:new Date()
-       }
-       this.logout = this.logout.bind(this)
-   }
+    constructor() {
+        super()
+        this.state = {
+            time: new Date()
+        }
+        this.logout = this.logout.bind(this)
+    }
 
-   currentTime(){
-       this.setState({
-           time:new Date()
-       })
-   }
-  UNSAFE_componentWillMount(){
-       setInterval(() => this.currentTime(), 1000)
-   }
-   logout(){
-       logOut();
+    currentTime() {
+        this.setState({
+            time: new Date()
+        })
+    }
+    UNSAFE_componentWillMount() {
+        setInterval(() => this.currentTime(), 1000)
+    }
+    logout() {
+        logOut();
 
-   }
+    }
     render() {
         return (
-            <div>       
-            <Header>
-                <Menu pointing style={{backgroundColor:'#6351ce'}}>
-                    <Menu.Item href='/' name='Home'/>
-                    <Menu.Item href='/admin/aerodrom' name='Airports'/>
-                    <Menu.Item name={this.state.time.toLocaleTimeString()}/>
-                    {/* // .replace(/:\d\d([ ap]|$)/,'$1')   samo sati i minuti   */}
-                    <Menu.Menu position='right'>
-                    <Form style={{display:'flex'}}>
-                        <Menu.Item>   
-                        <Input placeholder='Search Flyth'/>
-                        </Menu.Item>
-                        <Menu.Item>
-                            <Button href = '/airCompanyAdmin'>Temp Admin AirCompany</Button>
-                        </Menu.Item>
-                    </Form>
-                        <Menu.Item>
-                            <Button style={{'backgroundColor':'red'}} href='/admin'>Temp Admin</Button>
-                        </Menu.Item>
-                        <Menu.Item>   
-                            <Button href="/loginForm">Login</Button>
-                        </Menu.Item>
-                        <Menu.Item>   
-                            <Button onClick={this.logout} href="/">Logout</Button>
-                        </Menu.Item>
-                    </Menu.Menu>
-                </Menu>
-            </Header>
-            </div>
+            <header style={{height:'150px'}} class="header">
+                <div class="brand-box">
+                     <a href="/" class="btn btn-white btn-animated">Home<span style={{marginLeft:'5px'}}></span>{this.state.time.toLocaleTimeString()}</a>
+                </div>
+                <div class="text-box">
+                    <h1 class="heading-primary">
+                        <span class="heading-primary-main">Like no other airport on earth.</span>
+                        <span class="heading-primary-sub">Living ideas – connecting lives.</span>
+                    </h1>
+                    <a href="/admin" class="btn btn-white btn-animated">Temp Airport Admin</a>
+                    <a href="/airCompanyAdmin" class="btn btn-white btn-animated">DTemp Aircompany Admin</a>
+                    <a href="/loginForm" class="btn btn-white btn-animated">Login</a>
+                    <a onClick={this.logout} href="/" class="btn btn-white btn-animated">Logout</a>
+                </div>
+            </header>
         )
     }
 }

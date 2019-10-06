@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/user")
 @CrossOrigin
@@ -26,5 +28,10 @@ public class UserController {
     public ResponseEntity<?> getUser(@RequestBody LoginDTO loginDTO) {
         UserDTO userDTO = userService.getUserByUsername(loginDTO.getUsername());
         return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
+    }
+    @PostMapping("/getUserByRole")
+    public ResponseEntity<?>getAllUsersByRole(@RequestBody String role){
+        List<User> userList = userService.getAllUsersByRole(role);
+        return new ResponseEntity<List<User>>(userList,HttpStatus.OK);
     }
 }

@@ -6,7 +6,12 @@ public class AirCompanyDTO {
 
     private String idAirCompany;
     private String name;
-    private String pib;
+    private String nebitno;
+    private String nebitno2;
+    private String mark;
+    private String internationalName;
+    private String country;
+    private String nebitno3;
     private Set<AirportDTO> airportList;
     private Set<FlightDTO> flightList;
     private Set<AirplaneDTO> fleet ;
@@ -27,12 +32,28 @@ public class AirCompanyDTO {
         this.name = name;
     }
 
-    public String getPib() {
-        return pib;
+    public String getMark() {
+        return mark;
     }
 
-    public void setPib(String pib) {
-        this.pib = pib;
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
+    public String getInternationalName() {
+        return internationalName;
+    }
+
+    public void setInternationalName(String internationalName) {
+        this.internationalName = internationalName;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Set<AirportDTO> getAirportList() {

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Message, Segment} from 'semantic-ui-react'
+import { Button, Form, Grid, Message, Segment} from 'semantic-ui-react'
 import { select } from './Helpers/DataUtilsHelper'
+import HomeImg from './resources/img/home.jpg'
 
 class SingUpForm extends React.Component{
     constructor(props){
@@ -27,11 +28,10 @@ singUpFunction(){
 
     render() {
         return (
-            <Grid textAlign='center' style={{ height: '100vh',backgroundColor:'red' }} verticalAlign='middle'>
+          <div>
+          <img style={{position:'absolute', width:'100%',marginBottom:'1rem',height:'59%'}} src ={HomeImg} alt={HomeImg}/>
+            <Grid textAlign='center' style={{ height: '60vh',backgroundColor:'red' }} verticalAlign='middle'>
             <Grid.Column style={{ maxWidth: 450 }}>
-              <Header as='h2' color='teal' textAlign='center'>
-                  Fill Fields
-              </Header>
               <Form size='large' onSubmit={this.singUpFunction}>
                 <Segment stacked>
                   <Form.Input id='name' minLength='3' required fluid icon='user' iconPosition='left' placeholder='First name' />
@@ -40,8 +40,8 @@ singUpFunction(){
                   <Form.Input id='username' required fluid icon='user' iconPosition='left' placeholder='Username' />
                   <Form.Input id='password' minLength='6' required fluid icon='user' iconPosition='left' placeholder='Password' />
                   <Form.Input id='phone' required fluid icon='phone' iconPosition='left' placeholder='Phone number' />
-                  <Button color='teal' fluid size='large'>
-                    Sing Up
+                  <Button style={{backgroundColor:'#5cb5ed', color:'white'}} fluid size='large'>
+                    Login
                   </Button>
                 </Segment>
               </Form>
@@ -49,6 +49,7 @@ singUpFunction(){
               </Message>
             </Grid.Column>
           </Grid>
+          </div>
         );
     }
 }

@@ -11,7 +11,9 @@ public class AirCompany {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAirCompany;
     private String name;
-    private String pib;
+    private String mark;
+    private String internationalName;
+    private String country;
     @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "AirCompany_Airport",
             joinColumns = @JoinColumn(name = "aircompanyId"),
@@ -25,6 +27,30 @@ public class AirCompany {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "AircompanyUsers", joinColumns = @JoinColumn(name = "idAirCompany"), inverseJoinColumns = @JoinColumn(name = "userId"))
     private Set<User>setUsers;
+
+    public String getMark() {
+        return mark;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
+    public String getInternationalName() {
+        return internationalName;
+    }
+
+    public void setInternationalName(String internationalName) {
+        this.internationalName = internationalName;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public Set<User> getSetUsers() {
         return setUsers;
@@ -56,14 +82,6 @@ public class AirCompany {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPib() {
-        return pib;
-    }
-
-    public void setPib(String pib) {
-        this.pib = pib;
     }
 
     public Set<Airport> getAirportList() {

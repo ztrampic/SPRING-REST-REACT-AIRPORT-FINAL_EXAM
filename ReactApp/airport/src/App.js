@@ -18,7 +18,7 @@ function App() {
         <div className='mojHeader'>
           <MojHeader />
         </div>
-        <div className='Body' style={{marginTop:'1rem'}}>
+        <div className='Body'>
           <BrowserRouter  >
             <Route path="/" component={PublicRouter} />
             <Route path="/admin" component={CheckLoggedIn} />
