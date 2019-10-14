@@ -1,6 +1,7 @@
 package com.comtrade.airport.service;
 
 import com.comtrade.airport.dto.UserDTO;
+import com.comtrade.airport.entity.AirCompany;
 import com.comtrade.airport.entity.User;
 import com.comtrade.airport.enums.RoleName;
 import com.comtrade.airport.mapper.UserMapper;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -49,5 +51,15 @@ public class UserServiceImpl implements UserService{
              return null;
         }
         return userList;
+    }
+
+    @Override
+    @Transactional
+    public void removeAll(AirCompany airCompany, Set<User> userSet) {
+        for(User user:userSet){
+            airCompany.getSetUsers().remove(user);
+            user.getAirCompanySet().remove(airCompany);
+            userRepository.delete(user);
+        }
     }
 }

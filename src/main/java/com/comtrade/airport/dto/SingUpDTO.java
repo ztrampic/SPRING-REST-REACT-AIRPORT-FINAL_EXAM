@@ -27,7 +27,7 @@ public class SingUpDTO {
 
     private String phonenumber;
 
-        private String lastname;
+    private String lastname;
 
     public String getPhonenumber() {
         return phonenumber;

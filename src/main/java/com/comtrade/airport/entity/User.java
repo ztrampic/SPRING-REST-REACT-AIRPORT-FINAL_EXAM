@@ -21,6 +21,8 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "userRoles", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roleSet = new HashSet<>();
+    @ManyToMany(mappedBy = "setUsers")
+    private Set<AirCompany>airCompanySet;
 
     public User(String firstName, String lastName, @Email String email, String password, String username, String phoneNumber) {
         this.firstName = firstName;
@@ -32,6 +34,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Set<AirCompany> getAirCompanySet() {
+        return airCompanySet;
+    }
+
+    public void setAirCompanySet(Set<AirCompany> airCompanySet) {
+        this.airCompanySet = airCompanySet;
     }
 
     public Set<Role> getRoleSet() {

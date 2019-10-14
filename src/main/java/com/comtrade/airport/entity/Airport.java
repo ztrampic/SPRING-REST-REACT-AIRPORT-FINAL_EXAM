@@ -124,6 +124,19 @@ public class Airport {
         this.airCompanySet = airCompanySet;
     }
 
+    /*
+    Metode za dodavanje i brisanje Aviokompanije u listu
+    */
+    public void addAirCompany(AirCompany airCompany){
+        airCompanySet.add(airCompany);
+        airCompany.getAirportList().add(this);
+
+    }
+    public void removeAirCompany(AirCompany airCompany){
+        airCompanySet.remove(airCompany);
+        airCompany.getAirportList().remove(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -116,6 +116,14 @@ public class AirCompany {
         fleet.remove(airplane);
         airplane.setAirCompany(null);
     }
+    public void addUser(User user){
+        setUsers.add(user);
+        user.getAirCompanySet().add(this);
+    }
+    public void removeUser(User user){
+        setUsers.remove(user);
+        user.getAirCompanySet().remove(this);
+    }
 
     @Override
     public boolean equals(Object o) {

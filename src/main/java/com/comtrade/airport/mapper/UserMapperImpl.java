@@ -42,7 +42,7 @@ public class UserMapperImpl implements UserMapper{
                         roles.add(adminRole);
 
                         break;
-                    case "pm":
+                    case "airportAdmin":
                         Role pmRole = roleService.findByName(RoleName.ROLE_ADMIN_AIRCOMPANY);
                         roles.add(pmRole);
 
