@@ -2,6 +2,7 @@ import React from 'react'
 import { Tab } from 'semantic-ui-react'
 import AddUserCard from '../AddUserCard'
 import AddAirCompanyCard from '../AddAirCompanyCard'
+import ActiveAirCompanyUsers from './ActiveAirCompanyUsers'
 
 const panes = [
   {
@@ -13,8 +14,8 @@ const panes = [
     render: () => <Tab.Pane attached={false}><AddUserCard/></Tab.Pane>,
   },
   {
-    menuItem: 'All Users',
-    render: () => <Tab.Pane attached={false}>All Users</Tab.Pane>,
+    menuItem: 'Active AirCompany Users',
+    render: () => <Tab.Pane attached={false}><ActiveAirCompanyUsers/></Tab.Pane>,
   },
 ]
 

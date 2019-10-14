@@ -14,9 +14,9 @@ const panes = [
 
 const AirportTabs = () => (
     <Tab
-    menu={{ fluid: true, vertical: true }}
-    menuPosition='left'
-    panes={panes}
+      menu={{ fluid: true, vertical: true }}
+      menuPosition='left'
+      panes={panes}
     ></Tab>
 )
 

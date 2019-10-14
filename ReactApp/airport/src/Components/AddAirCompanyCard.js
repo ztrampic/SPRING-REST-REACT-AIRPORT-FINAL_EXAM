@@ -1,79 +1,102 @@
 import React, { Component } from 'react'
-import { Input, Form, Label, Segment, SegmentGroup, Button } from 'semantic-ui-react'
+import { Input, Form, Label, Segment, SegmentGroup, Button, Modal } from 'semantic-ui-react'
 import AirportAdminSearchAirlines from './AirportAdmin/AirportAdminSearchAirlines'
-import Axios from 'axios'
+import { select } from '../Helpers/DataUtilsHelper'
+import ModalResponseStatus from './modals/ModalResponseStatus'
 
 export default class AddAirCompanyCard extends Component {
     constructor(props) {
         super(props)
         this.state = {
             searchResultAirCompanys: [],
+            userOfApplicationData:{},
+            modalResponseStatus:false,
+            status:'',
         }
         this.searchAirCompanyByName = this.searchAirCompanyByName.bind(this)
+        this.addUserAirCompany = this.addUserAirCompany.bind(this)
+        this.closeModalResponseStatus = this.closeModalResponseStatus.bind(this)
     }
+componentDidMount(){
+    this.getUserAirportData();
+}
+closeModalResponseStatus(){
+    this.setState({modalResponseStatus:false})
+}
+
+getUserAirportData(){
+    const  idUserAirport = 1;
+    select('getUserOfAppInfoAdmin',idUserAirport)
+      .then(res => {  
+        let userAirportDataApi = res;   
+        this.setState({ userOfApplicationData : userAirportDataApi });      
+      })   
+   }
+
 searchAirCompanyByName(){
     const airCompanyName = document.getElementById('airCompanyName').value;  
-    Axios.post('http://localhost:8080/api/aircompany/searchByName', airCompanyName)
+    select('searchAirCompanyByName',airCompanyName)
     .then(res => {
       const apiAirCompanys = res.data;
-      this.setState({searchResultAirCompanys:apiAirCompanys})  
+      this.setState({searchResultAirCompanys:apiAirCompanys}) 
+    })
+}
+addUserAirCompany(id){
+    const{userOfApplicationData} = this.state
+    console.log("USER",userOfApplicationData.data.airportDTO);
+    console.log("USER",id);
+    const AirportAdminSearchDTO  = {airportDTO:userOfApplicationData.data.airportDTO,distance:id}
+    console.log(AirportAdminSearchDTO);
+    
+    select('insertAirCompanyUser', AirportAdminSearchDTO )
+    .then(res => {
+        const resStatus = res.status;
+           this.setState({modalResponseStatus:true,status:resStatus})
+      
     })
 }
 
     render() {
-        const { searchResultAirCompanys } = this.state;
+        const { searchResultAirCompanys, modalResponseStatus, status } = this.state;
 
         return (
+            <div><ModalResponseStatus status={status} open={modalResponseStatus} close={this.closeModalResponseStatus}></ModalResponseStatus>
             <SegmentGroup horizontal>
-                <Segment style={{ width: '40%', backgroundColor: 'aliceblue', display: 'grid' }}>
-                    <Label style={{ position: 'absolute', width: '100%', textAlign: 'center' }}>New Aircompany</Label>
+                <Segment style={{ width:'80%',backgroundColor:'aliceblue', display:'inline'}}>
+                    <Label style={{top:'0', left:'0', color:'white', backgroundColor:'#2185d0', position:'absolute',width:'100%',textAlign:'center'}}>Search Aircompany from Database </Label>
+                    <Form onSubmit={this.searchAirCompanyByName} style={{margin:'auto',marginBottom:'1rem',marginTop:'2rem',display:'flex'}}>
+                        <Input
+                            id='airCompanyName'
+                            minLength={5}
+                            required
+                            icon={{ name: 'search', circular: true }}
+                            placeholder='Search...'
+                        />
+                        <Button style={{ marginLeft: '1rem', backgroundColor:'#21ba45', color:'white'}}>Search</Button>
+                    </Form>
+                    <AirportAdminSearchAirlines
+                        searchResultAirCompanys = {searchResultAirCompanys}
+                        addUserAirCompany = {this.addUserAirCompany}
+                        />
+                </Segment>
+                <Segment style={{ width: '20%', backgroundColor: 'aliceblue', display: 'grid' }}>
+                    <Label style={{ color:'white', backgroundColor:'#2185d0', position: 'absolute', width: '100%', textAlign: 'center' }}>New Aircompany</Label>
                     <Form style={{ marginTop: '2rem' }}>
                         <div style={{ display: 'grid' }}>
                             <Label size={"mini"} style={{ color: 'white', backgroundColor: '#2185d0' }}>Aircompany Name</Label>
                             <Input required focus size={"mini"} style={{ marginBottom: '1rem' }}></Input>
-                            <Label size={"mini"} style={{ color: 'white', backgroundColor: '#2185d0' }}>Pib</Label>
+                            <Label size={"mini"} style={{ color: 'white', backgroundColor: '#2185d0' }}>Country</Label>
+                            <Input required focus size={"mini"} style={{ marginBottom: '1rem' }}></Input>
+                            <Label size={"mini"} style={{ color: 'white', backgroundColor: '#2185d0' }}>Mark</Label>
+                            <Input required focus size={"mini"} style={{ marginBottom: '1rem' }}></Input>
+                            <Label size={"mini"} style={{ color: 'white', backgroundColor: '#2185d0' }}>Int-Name</Label>
                             <Input required focus size={"mini"} style={{ marginBottom: '1rem' }}></Input>
                             <Button size={"mini"} style={{ backgroundColor: '#21ba45', color: 'white' }}>Insert</Button>
                         </div>
                     </Form>
                 </Segment>
-                <Segment style={{width:'60%',backgroundColor:'aliceblue', display:'grid'}}>
-                    <Label style={{position:'absolute',width:'100%',textAlign:'center'}}>New Aircompany Admin</Label>
-                    <Form onSubmit={this.searchAirCompanyByName} style={{margin:'auto',marginTop:'1rem',display:'flex',flexDirection:'row-reverse'}}>
-                        <Input
-                            id='airCompanyName'
-                            minLength={4}
-                            required
-                            icon={{ name: 'search', circular: true }}
-                            placeholder='Search...'
-                        />
-                        <Button style={{ marginLeft: '1rem' }}>Search</Button>
-                    </Form>
-                    <AirportAdminSearchAirlines
-                        searchResultAirCompanys = {searchResultAirCompanys}
-                        />
-                </Segment>
-                {/* <Segment style={{width:'60%',backgroundColor:'aliceblue', display:'grid'}}>
-                    <Label style={{position:'absolute',width:'100%',textAlign:'center'}}>New Aircompany Admin</Label>
-            <Form style={{margin:'auto',marginTop:'1rem',display:'flex',flexDirection:'row-reverse'}}>
-                <div style = {{display:'grid'}}>
-                    <Label type="Email" size={"mini"} style={{color:'white',backgroundColor:'#2185d0'}}>Firstname</Label>
-                    <Input required focus size={"mini"} style={{marginBottom:'1rem'}}></Input>
-                    <Label size={"mini"} style={{color:'white',backgroundColor:'#2185d0'}}>Lastname</Label>
-                    <Input required focus size={"mini"} style={{marginBottom:'1rem'}}></Input>
-                    <Label type="Email" size={"mini"} style={{color:'white',backgroundColor:'#2185d0'}}>Email</Label>
-                    <Input required focus size={"mini"} style={{marginBottom:'1rem'}}></Input>
-                    <Label size={"mini"} style={{color:'white',backgroundColor:'#2185d0'}}>Phone number</Label>
-                    <Input required focus size={"mini"} style={{marginBottom:'1rem'}}></Input>
-                    <Label size={"mini"} style={{color:'white',backgroundColor:'#2185d0'}}>Username</Label>
-                    <Input required focus size={"mini"} style={{marginBottom:'1rem'}}></Input>
-                    <Label size={"mini"} style={{color:'white',backgroundColor:'#2185d0'}}>Password</Label>
-                    <Input required type="Password" focus size={"mini"}  style={{marginBottom:'1rem'}}></Input>
-                    <Button size={"mini"} style={{backgroundColor:'#21ba45',color:'white'}}>Add Admin</Button>
-                </div>      
-            </Form>
-            </Segment> */}
             </SegmentGroup>
+            </div>
         )
     }
 }

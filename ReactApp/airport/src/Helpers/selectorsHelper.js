@@ -11,6 +11,11 @@ import getUserOfAppInfoAdmin from '../apiSelectors/airport/GetUserOfAppInfoAdmin
 import updateUserOfAppAdmin from '../apiSelectors/airport/UpdateUserOfAppAdmin'
 import setFirstTimeUserOfApp from '../apiSelectors/airport/SetFirstTimeUserOfApp'
 import getAllRoles from '../apiSelectors/roles/GetAllRoles'
+import searchAirCompanyByName from '../apiSelectors/airCompany/SearchAirCompanyByName'
+import insertAirCompanyUser from '../apiSelectors/airport/InsertAirCompanyUser'
+import getAllAirCompanyUsers from '../apiSelectors/airport/GetAllAirCompanyUsers'
+import deleteAirCompanyUser from '../apiSelectors/airport/DeleteAirCompanyUser'
+import addUserAirCompanyAdminAccount from '../apiSelectors/airport/AddUserAirCompanyAdminAccount'
 
 export default{
     userSingUp,
@@ -26,4 +31,9 @@ export default{
     updateUserOfAppAdmin,
     setFirstTimeUserOfApp,
     getAllRoles,
+    searchAirCompanyByName,
+    insertAirCompanyUser,
+    getAllAirCompanyUsers,
+    deleteAirCompanyUser,
+    addUserAirCompanyAdminAccount,
 }

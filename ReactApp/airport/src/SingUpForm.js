@@ -13,12 +13,12 @@ class SingUpForm extends React.Component{
     }
 
 singUpFunction(){
-    const name  = document.getElementById('name').value;
-    const lastname  = document.getElementById('lastName').value;
-    const email  = document.getElementById('email').value;
-    const username  = document.getElementById('username').value;
-    const password  = document.getElementById('password').value;
-    const phonenumber  = document.getElementById('phone').value;
+    const name = document.getElementById('name').value;
+    const lastname = document.getElementById('lastName').value;
+    const email = document.getElementById('email').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const phonenumber = document.getElementById('phone').value;
     const singUpDTO={name,lastname,email,username,password,phonenumber}
     select('userSingUp',singUpDTO)
       .then((response)=>{

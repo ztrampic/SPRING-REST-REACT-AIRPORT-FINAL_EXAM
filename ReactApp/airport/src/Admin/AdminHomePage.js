@@ -45,16 +45,11 @@ export class AdminHomePage extends Component {
           <h1>AdminHomePage {}</h1>
         </div>
         <Grid columns={2} divided>
-          <Grid.Row stretched>
-            <Grid.Column style={{width:'70%'}}>
+            <Grid.Column style={{width:'90%'}}>
               <Segment>
                 <AirportTabs></AirportTabs>   
               </Segment>
             </Grid.Column>
-          </Grid.Row>
-        </Grid>
-        <Grid columns={2} divided>
-          
         </Grid>
       </div>
     )
