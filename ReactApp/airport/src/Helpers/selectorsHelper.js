@@ -16,6 +16,14 @@ import insertAirCompanyUser from '../apiSelectors/airport/InsertAirCompanyUser'
 import getAllAirCompanyUsers from '../apiSelectors/airport/GetAllAirCompanyUsers'
 import deleteAirCompanyUser from '../apiSelectors/airport/DeleteAirCompanyUser'
 import addUserAirCompanyAdminAccount from '../apiSelectors/airport/AddUserAirCompanyAdminAccount'
+import getAirCompanyInfo from '../apiSelectors/airCompany/GetAirCompanyInfo'
+import insertNewAirplane from '../apiSelectors/airCompany/InsertNewAirplane'
+import getAllAirplanes from '../apiSelectors/airCompany/GetAllAirplanes'
+import insertNewFlyRequest from '../apiSelectors/airCompany/InsertNewFlyRequest'
+import getSearchAirportByCity from '../apiSelectors/airCompany/GetSerachAirportByCity'
+import getApprovedFlightRequests from '../apiSelectors/flightRequest/GetApprovedFlightRequests'
+import getDeclinedFlightRequests from '../apiSelectors/flightRequest/GetDeclinedFlightRequests'
+import getPendingFlightRequests from '../apiSelectors/flightRequest/GetPendingFlightRequests'
 
 export default{
     userSingUp,
@@ -36,4 +44,12 @@ export default{
     getAllAirCompanyUsers,
     deleteAirCompanyUser,
     addUserAirCompanyAdminAccount,
+    getAirCompanyInfo,
+    insertNewAirplane,
+    getAllAirplanes,
+    insertNewFlyRequest,
+    getSearchAirportByCity,
+    getApprovedFlightRequests,
+    getDeclinedFlightRequests,
+    getPendingFlightRequests,
 }

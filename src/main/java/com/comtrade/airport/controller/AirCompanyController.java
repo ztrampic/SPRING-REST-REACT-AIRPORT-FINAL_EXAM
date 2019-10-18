@@ -3,25 +3,29 @@ package com.comtrade.airport.controller;
 import com.comtrade.airport.dto.AirCompanyDTO;
 import com.comtrade.airport.dto.AirportAdminSearchDTO;
 import com.comtrade.airport.dto.SingUpDTO;
-import com.comtrade.airport.mapper.AirCompanyMapper;
+import com.comtrade.airport.dto.responseLogin.ResponseMessage;
+import com.comtrade.airport.repository.UserRepository;
 import com.comtrade.airport.service.AirCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Set;
 
 @RestController
 @RequestMapping("api/airCompany")
 @CrossOrigin
 public class AirCompanyController {
+
+    private final UserRepository userRepository;
     private final AirCompanyService airCompanyService;
-    private final AirCompanyMapper airCompanyMapper;
     @Autowired
-    public AirCompanyController(AirCompanyService airCompanyService, AirCompanyMapper airCompanyMapper) {
+    public AirCompanyController(UserRepository userRepository, AirCompanyService airCompanyService) {
+
+        this.userRepository = userRepository;
         this.airCompanyService = airCompanyService;
-        this.airCompanyMapper = airCompanyMapper;
     }
     @PostMapping("/searchByName")
     public ResponseEntity<?>searchAirCompanyByName(@RequestBody String name){
@@ -43,12 +47,25 @@ public class AirCompanyController {
         }
     }
     @PostMapping("/insertAdminAccount/{id}")
-    public ResponseEntity<?>addAdminAccount(@PathVariable(value = "id")Long id, @RequestBody SingUpDTO singUpDTO){
+    public ResponseEntity<?>addAdminAccount(@PathVariable(value = "id")Long id,@RequestBody SingUpDTO singUpDTO){
+        if (userRepository.existsByEmail(singUpDTO.getEmail())) {
+            return new ResponseEntity<>(new ResponseMessage("Fail -> Email is already in use!"),
+                    HttpStatus.BAD_REQUEST);
+        }
         try{
             airCompanyService.addNewAdminAccount(id,singUpDTO);
             return new ResponseEntity<String>(HttpStatus.OK);
+        }catch (ConstraintViolationException e){
+            return new ResponseEntity<>(HttpStatus.PRECONDITION_REQUIRED);
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+    /* GET AIRCOMPANY FOR ADMIN ID */
+
+    @GetMapping("/getInfo/{id}")
+    public ResponseEntity<?>getAirCompanyInfo(@PathVariable(value = "id")Long id){
+        AirCompanyDTO airCompanyDTO = airCompanyService.getAirCompanyForAdminId(id);
+        return new ResponseEntity<AirCompanyDTO>(airCompanyDTO,HttpStatus.OK);
     }
 }

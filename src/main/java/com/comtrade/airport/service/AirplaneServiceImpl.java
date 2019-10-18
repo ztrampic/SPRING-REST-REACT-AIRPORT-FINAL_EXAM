@@ -21,17 +21,22 @@ public class AirplaneServiceImpl implements AirplaneService{
         this.airplaneMapper = airplaneMapper;
     }
 
-    @Override
-    @Transactional
-    public void insertNewAirplane(Airplane airplane) {
-        airplaneRepository.save(airplane);
-    }
+
 
     @Override
     @Transactional
     public List<AirplaneDTO> getAllForId(Long id) {
         List<Airplane> list = airplaneRepository.getAllForIdAirportCompany(id);
-        List<AirplaneDTO>listDtos = airplaneMapper.convertEntityToDTO(list);
+        List<AirplaneDTO>listDtos = airplaneMapper.convertEntityListToDTOList(list);
         return listDtos;
+    }
+
+    @Override
+    @Transactional
+    public AirplaneDTO insertNewAirplane(AirplaneDTO airplaneDto) {
+        Airplane airplane = airplaneMapper.convertDTOtoEntity(airplaneDto);
+        Airplane airplaneWitID = airplaneRepository.save(airplane);
+        AirplaneDTO airplaneDTO = airplaneMapper.convertEntityToDTO(airplaneWitID);
+        return airplaneDTO;
     }
 }

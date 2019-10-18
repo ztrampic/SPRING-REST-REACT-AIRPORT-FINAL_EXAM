@@ -28,7 +28,7 @@ public class AirplaneMapperImpl implements AirplaneMapper{
     }
 
     @Override
-    public List<AirplaneDTO> convertEntityToDTO(List<Airplane> list) {
+    public List<AirplaneDTO> convertEntityListToDTOList(List<Airplane> list) {
         List<AirplaneDTO> listDto = new ArrayList<>();
         for(Airplane a: list){
             AirplaneDTO airplaneDTO = new AirplaneDTO();
@@ -42,5 +42,18 @@ public class AirplaneMapperImpl implements AirplaneMapper{
             listDto.add(airplaneDTO);
         }
         return listDto;
+    }
+
+    @Override
+    public AirplaneDTO convertEntityToDTO(Airplane a) {
+        AirplaneDTO airplaneDTO = new AirplaneDTO();
+        AirCompanyDTO airCompanyDTO = new AirCompanyDTO();
+        airCompanyDTO.setIdAirCompany(String.valueOf(a.getAirCompany().getIdAirCompany()));
+        airplaneDTO.setAirCompanyDTO(airCompanyDTO);
+        airplaneDTO.setIdAirplane(String.valueOf(a.getIdAirplane()));
+        airplaneDTO.setMark(a.getMark());
+        airplaneDTO.setMaxFlyDistance(String.valueOf(a.getMaxDistance()));
+        airplaneDTO.setSeatingCapacity(String.valueOf(a.getSeatingCapacity()));
+        return airplaneDTO;
     }
 }

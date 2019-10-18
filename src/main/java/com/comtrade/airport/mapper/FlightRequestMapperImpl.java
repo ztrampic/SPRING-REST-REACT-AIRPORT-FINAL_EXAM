@@ -8,8 +8,6 @@ import com.comtrade.airport.entity.Airplane;
 import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.entity.FlightRequest;
 import com.comtrade.airport.enums.FlightRequestStatus;
-import com.comtrade.airport.service.AirplaneService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,17 +15,6 @@ import java.util.List;
 
 @Component
 public class FlightRequestMapperImpl implements FlightRequestMapper {
-
-    private final AirplaneService airplaneService;
-    private final AirplaneMapper airplaneMapper;
-    private final AirportMapper airportMapper;
-    @Autowired
-    public FlightRequestMapperImpl(AirplaneService airplaneService, AirplaneMapper airplaneMapper, AirportMapper airportMapper) {
-        this.airplaneService = airplaneService;
-        this.airplaneMapper = airplaneMapper;
-        this.airportMapper = airportMapper;
-    }
-
 
     @Override
     public List<FlightRequestDTO> convertToListDTOs(List<FlightRequest> list) {

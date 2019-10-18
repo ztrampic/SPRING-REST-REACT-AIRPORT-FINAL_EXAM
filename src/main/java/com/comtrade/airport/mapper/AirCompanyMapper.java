@@ -8,7 +8,6 @@ import java.util.Set;
 
 public interface AirCompanyMapper {
     AirCompany convertToEntity(AirCompanyDTO airCompanyDTO);
-
     AirCompanyDTO convertToDTO(AirCompany airCompany);
     Set<AirCompanyDTO> convertToSetDTOs(List<AirCompany> airCompanyList);
     Set<AirCompanyDTO> convertSetToSetDTOs(Set<AirCompany> airCompanies);

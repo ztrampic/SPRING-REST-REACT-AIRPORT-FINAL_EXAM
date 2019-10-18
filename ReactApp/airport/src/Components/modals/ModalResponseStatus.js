@@ -8,7 +8,7 @@ const ModalResponseStatus = ({ open, close, status }) => {
                     <div>
                         <Modal open={open} style={{ width: '35%', height: '200px', position: 'initial' }}>
                             <Modal.Header style={{height:'25%'}}><span>Success</span></Modal.Header>
-                            <Modal.Content><span>You added Air company to yours user list.</span></Modal.Content>
+                            <Modal.Content><span>Your request was successfully completed..</span></Modal.Content>
                             <Modal.Actions>
                                 <Button onClick={close} color='green'> Ok </Button>
                             </Modal.Actions>        

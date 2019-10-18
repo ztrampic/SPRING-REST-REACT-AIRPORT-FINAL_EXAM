@@ -56,10 +56,11 @@ public class UserServiceImpl implements UserService{
     @Override
     @Transactional
     public void removeAll(AirCompany airCompany, Set<User> userSet) {
-        for(User user:userSet){
-            airCompany.getSetUsers().remove(user);
+        for(User user : userSet){
             user.getAirCompanySet().remove(airCompany);
             userRepository.delete(user);
         }
+        airCompany.getSetUsers().removeAll(userSet);
+
     }
 }

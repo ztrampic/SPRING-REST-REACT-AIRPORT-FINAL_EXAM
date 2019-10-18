@@ -35,10 +35,6 @@ class ApplicationSettings extends Component {
         this.updateAirports = this.updateAirports.bind(this)
     }
 
-    componentWillMount() {
-
-    }
-
     componentDidMount() {
         this.getAllAirports();
         this.getUserAirportData();
@@ -86,8 +82,6 @@ class ApplicationSettings extends Component {
               let apiUserOfApplicationData = res.data;
               this.setState({userOfApplicationData:apiUserOfApplicationData})
               window.location.reload();
-              
-              
         })       
     }
 

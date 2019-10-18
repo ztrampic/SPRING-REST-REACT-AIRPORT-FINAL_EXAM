@@ -27,19 +27,19 @@ export class MojHeader extends Component {
     }
     render() {
         return (
-            <header style={{height:'150px'}} class="header">
-                <div class="brand-box">
-                     <a href="/" class="btn btn-white btn-animated">Home<span style={{marginLeft:'5px'}}></span>{this.state.time.toLocaleTimeString()}</a>
+            <header style={{height:'150px'}} className="header">
+                <div className="brand-box">
+                     <a href="/" className="btn btn-white btn-animated">Home<span style={{marginLeft:'5px'}}></span>{this.state.time.toLocaleTimeString()}</a>
                 </div>
-                <div class="text-box">
-                    <h1 class="heading-primary">
-                        <span class="heading-primary-main">Like no other airport on earth.</span>
-                        <span class="heading-primary-sub">Living ideas – connecting lives.</span>
+                <div className="text-box">
+                    <h1 className="heading-primary">
+                        <span className="heading-primary-main">Like no other airport on earth.</span>
+                        <span className="heading-primary-sub">Living ideas – connecting lives.</span>
                     </h1>
-                    <a href="/admin" class="btn btn-white btn-animated">Temp Airport Admin</a>
-                    <a href="/airCompanyAdmin" class="btn btn-white btn-animated">DTemp Aircompany Admin</a>
-                    <a href="/loginForm" class="btn btn-white btn-animated">Login</a>
-                    <a onClick={this.logout} href="/" class="btn btn-white btn-animated">Logout</a>
+                    <a href="/admin" className="btn btn-white btn-animated">Temp Airport Admin</a>
+                    <a href="/airCompanyAdmin" className="btn btn-white btn-animated">DTemp Aircompany Admin</a>
+                    <a href="/loginForm" className="btn btn-white btn-animated">Login</a>
+                    <a onClick={this.logout} href="/" className="btn btn-white btn-animated">Logout</a>
                 </div>
             </header>
         )

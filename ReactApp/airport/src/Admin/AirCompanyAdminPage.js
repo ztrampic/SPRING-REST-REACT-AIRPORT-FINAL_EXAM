@@ -2,31 +2,32 @@ import React, { Component } from 'react'
 import { Grid, Segment, Menu, Button } from 'semantic-ui-react';
 import AirCompanyTabs from '../Components/AirCompanyAdmin/AirCompanyTabs';
 import { getAuthUserFromSessionStorage } from '../Helpers/AuthHelper';
+import { select } from '../Helpers/DataUtilsHelper';
 
 
-
-class AirCompanyAdminPage extends Component {
+export class AirCompanyAdminPage extends Component {
     constructor(props) {
         super(props)
-    
         this.state = {
-             airCompany:{
-                 id:'',
-                 name:'',
-                 pib:'',
-             },
+             airCompany:{},
              flightList:[],
              showingAirportTable:false,
         }
-        
+    }
+    componentDidMount(){
+       const user = getAuthUserFromSessionStorage()
+       this.getAirCompanyInfo(user.userId)
     }
 
-    componentDidMount(){
-      const user = getAuthUserFromSessionStorage()
-      console.log(user);
-      
+    getAirCompanyInfo(id){
+        select('getAirCompanyInfo',id)
+            .then(res => {
+                let result = res.data;
+                console.log(result); 
+                this.setState({airCompany:result})
+            })
     }
- 
+
     render() {
         return (
             <div>

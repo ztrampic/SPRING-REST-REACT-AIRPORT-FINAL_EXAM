@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Segment, SegmentGroup } from 'semantic-ui-react'
 import { select } from '../../Helpers/DataUtilsHelper'
-import { getAuthUserFromSessionStorage } from '../../Helpers/AuthHelper'
 import AirportAirCompanyUsers from './AirportAirCompanyUsers'
 import ModalAddAdmin from '../modals/ModalAddAdmin'
 
@@ -60,10 +59,10 @@ class ActiveAirCompanyUsers extends Component {
     }
 
     render() {
-        const {airCompanies,modalAddAdmin, idAircompanyForAddAdmin} = this.state;
+        const {airCompanies, modalAddAdmin, idAircompanyForAddAdmin} = this.state;
         return (
             <div>
-                <SegmentGroup vertical>
+                <SegmentGroup vertical={true}>
                    <Segment>
                         <Button size='mini' style={{color:'white',backgroundColor:'#2185d0'}} onClick={this.getAllAircompanyUsers}>Get All</Button>
                     </Segment>

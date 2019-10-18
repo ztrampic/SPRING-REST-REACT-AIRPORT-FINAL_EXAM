@@ -12,4 +12,5 @@ public interface AirCompanyService {
     Set<AirCompanyDTO> findByName(String name);
     void insertUserAirCompany(AirportAdminSearchDTO newAirCompany);
     void addNewAdminAccount(Long id, SingUpDTO singUpDTO);
+    AirCompanyDTO getAirCompanyForAdminId(Long id);
 }

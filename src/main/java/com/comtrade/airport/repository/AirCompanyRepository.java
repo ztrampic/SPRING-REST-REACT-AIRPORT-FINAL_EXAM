@@ -14,4 +14,6 @@ public interface AirCompanyRepository extends JpaRepository<AirCompany,Long>{
     List<AirCompany> findByName(@Param("name") String name);
     @Query(value = "SELECT * FROM `air_company` WHERE `id_air_company` = ?",nativeQuery = true)
     AirCompany findAirCompanyById(Long id);
+    @Query(value = "SELECT a.* FROM air_company a INNER JOIN aircompany_users au ON au.id_air_company= a.id_air_company WHERE au.user_id = :user_id",nativeQuery = true)
+    AirCompany getAirCompanyForAdminId(@Param("user_id") Long id);
 }

@@ -8,6 +8,7 @@ import com.comtrade.airport.entity.AirCompany;
 import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.entity.User;
 import com.comtrade.airport.mapper.AirCompanyMapper;
+import com.comtrade.airport.mapper.AirportMapper;
 import com.comtrade.airport.mapper.UserMapper;
 import com.comtrade.airport.repository.AirCompanyRepository;
 import com.comtrade.airport.repository.UserRepository;
@@ -27,14 +28,17 @@ public class AirCompanyServiceImpl implements AirCompanyService{
     private final AirportService airportService;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final AirportMapper airportMapper;
+
 
     @Autowired
-    public AirCompanyServiceImpl(AirCompanyRepository airCompanyRepository, AirCompanyMapper airCompanyMapper, AirportService airportService, UserMapper userMapper, UserRepository userRepository) {
+    public AirCompanyServiceImpl(AirCompanyRepository airCompanyRepository, AirCompanyMapper airCompanyMapper, AirportService airportService, UserMapper userMapper, UserRepository userRepository, AirportMapper airportMapper) {
         this.airCompanyRepository = airCompanyRepository;
         this.airCompanyMapper = airCompanyMapper;
         this.airportService = airportService;
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.airportMapper = airportMapper;
     }
 
     @Override
@@ -75,6 +79,16 @@ public class AirCompanyServiceImpl implements AirCompanyService{
         AirCompany airCompany = airCompanyRepository.findAirCompanyById(id);
         airCompany.getSetUsers().add(userWithId);
         airCompanyRepository.save(airCompany);
+    }
+
+    @Override
+    @Transactional
+    public AirCompanyDTO getAirCompanyForAdminId(Long id) {
+        AirCompany airCompany = airCompanyRepository.getAirCompanyForAdminId(id);
+        AirCompanyDTO airCompanyDTO = airCompanyMapper.convertToDTO(airCompany);
+        Set<AirportDTO>airportDTOSet = airportMapper.convertSetToDTOSet(airCompany.getAirportList());
+        airCompanyDTO.setAirportList(airportDTOSet);
+        return airCompanyDTO;
     }
 }
 

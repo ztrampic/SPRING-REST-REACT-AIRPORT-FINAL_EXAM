@@ -1,8 +1,6 @@
 package com.comtrade.airport.controller;
 
 import com.comtrade.airport.dto.AirplaneDTO;
-import com.comtrade.airport.entity.Airplane;
-import com.comtrade.airport.mapper.AirplaneMapper;
 import com.comtrade.airport.service.AirplaneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,20 +15,18 @@ import java.util.List;
 public class AirplaneController {
 
     private final AirplaneService airplaneService;
-    private final AirplaneMapper airplaneMapper;
 
     @Autowired
-    public AirplaneController(AirplaneService airplaneService, AirplaneMapper airplaneMapper) {
+    public AirplaneController( AirplaneService airplaneService) {
         this.airplaneService = airplaneService;
-        this.airplaneMapper = airplaneMapper;
+
     }
 
     @PostMapping("/insert")
     public ResponseEntity<?>insertAirplane(@RequestBody AirplaneDTO airplaneDto){
         try {
-            Airplane airplane = airplaneMapper.convertDTOtoEntity(airplaneDto);
-            airplaneService.insertNewAirplane(airplane);
-            return new ResponseEntity<AirplaneDTO>(HttpStatus.OK);
+            AirplaneDTO newAirplaneDTO = airplaneService.insertNewAirplane(airplaneDto);
+            return new ResponseEntity<AirplaneDTO>(newAirplaneDTO,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<AirplaneDTO>(HttpStatus.BAD_REQUEST);
         }

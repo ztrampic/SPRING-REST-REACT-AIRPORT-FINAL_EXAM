@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface AirplaneMapper {
     Airplane convertDTOtoEntity(AirplaneDTO airplaneDto);
-
-    List<AirplaneDTO> convertEntityToDTO(List<Airplane> list);
+    List<AirplaneDTO> convertEntityListToDTOList(List<Airplane> list);
+    AirplaneDTO convertEntityToDTO(Airplane airplaneWitID);
 }

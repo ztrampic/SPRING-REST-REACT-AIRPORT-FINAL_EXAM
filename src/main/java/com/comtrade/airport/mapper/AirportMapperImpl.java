@@ -3,21 +3,14 @@ package com.comtrade.airport.mapper;
 import com.comtrade.airport.dto.AirportAdminSearchDTO;
 import com.comtrade.airport.dto.AirportDTO;
 import com.comtrade.airport.entity.Airport;
-import com.comtrade.airport.service.AirportService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.OptionalDouble;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class AirportMapperImpl implements AirportMapper{
-
-    private final AirportService airportService;
-    @Autowired
-    public AirportMapperImpl(AirportService airportService) {
-        this.airportService = airportService;
-    }
 
     @Override
     public Airport convertAirportDTOtoAirport(AirportDTO airportDTO) {
@@ -133,5 +126,16 @@ public class AirportMapperImpl implements AirportMapper{
             dist = Math.round(dist * 100.0) / 100.0;
             return (dist);
         }
+    }
+
+    @Override
+    @Transactional
+    public Set<AirportDTO> convertSetToDTOSet(Set<Airport> airportList) {
+        Set<AirportDTO>airportDTOSet = new HashSet<>();
+        for(Airport airport : airportList){
+           AirportDTO airportDTO = convertAirportToAirportDTO(airport);
+           airportDTOSet.add(airportDTO);
+        }
+        return airportDTOSet;
     }
 }

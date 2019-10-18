@@ -2,14 +2,14 @@ import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import AirCompanyTabsStaffTable from './AirCompanyTabsStaffTable';
-import { Grid, Segment, Form, Label, FormGroup, Input, Button, Table, Icon } from 'semantic-ui-react';
+import { Grid, Segment, Form, Label, FormGroup, Input, Button, Table } from 'semantic-ui-react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment';
-import axios from 'axios';
 import AirCompanyTabsAirplaneTable from './AirCompanyTabsAirplaneTable';
 import AirCompanyTabsAirportSearchTable from './AirCompanyTabsAirportSearchTable';
 import AirCompanyFlightRequestsTable from './AirCompanyFlightRequestsTable';
+import { select } from '../../Helpers/DataUtilsHelper';
 
 
 
@@ -39,6 +39,9 @@ export default class AirCompanyTabs extends React.Component {
     this.loadAllPendingFlights = this.loadAllPendingFlights.bind(this)
   }
 
+  componentDidMount(){
+  }
+
   toggle(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -58,7 +61,7 @@ export default class AirCompanyTabs extends React.Component {
     const seatingCapacity = document.getElementById('numberOfSeats').value;
     const maxFlyDistance = document.getElementById('maxFlyDistance').value;
     const avion = {airCompanyDTO, mark, seatingCapacity, maxFlyDistance}
-    axios.post('http://localhost:8080/api/airplane/insert', avion)
+    select('insertNewAirplane', avion)
     .then(res=>{
       const api = res.data;
       window.location.reload();
@@ -68,55 +71,49 @@ export default class AirCompanyTabs extends React.Component {
 
   getAllAirplanes(){
     const id = 1;
-    axios.get('http://localhost:8080/api/airplane/getAllAirplanes/'+id)
+    select('getAllAirplanes', id)
     .then(res=>{
       const apiAirplanes = res.data;
-      this.setState({
-        airplanes:apiAirplanes
-        
-      })
-      console.log("AVION",this.state.airplanes);
+      this.setState({airplanes:apiAirplanes})
     })
   }
-
-  
 
   sendFlightRequest(){
     let {dateForRequest} = this.state;
     dateForRequest = moment(dateForRequest).format('DD-MM-YYYY')
     console.log("DATE", dateForRequest);
-    
-    axios.post('http://localhost:8080/api/airCompany', dateForRequest)
+    select('dateForRequest', dateForRequest)
     .then(res => {
       const numberOfTermins = res.data;    //nije uradjeno
     })
-    
   }
 
   searchAirportByAirportCity(){
-    const airportCityName = document.getElementById('airportCityName').value;
-    axios.post('http://localhost:8080/api/airport/searchByCity', airportCityName)
+   const airportCityName = document.getElementById('airportCityName').value;
+   select('getSearchAirportByCity', airportCityName)
     .then(res => {
       const apiAirports = res.data;
       this.setState({searchResultAirports:apiAirports})  
     })
   }
+
   loadAllApprovedFlights(){
-    axios.get('http://localhost:8080/api/flightRequest/getAllAccepted')
+    select('getApprovedFlights')
     .then(res => {
       const apiFlightRequests = res.data;
       this.setState({flightRequests:apiFlightRequests})  
     })
   }
+
   loadAllDeclinedFlights(){
-    axios.get('http://localhost:8080/api/flightRequest/getAllDeclined')
+   select('getDeclinedFlightRequests')
     .then(res => {
       const apiFlightRequests = res.data;
       this.setState({flightRequests:apiFlightRequests})  
     })
   }
   loadAllPendingFlights(){
-    axios.get('http://localhost:8080/api/flightRequest/getAllPennding')
+   select('getPendingFlightRequests')
     .then(res => {
       const apiFlightRequests = res.data;
       this.setState({flightRequests:apiFlightRequests})  
