@@ -1,7 +1,7 @@
 package com.comtrade.airport.controller;
 
 import com.comtrade.airport.dto.AirplaneDTO;
-import com.comtrade.airport.service.AirplaneService;
+import com.comtrade.airport.facade.AirplaneFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +14,17 @@ import java.util.List;
 @CrossOrigin
 public class AirplaneController {
 
-    private final AirplaneService airplaneService;
+    private final AirplaneFacade airplaneFacade;
 
     @Autowired
-    public AirplaneController( AirplaneService airplaneService) {
-        this.airplaneService = airplaneService;
-
+    public AirplaneController(AirplaneFacade airplaneFacade) {
+        this.airplaneFacade = airplaneFacade;
     }
 
     @PostMapping("/insert")
     public ResponseEntity<?>insertAirplane(@RequestBody AirplaneDTO airplaneDto){
         try {
-            AirplaneDTO newAirplaneDTO = airplaneService.insertNewAirplane(airplaneDto);
+            AirplaneDTO newAirplaneDTO = airplaneFacade.insertNewAirplane(airplaneDto);
             return new ResponseEntity<AirplaneDTO>(newAirplaneDTO,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<AirplaneDTO>(HttpStatus.BAD_REQUEST);
@@ -35,7 +34,7 @@ public class AirplaneController {
     @GetMapping("/getAllAirplanes/{id}")
     public ResponseEntity<?>getAllAirplanesForId(@PathVariable Long id){
         try {
-            List<AirplaneDTO> listAirplandeDTO = airplaneService.getAllForId(id);
+            List<AirplaneDTO> listAirplandeDTO = airplaneFacade.getAllForId(id);
             return new ResponseEntity<List<AirplaneDTO>>(listAirplandeDTO, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);

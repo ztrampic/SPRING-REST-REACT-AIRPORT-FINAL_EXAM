@@ -17,7 +17,7 @@ function AirCompanyTabsAirportSearchTable({searchResultAirports}) {
         )
     });
     return (  
-        <div>
+        <div style={{height:"200px", overflowY:'scroll'}}>
             <Table striped>
                 <Table.Header>
                 <Table.Row>

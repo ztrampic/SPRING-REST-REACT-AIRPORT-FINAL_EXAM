@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Button } from 'semantic-ui-react'
 
-function AirCompanyTabsAirplaneTable({airplanes}) {
+function AirCompanyTabsAirplaneTable({airplanes,openModalFlightRequest}) {
    
     let allAirplanes = airplanes.map((airplane)=>{
         return (
@@ -9,7 +9,7 @@ function AirCompanyTabsAirplaneTable({airplanes}) {
                 <Table.Cell>{airplane.mark}</Table.Cell>
                 <Table.Cell>{airplane.seatingCapacity}</Table.Cell>
                 <Table.Cell>{airplane.maxFlyDistance}</Table.Cell>
-                <Table.Cell><Button id = {airplane.idAirplane} color='green' style={{fontSize:'smaller'}}>Add</Button></Table.Cell>
+                <Table.Cell><Button onClick={()=>openModalFlightRequest(airplane)} id = {airplane.idAirplane} color='green' style={{fontSize:'smaller'}}>Add</Button></Table.Cell>
             </Table.Row>        
 
         )

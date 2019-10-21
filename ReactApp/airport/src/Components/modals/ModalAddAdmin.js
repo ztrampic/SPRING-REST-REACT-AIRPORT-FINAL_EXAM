@@ -35,10 +35,12 @@ class ModalAddAdmin extends Component {
         const val = this.validation(user)
         if (val === true) {
             select('addUserAirCompanyAdminAccount', data)
-                .then(res => {
-                    const response = res.status;
-                    if (response === 200) {
+                .then( res => {
+                    const response = res.data.message;
+                    if(response === "Succes -> Admin Account added"){
                         this.props.closeAdminModal()
+                    }else{
+                      alert(response)
                     }
                 })
         } else {

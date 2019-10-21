@@ -1,10 +1,7 @@
 package com.comtrade.airport.service;
 
-import com.comtrade.airport.dto.AirCompanyDTO;
 import com.comtrade.airport.dto.AirportDTO;
-import com.comtrade.airport.entity.AirCompany;
 import com.comtrade.airport.entity.Airport;
-import com.comtrade.airport.entity.User;
 import com.comtrade.airport.mapper.AirCompanyMapper;
 import com.comtrade.airport.repository.AirCompanyRepository;
 import com.comtrade.airport.repository.AirportRepository;
@@ -12,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class AirportServiceImpl implements AirportService{
@@ -63,9 +58,8 @@ public class AirportServiceImpl implements AirportService{
     @Override
     @Transactional
     public List<Airport> updateAirport(Airport airport) {
-        List<Airport>updatedList = new ArrayList<>();
         airportRepository.save(airport);
-            updatedList = airportRepository.findAll();
+        List<Airport> updatedList = airportRepository.findAll();
         return updatedList;
     }
 
@@ -78,8 +72,7 @@ public class AirportServiceImpl implements AirportService{
     @Override
     @Transactional
     public List<Airport> getSearchAirportBycity(String cityName) {
-        List<Airport>searchList = new ArrayList<>();
-        searchList = airportRepository.findAirportByCityName(cityName);
+        List<Airport> searchList = airportRepository.findAirportByCityName(cityName);
         return searchList;
     }
 
@@ -90,25 +83,4 @@ public class AirportServiceImpl implements AirportService{
         return airport;
     }
 
-    @Override
-    @Transactional
-    public Set<AirCompanyDTO> getAllForId(Long id) {
-       Airport airport = airportRepository.getAirportById(id);
-       Set<AirCompany> airCompanies = airport.getAirCompanySet();
-       Set<AirCompanyDTO>airCompanyDTOS = airCompanyMapper.convertSetToSetDTOs(airCompanies);
-       return airCompanyDTOS;
-    }
-
-    @Override
-    @Transactional
-    public Set<AirCompanyDTO> updateSetOfAirCompanys(Long id, Long idAircompany) {
-        Airport airport = airportRepository.getAirportById(id);
-        AirCompany airCompany = airCompanyRepository.findAirCompanyById(idAircompany);
-        Set<User> userSet = airCompany.getSetUsers();
-        userService.removeAll(airCompany,userSet);
-        airport.removeAirCompany(airCompany);
-        Airport airport1 = airportRepository.save(airport);
-        Set<AirCompanyDTO>airCompanyDTOS = airCompanyMapper.convertSetToSetDTOs(airport1.getAirCompanySet());
-        return airCompanyDTOS;
-    }
 }

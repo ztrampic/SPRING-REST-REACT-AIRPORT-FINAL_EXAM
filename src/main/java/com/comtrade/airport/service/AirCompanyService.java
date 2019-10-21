@@ -1,16 +1,14 @@
 package com.comtrade.airport.service;
 
-import com.comtrade.airport.dto.AirCompanyDTO;
-import com.comtrade.airport.dto.AirportAdminSearchDTO;
-import com.comtrade.airport.dto.SingUpDTO;
 import com.comtrade.airport.entity.AirCompany;
+import com.comtrade.airport.entity.Airplane;
 
-import java.util.Set;
+import java.util.List;
 
 public interface AirCompanyService {
     AirCompany newAirCompany(AirCompany airCompany);
-    Set<AirCompanyDTO> findByName(String name);
-    void insertUserAirCompany(AirportAdminSearchDTO newAirCompany);
-    void addNewAdminAccount(Long id, SingUpDTO singUpDTO);
-    AirCompanyDTO getAirCompanyForAdminId(Long id);
+    List<AirCompany> findByName(String name);
+    AirCompany getAirCompanyForAdminId(Long id);
+    AirCompany findAirCompanyById(Long idAirCompany);
+    void findByIdAndUpdateFleet(long parseLong, Airplane airplaneWithId);
 }

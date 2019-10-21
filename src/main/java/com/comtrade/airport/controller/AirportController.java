@@ -2,15 +2,12 @@ package com.comtrade.airport.controller;
 
 import com.comtrade.airport.dto.AirportAdminSearchDTO;
 import com.comtrade.airport.dto.AirportDTO;
-import com.comtrade.airport.entity.Airport;
-import com.comtrade.airport.mapper.AirportMapper;
-import com.comtrade.airport.service.AirportService;
+import com.comtrade.airport.facade.AirportFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,101 +15,79 @@ import java.util.List;
 @CrossOrigin
 public class AirportController {
 
-    private final AirportMapper airportMapper;
-    private final AirportService airportService;
+    private final AirportFacade airportFacade;
     @Autowired
-    public AirportController(AirportMapper airportMapper, AirportService airportService) {
-        this.airportMapper = airportMapper;
-        this.airportService = airportService;
+    public AirportController(AirportFacade airportFacade) {
+        this.airportFacade = airportFacade;
     }
 
     @PostMapping("/iniEntry")
     public ResponseEntity<?>pocetniUnosAerodroma(@RequestBody List<AirportDTO> listaAerodromaJSON){
-        List<Airport> listaSaIdAerodroma= new ArrayList<>();
-        for(AirportDTO a: listaAerodromaJSON){
-            Airport airport  = airportMapper.convertAirportDTOtoAirport(a);
-            airport= airportService.newAirport(airport);
-                listaSaIdAerodroma.add(airport);
+        try{
+            List<AirportDTO>airportDTOList = airportFacade.newAirportsList(listaAerodromaJSON);
+            return new ResponseEntity<List<AirportDTO>>(airportDTOList ,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<AirportDTO>listaForFront = new ArrayList<>();
-        for (Airport air : listaSaIdAerodroma){
-            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(air);
-            listaForFront.add(airportDTO);
-        }
-        return new ResponseEntity<List<AirportDTO>>(listaForFront ,HttpStatus.OK);
     }
+
     @PostMapping("/airportEntry")
     public ResponseEntity<List<AirportDTO>>airportEntry(@RequestBody AirportDTO airportDTO){
-        Airport airport = new Airport();
-        List<AirportDTO>listDTO = new ArrayList<>();
-        List<Airport>listAirport = new ArrayList<>();
-        airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
-        airport= airportService.newAirport(airport);
-        listAirport = airportService.getAllAirports();
-        for(Airport a: listAirport){
-            airportDTO = airportMapper.convertAirportToAirportDTO(a);
-            listDTO.add(airportDTO);
+        try{
+            List<AirportDTO>listDTO = airportFacade.newAirport(airportDTO);
+            return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
     }
 
     @GetMapping("/getAllAirports")
     public ResponseEntity<?>getAllAirports(){
-        List<AirportDTO>listAirportsDTO = new ArrayList<>();
-        List<Airport> listAirports = airportService.getAllAirports();
-        for(Airport a: listAirports){
-            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(a);
-            listAirportsDTO.add(airportDTO);
+        try{
+            List<AirportDTO>listAirportsDTO = airportFacade.getAllAirports();
+            return new ResponseEntity<List<AirportDTO>>(listAirportsDTO,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
-        return new ResponseEntity<List<AirportDTO>>(listAirportsDTO,HttpStatus.OK);
     }
+
     @PostMapping("/getSearchAirports")
     public ResponseEntity<?>getSearchAirports(@RequestBody AirportDTO airportDTO){
-        List<Airport> searchList = new ArrayList<>();
-        List<AirportDTO> searchListDTO = new ArrayList<>();
-        searchList = airportService.getSearchAirports(airportDTO);
-        for(Airport a: searchList){
-            AirportDTO airportDTO1 = airportMapper.convertAirportToAirportDTO(a);
-            searchListDTO.add(airportDTO1);
-        }
-        return new ResponseEntity<List<AirportDTO>>(searchListDTO,HttpStatus.OK);
+       try {
+           List<AirportDTO>searchListDTO = airportFacade.getSearchAirports(airportDTO);
+           return new ResponseEntity<List<AirportDTO>>(searchListDTO,HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
+
     @PutMapping("/updateAirport")
     public ResponseEntity<?>updateAirport(@RequestBody AirportDTO airportDTO){
-        List<AirportDTO> listDto = new ArrayList<>();
-        List<Airport>updatedList =new ArrayList<>();
-        Airport airport = airportMapper.convertAirportDTOtoAirport(airportDTO);
-        updatedList = airportService.updateAirport(airport);
-        for(Airport a: updatedList){
-            AirportDTO airportDTO1 =airportMapper.convertAirportToAirportDTO(a);
-            listDto.add(airportDTO1);
-        }
-        return new ResponseEntity<List<AirportDTO>>(listDto,HttpStatus.OK);
+       try{
+           List<AirportDTO>listDto = airportFacade.updateAirportAndGetAll(airportDTO);
+           return new ResponseEntity<List<AirportDTO>>(listDto,HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
+
     @GetMapping("/hardDeleteAirport/{id}")
     public ResponseEntity<?>hardDeleteAirport(@PathVariable(value = "id") String id){
-        String value = id.replaceAll("[^0-9]","");
-        Long idDel = Long.parseLong(value);
-        airportService.hardDeleteAirport(idDel);
-        List<Airport> list = airportService.getAllAirports();
-        List<AirportDTO>listDTO = new ArrayList<>();
-        for(Airport a:list){
-            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(a);
-            listDTO.add(airportDTO);
-        }
-        return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
+       try{
+           List<AirportDTO> listDTO = airportFacade.hardDeleteAirportAndGetAll(id);
+           return new ResponseEntity<List<AirportDTO>>(listDTO,HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
+
     @PostMapping("/searchByCity")
     public ResponseEntity<List<AirportAdminSearchDTO>>searchByCity(@RequestBody String searchString){
-        String cityName = searchString.replace("=","");
-        List<AirportAdminSearchDTO>searchListDto = new ArrayList<>();
-        List<Airport>listAirports = airportService.getSearchAirportBycity(cityName);
-        for(Airport a:listAirports){
-            AirportAdminSearchDTO airportAdminSearchDTO = airportMapper.convertAirportToAirportAdminSearchDTO(a);
-            searchListDto.add(airportAdminSearchDTO);
+        try{
+            List<AirportAdminSearchDTO> searchListDto = airportFacade.searchAirportByCity(searchString);
+            return new ResponseEntity<List<AirportAdminSearchDTO>>(searchListDto,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<List<AirportAdminSearchDTO>>(searchListDto,HttpStatus.OK);
     }
 }

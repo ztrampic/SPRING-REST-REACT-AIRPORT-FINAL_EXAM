@@ -1,11 +1,13 @@
 package com.comtrade.airport.service;
 
-import com.comtrade.airport.dto.AirplaneDTO;
+import com.comtrade.airport.entity.AirCompany;
+import com.comtrade.airport.entity.Airplane;
 
 import java.util.List;
 
 public interface AirplaneService {
 
-    List<AirplaneDTO> getAllForId(Long id);
-    AirplaneDTO insertNewAirplane(AirplaneDTO airplaneDto);
+    List<Airplane> getAllForId(Long id);
+    Airplane insertNewAirplane(Airplane airplane);
+    void removeAll(AirCompany airCompany);
 }

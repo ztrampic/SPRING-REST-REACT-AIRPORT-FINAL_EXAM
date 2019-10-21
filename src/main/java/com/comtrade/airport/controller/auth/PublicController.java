@@ -3,20 +3,13 @@ package com.comtrade.airport.controller.auth;
 import com.comtrade.airport.dto.*;
 import com.comtrade.airport.dto.responseLogin.JwtResponse;
 import com.comtrade.airport.dto.responseLogin.ResponseMessage;
-import com.comtrade.airport.entity.AirCompany;
-import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.entity.User;
-import com.comtrade.airport.entity.UserAirport;
-import com.comtrade.airport.mapper.AirCompanyMapper;
-import com.comtrade.airport.mapper.AirportMapper;
-import com.comtrade.airport.mapper.UserAirportMapper;
+import com.comtrade.airport.facade.AirCompanyFacade;
+import com.comtrade.airport.facade.AirportFacade;
+import com.comtrade.airport.facade.UserAirportFacade;
 import com.comtrade.airport.mapper.UserMapper;
 import com.comtrade.airport.repository.UserRepository;
 import com.comtrade.airport.security.jwt1.JwtProvider;
-import com.comtrade.airport.security.services.RoleService;
-import com.comtrade.airport.service.AirCompanyService;
-import com.comtrade.airport.service.AirportService;
-import com.comtrade.airport.service.UserAirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,44 +18,35 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class PublicController {
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final JwtProvider jwtProvider;
+    private final UserMapper userMapper;
+    private final UserAirportFacade userAirportFacade;
+    private final AirportFacade airportFacade;
+    private final AirCompanyFacade airCompanyFacade;
+    @Autowired
+    public PublicController(AuthenticationManager authenticationManager,
+                            UserRepository userRepository, JwtProvider jwtProvider, UserMapper userMapper,
+                            UserAirportFacade userAirportFacade, AirportFacade airportFacade, AirCompanyFacade airCompanyFacade) {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JwtProvider jwtProvider;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserAirportService userAirportService;
-    @Autowired
-    private UserAirportMapper userAirportMapper;
-    @Autowired
-    private AirportService airportService;
-    @Autowired
-    private AirportMapper airportMapper;
-    @Autowired
-    private AirCompanyMapper airCompanyMapper;
-    @Autowired
-    private AirCompanyService airCompanyService;
-
-
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
+        this.userMapper = userMapper;
+        this.userAirportFacade = userAirportFacade;
+        this.airportFacade = airportFacade;
+        this.airCompanyFacade = airCompanyFacade;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginDTO){
@@ -95,42 +79,33 @@ public class PublicController {
     }
 
     @GetMapping("/getUserOfApplication/{id}")
-    public ResponseEntity<UserAirportDTO> getUserOfApplication(@PathVariable Long id){
-        UserAirport userAirport = userAirportService.getUserAirport(id);
-        UserAirportDTO userAirportDTO = userAirportMapper.convertUserAirportToUserAirportDTO(userAirport);
-        return new ResponseEntity<UserAirportDTO>(userAirportDTO, HttpStatus.OK);
+    public ResponseEntity<UserAirportDTO> getUserOfApplication(@PathVariable Long id) {
+        try {
+            UserAirportDTO userAirportDTO = userAirportFacade.getUserOfApplicationAirport(id);
+            return new ResponseEntity<UserAirportDTO>(userAirportDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/iniEntry")
     public ResponseEntity<?>pocetniUnosAerodroma(@RequestBody List<AirportDTO> listaAerodromaJSON){
-        List<Airport> listaSaIdAerodroma= new ArrayList<>();
-        for(AirportDTO a: listaAerodromaJSON){
-            Airport airport  = airportMapper.convertAirportDTOtoAirport(a);
-            airport= airportService.newAirport(airport);
-            listaSaIdAerodroma.add(airport);
+        try{
+            List<AirportDTO>airportDTOList = airportFacade.newAirportsList(listaAerodromaJSON);
+            return new ResponseEntity<List<AirportDTO>>(airportDTOList ,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        List<AirportDTO>listaForFront = new ArrayList<>();
-        for (Airport air : listaSaIdAerodroma){
-            AirportDTO airportDTO = airportMapper.convertAirportToAirportDTO(air);
-            listaForFront.add(airportDTO);
-        }
-        return new ResponseEntity<List<AirportDTO>>(listaForFront ,HttpStatus.OK);
     }
 
     @PostMapping("/iniEntryAirCompany")
     public ResponseEntity<?>pocetniUnosAviokompanija(@RequestBody List<AirCompanyDTO> companyDTOList){
-        List<AirCompany>airCompanyList = new ArrayList<>();
-        for(AirCompanyDTO airCompanyDTO:companyDTOList){
-            AirCompany airCompany = airCompanyMapper.convertToEntity(airCompanyDTO);
-            airCompany = airCompanyService.newAirCompany(airCompany);
-            airCompanyList.add(airCompany);
+        try{
+            List<AirCompanyDTO> listAirCompanyDTOwithIds = airCompanyFacade.iniEntryAirCompanies(companyDTOList);
+            return new ResponseEntity<List<AirCompanyDTO>>(listAirCompanyDTOwithIds,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        List<AirCompanyDTO>listAirCompanyDTOwithIds = new ArrayList<>();
-        for(AirCompany airCompany:airCompanyList){
-            AirCompanyDTO airCompanyDTO = airCompanyMapper.convertToDTO(airCompany);
-            listAirCompanyDTOwithIds.add(airCompanyDTO);
-        }
-        return new ResponseEntity<List<AirCompanyDTO>>(listAirCompanyDTOwithIds,HttpStatus.OK);
     }
 
 

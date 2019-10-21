@@ -24,6 +24,7 @@ export class AirCompanyAdminPage extends Component {
             .then(res => {
                 let result = res.data;
                 console.log(result); 
+                sessionStorage.setItem('userAircompanyInfo', JSON.stringify(result));
                 this.setState({airCompany:result})
             })
     }

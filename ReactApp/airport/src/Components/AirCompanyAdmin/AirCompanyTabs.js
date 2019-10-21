@@ -3,13 +3,10 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, 
 import classnames from 'classnames';
 import AirCompanyTabsStaffTable from './AirCompanyTabsStaffTable';
 import { Grid, Segment, Form, Label, FormGroup, Input, Button, Table } from 'semantic-ui-react';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment';
 import AirCompanyTabsAirplaneTable from './AirCompanyTabsAirplaneTable';
-import AirCompanyTabsAirportSearchTable from './AirCompanyTabsAirportSearchTable';
 import AirCompanyFlightRequestsTable from './AirCompanyFlightRequestsTable';
 import { select } from '../../Helpers/DataUtilsHelper';
+import ModalFlightRequest from '../modals/ModalFlightRequest';
 
 
 
@@ -17,29 +14,36 @@ import { select } from '../../Helpers/DataUtilsHelper';
 export default class AirCompanyTabs extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       activeTab: '1',
-      dateForRequest: new Date(),
       airportCityName:'',
-      searchResultAirports:[],
       airCompanyDTO:{},
       avion:{},
       airplanes:[],
       flightRequests:[],
+      modalAddFlightRequestOpen:false,
     };
     this.toggle = this.toggle.bind(this); 
-    this.handleChangeDate = this.handleChangeDate.bind(this)
-    this.sendFlightRequest = this.sendFlightRequest.bind(this)
-    this.searchAirportByAirportCity = this.searchAirportByAirportCity.bind(this)
     this.insertAirplane = this.insertAirplane.bind(this)
     this.getAllAirplanes = this.getAllAirplanes.bind(this)
     this.loadAllApprovedFlights = this.loadAllApprovedFlights.bind(this)
     this.loadAllDeclinedFlights = this.loadAllDeclinedFlights.bind(this)
     this.loadAllPendingFlights = this.loadAllPendingFlights.bind(this)
+    this.openModalFlightRequest = this.openModalFlightRequest.bind(this)
+    this.closeModalFlightRequest = this.closeModalFlightRequest.bind(this)
   }
 
   componentDidMount(){
+  }
+
+  openModalFlightRequest(airplane){
+    console.log("airplane",airplane);
+    this.setState({avion:airplane})
+    
+    this.setState({modalAddFlightRequestOpen:true})
+  }
+  closeModalFlightRequest(){
+    this.setState({modalAddFlightRequestOpen:false})
   }
 
   toggle(tab) {
@@ -48,11 +52,6 @@ export default class AirCompanyTabs extends React.Component {
         activeTab: tab
       });
     }
-  }
-  handleChangeDate = date => {
-    this.setState({
-      dateForRequest: date
-    })
   }
 
   insertAirplane(){
@@ -78,24 +77,6 @@ export default class AirCompanyTabs extends React.Component {
     })
   }
 
-  sendFlightRequest(){
-    let {dateForRequest} = this.state;
-    dateForRequest = moment(dateForRequest).format('DD-MM-YYYY')
-    console.log("DATE", dateForRequest);
-    select('dateForRequest', dateForRequest)
-    .then(res => {
-      const numberOfTermins = res.data;    //nije uradjeno
-    })
-  }
-
-  searchAirportByAirportCity(){
-   const airportCityName = document.getElementById('airportCityName').value;
-   select('getSearchAirportByCity', airportCityName)
-    .then(res => {
-      const apiAirports = res.data;
-      this.setState({searchResultAirports:apiAirports})  
-    })
-  }
 
   loadAllApprovedFlights(){
     select('getApprovedFlights')
@@ -123,7 +104,7 @@ export default class AirCompanyTabs extends React.Component {
  
 
   render() {
-    const{ searchResultAirports, airplanes, flightRequests 
+    const{ airplanes, flightRequests, modalAddFlightRequestOpen 
      } = this.state
    
     return (
@@ -261,45 +242,14 @@ export default class AirCompanyTabs extends React.Component {
                   <Button onClick={this.getAllAirplanes} color='blue' style={{width:'50%%',marginBottom:'1rem',backgroundColor:'black'}}>Get All Airplanes</Button>{' '} 
                     <AirCompanyTabsAirplaneTable
                       airplanes = {airplanes}
+                      openModalFlightRequest = {this.openModalFlightRequest}
                     />
                   </Segment>
                 </Grid.Column>
                 <Grid.Column width={8} style={{marginTop: '1rem'}}>
                   <Segment>
-                  <Label style={{display:'flex', color:'white', background:'#2185d0'}}>Flight check with departure Airport</Label>
-                    <Form onSubmit={this.sendFlightRequest} style={{paddingTop:'1rem'}}>
-                      <Form.Group style={{margin:0}}>
-                        <DatePicker
-                          selected={this.state.dateForRequest}
-                          onChange={this.handleChangeDate}
-                          placeholderText={this.state.date}
-                        />
-                        <Button type='submit'>Check</Button>
-                        <Label id='positive' style={{ borderWidth:'thin', borderColor:'green', backgroundColor:'white', color:'green', width:'75px',visibility:'visible', textAlign:'center', lineHeight:'2'}}>Dostupno</Label>
-                        <Label id='negative' style={{ borderWidth:'thin', borderColor:'red',backgroundColor:'white', color:'red', width:'75px',visibility:'visible', textAlign:'center', lineHeight:'2'}}>Puno</Label>
-                      </Form.Group>
-                    </Form>
                   </Segment>
-                  <Segment.Group>
-                    <Segment>                    
-                      <Label style={{marginBottom:'1rem', display:'flex', color:'white', background:'#2185d0'}}>Search airport city destination</Label>
-                      <Form onSubmit={this.searchAirportByAirportCity}>
-                        <Input
-                          id='airportCityName' 
-                          minLength = {4}
-                          required
-                          icon={{name: 'search', circular: true}}
-                          placeholder='Search...'
-                        />
-                        <Button style={{marginLeft:'1rem'}}>Search</Button>
-                      </Form>  
-                    </Segment>
-                    <Segment>
-                        <AirCompanyTabsAirportSearchTable
-                        searchResultAirports={searchResultAirports}
-                        />  
-                    </Segment>
-                  </Segment.Group>
+                 
                   <Segment>
                   <Label style={{display:'flex', color:'white', background:'#2185d0'}}>New Request for Flight</Label>
                     <Table striped>
@@ -325,6 +275,11 @@ export default class AirCompanyTabs extends React.Component {
             </Row>
           </TabPane>
         </TabContent>
+        <ModalFlightRequest 
+              open={modalAddFlightRequestOpen}
+              closeModalFlightRequest={this.closeModalFlightRequest}
+              airplane = {this.state.avion}
+              />
       </div>
     );
   }

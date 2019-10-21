@@ -21,7 +21,7 @@ public class AirCompany {
     private Set<Airport>airportList;
     @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Flight> flightList;
-    @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Airplane> fleet ;
     @ManyToMany(fetch = FetchType.LAZY)

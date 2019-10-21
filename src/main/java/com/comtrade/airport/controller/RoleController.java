@@ -16,11 +16,13 @@ import java.util.Set;
 @RequestMapping("api/role")
 @CrossOrigin
 public class RoleController {
+
     private final RoleService roleService;
     @Autowired
     public RoleController(RoleService roleService) {
         this.roleService = roleService;
     }
+
     @GetMapping("/getAll")
     public ResponseEntity<?>getAllRoles(){
         Set<Role>setOfRoles = roleService.getAllRoles();
