@@ -50,10 +50,11 @@ public class AirCompanyServiceImpl implements AirCompanyService{
 
     @Override
     @Transactional
-    public void findByIdAndUpdateFleet(long id, Airplane airplaneWithId) {
+    public Airplane findByIdAndUpdateFleet(long id, Airplane airplaneWithId) {
         AirCompany airCompany = airCompanyRepository.findAirCompanyById(id);
         airCompany.getFleet().add(airplaneWithId);
-        airCompanyRepository.save(airCompany);
+        airplaneWithId.setAirCompany(airCompanyRepository.save(airCompany));
+        return airplaneWithId;
     }
 }
 

@@ -24,6 +24,8 @@ import getSearchAirportByCity from '../apiSelectors/airCompany/GetSerachAirportB
 import getApprovedFlightRequests from '../apiSelectors/flightRequest/GetApprovedFlightRequests'
 import getDeclinedFlightRequests from '../apiSelectors/flightRequest/GetDeclinedFlightRequests'
 import getPendingFlightRequests from '../apiSelectors/flightRequest/GetPendingFlightRequests'
+import checkAvailableTermin from '../apiSelectors/airport/CheckAvailableTermin'
+import deleteAirplaneAndGetRest from '../apiSelectors/airCompany/DeleteAirplaneAndGetRest'
 
 export default{
     userSingUp,
@@ -52,4 +54,6 @@ export default{
     getApprovedFlightRequests,
     getDeclinedFlightRequests,
     getPendingFlightRequests,
+    checkAvailableTermin,
+    deleteAirplaneAndGetRest,
 }

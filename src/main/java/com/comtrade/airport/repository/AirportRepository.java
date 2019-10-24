@@ -17,4 +17,6 @@ public interface AirportRepository extends JpaRepository<Airport,Long> {
     List<Airport> findAirportByCityName(@Param("cityName") String cityName);
     @Query(value = "SELECT * FROM `airport` WHERE `id` = ?",nativeQuery = true)
     Airport getAirportById(Long id);
+    @Query(value = "SELECT number_of_max_departures FROM `airport` WHERE id = ?",nativeQuery = true)
+    Integer getMaxDepartures(Long id);
 }

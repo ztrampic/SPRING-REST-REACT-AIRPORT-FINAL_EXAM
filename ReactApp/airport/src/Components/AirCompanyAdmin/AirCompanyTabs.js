@@ -31,13 +31,14 @@ export default class AirCompanyTabs extends React.Component {
     this.loadAllPendingFlights = this.loadAllPendingFlights.bind(this)
     this.openModalFlightRequest = this.openModalFlightRequest.bind(this)
     this.closeModalFlightRequest = this.closeModalFlightRequest.bind(this)
+    this.sendFlightRequest = this.sendFlightRequest.bind(this)
+    this.deleteAirplane = this.deleteAirplane.bind(this)
   }
 
   componentDidMount(){
   }
 
   openModalFlightRequest(airplane){
-    console.log("airplane",airplane);
     this.setState({avion:airplane})
     
     this.setState({modalAddFlightRequestOpen:true})
@@ -53,6 +54,17 @@ export default class AirCompanyTabs extends React.Component {
       });
     }
   }
+  sendFlightRequest(airplane,destinationAirportDTO,description,datum){
+   const airplaneDTO = airplane; 
+   const data = {airplaneDTO,destinationAirportDTO,description,datum}
+   select('insertNewFlyRequest',data)
+    .then(res =>{
+      const apiRes = res.status;
+      if(apiRes === 200){
+        this.setState({modalAddFlightRequestOpen:false})
+      }
+    })
+  }
 
   insertAirplane(){
     const airCompanyDTO = {idAirCompany:"1"}
@@ -65,8 +77,16 @@ export default class AirCompanyTabs extends React.Component {
       const api = res.data;
       window.location.reload();
     })
+  }
+  deleteAirplane(id){
+   select('deleteAirplaneAndGetRest',id)
+    .then(res=>{
+      const apiRes = res.data;
+      this.setState({airplanes:apiRes})
+    })
     
   }
+
 
   getAllAirplanes(){
     const id = 1;
@@ -243,6 +263,7 @@ export default class AirCompanyTabs extends React.Component {
                     <AirCompanyTabsAirplaneTable
                       airplanes = {airplanes}
                       openModalFlightRequest = {this.openModalFlightRequest}
+                      deleteAirplane = {this.deleteAirplane}
                     />
                   </Segment>
                 </Grid.Column>
@@ -279,6 +300,7 @@ export default class AirCompanyTabs extends React.Component {
               open={modalAddFlightRequestOpen}
               closeModalFlightRequest={this.closeModalFlightRequest}
               airplane = {this.state.avion}
+              sendFlightRequest = {this.sendFlightRequest}
               />
       </div>
     );

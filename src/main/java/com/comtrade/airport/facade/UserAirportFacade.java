@@ -41,4 +41,5 @@ public class UserAirportFacade {
         UserAirportDTO userAirportDTOResponse = userAirportMapper.convertUserAirportToUserAirportDTO(userAirport);
         return userAirportDTOResponse;
     }
+
 }

@@ -10,5 +10,5 @@ public interface AirCompanyService {
     List<AirCompany> findByName(String name);
     AirCompany getAirCompanyForAdminId(Long id);
     AirCompany findAirCompanyById(Long idAirCompany);
-    void findByIdAndUpdateFleet(long parseLong, Airplane airplaneWithId);
+    Airplane findByIdAndUpdateFleet(long parseLong, Airplane airplaneWithId);
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/airplane")
@@ -39,5 +40,10 @@ public class AirplaneController {
         }catch (Exception e){
             return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
         }
+    }
+    @GetMapping("/deleteAndGetRest/{id}")
+    public ResponseEntity<?>deleteAndGetRest(@PathVariable Long id){
+        Set<AirplaneDTO> airplaneDTOS =  airplaneFacade.deleteAndGetRest(id);
+        return new ResponseEntity<Set<AirplaneDTO>>(airplaneDTOS,HttpStatus.OK);
     }
 }

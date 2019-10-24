@@ -2,6 +2,7 @@ package com.comtrade.airport.controller;
 
 import com.comtrade.airport.dto.FlightRequestDTO;
 import com.comtrade.airport.entity.FlightRequest;
+import com.comtrade.airport.facade.FlightRequestFacade;
 import com.comtrade.airport.mapper.FlightRequestMapper;
 import com.comtrade.airport.service.FlightRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,25 @@ public class FlightRequestController {
 
     private final FlightRequestService flightRequestService;
     private final FlightRequestMapper flightRequestMapper;
+    private final FlightRequestFacade flightRequestFacade;
 
     @Autowired
-    public FlightRequestController(FlightRequestService flightRequestService, FlightRequestMapper flightRequestMapper) {
+    public FlightRequestController(FlightRequestService flightRequestService, FlightRequestMapper flightRequestMapper, FlightRequestFacade flightRequestFacade) {
         this.flightRequestService = flightRequestService;
         this.flightRequestMapper = flightRequestMapper;
+        this.flightRequestFacade = flightRequestFacade;
     }
+
     @PostMapping("/insertNewFR")
     public ResponseEntity<?>insertNewFlightRequest(@RequestBody FlightRequestDTO flightRequestDTO){
-        FlightRequest flightRequest = flightRequestMapper.convertDTOtoEntity(flightRequestDTO);
-        flightRequestService.insertNewFR(flightRequest);
-        return new ResponseEntity<String>(HttpStatus.OK);
+      try{
+          flightRequestFacade.insertNewFilghtRequest(flightRequestDTO);
+          return new ResponseEntity<>(HttpStatus.OK);
+      }catch (Exception e){
+          return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+      }
     }
+
     @GetMapping("/getAll")
     public ResponseEntity<?>getAllFR(){
         List<FlightRequest> flightRequests = flightRequestService.getAll();

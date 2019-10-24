@@ -2,6 +2,7 @@ package com.comtrade.airport.service;
 
 import com.comtrade.airport.entity.AirCompany;
 import com.comtrade.airport.entity.Airplane;
+import com.comtrade.airport.repository.AirCompanyRepository;
 import com.comtrade.airport.repository.AirplaneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ import java.util.Set;
 public class AirplaneServiceImpl implements AirplaneService{
 
     private final AirplaneRepository airplaneRepository;
+    private final AirCompanyRepository airCompanyRepository;
     @Autowired
-    public AirplaneServiceImpl(AirplaneRepository airplaneRepository) {
+    public AirplaneServiceImpl(AirplaneRepository airplaneRepository, AirCompanyRepository airCompanyRepository) {
         this.airplaneRepository = airplaneRepository;
+        this.airCompanyRepository = airCompanyRepository;
     }
 
     @Override
@@ -46,6 +49,17 @@ public class AirplaneServiceImpl implements AirplaneService{
             airCompany.removeAirplaneFromFleet(airplane);
             airplaneRepository.deleteById(airplane.getIdAirplane());
         }
+    }
+
+    @Override
+    @Transactional
+    public Set<Airplane> deleteAndGetRest(Long id) {
+        Airplane airplane = airplaneRepository.getAirplaneById(id);
+        AirCompany airCompany = airCompanyRepository.findAirCompanyById(airplane.getAirCompany().getIdAirCompany());
+        airCompany.getFleet().remove(airplane);
+        airplaneRepository.deleteById(id);
+        AirCompany updatedAirCompany = airCompanyRepository.save(airCompany);
+        return updatedAirCompany.getFleet();
     }
 
 }

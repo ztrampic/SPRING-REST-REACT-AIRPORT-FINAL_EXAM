@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AirplaneFacade {
@@ -25,8 +26,8 @@ public class AirplaneFacade {
     public AirplaneDTO insertNewAirplane(AirplaneDTO airplaneDto) {
         Airplane airplane = airplaneMapper.convertDTOtoEntity(airplaneDto);
         Airplane airplaneWithId = airplaneService.insertNewAirplane(airplane);
-        airCompanyService.findByIdAndUpdateFleet(Long.parseLong(airplaneDto.getAirCompanyDTO().getIdAirCompany()),airplaneWithId);
-        AirplaneDTO airplaneDTO1 = airplaneMapper.convertEntityToDTO(airplaneWithId);
+        Airplane airplane1 = airCompanyService.findByIdAndUpdateFleet(Long.parseLong(airplaneDto.getAirCompanyDTO().getIdAirCompany()),airplaneWithId);
+        AirplaneDTO airplaneDTO1 = airplaneMapper.convertEntityToDTO(airplane1);
         return airplaneDTO1;
     }
 
@@ -34,5 +35,11 @@ public class AirplaneFacade {
         List<Airplane>airplanes = airplaneService.getAllForId(id);
         List<AirplaneDTO> listDtos = airplaneMapper.convertEntityListToDTOList(airplanes);
         return listDtos;
+    }
+
+    public Set<AirplaneDTO> deleteAndGetRest(Long id){
+        Set<Airplane> airplaneSet = airplaneService.deleteAndGetRest(id);
+        Set<AirplaneDTO> airplaneDTOS = airplaneMapper.convertSetToDTOSet(airplaneSet);
+        return airplaneDTOS;
     }
 }

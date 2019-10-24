@@ -12,4 +12,6 @@ public interface AirplaneRepository extends JpaRepository<Airplane,Long> {
 
     @Query(value = "SELECT * FROM `airplane` WHERE `id_air_company` = ?",nativeQuery = true)
     List<Airplane> getAllForIdAirportCompany(Long id);
+    @Query(value = "SELECT * FROM `airplane` WHERE `id_airplane` = ?",nativeQuery = true)
+    Airplane getAirplaneById(Long id);
 }

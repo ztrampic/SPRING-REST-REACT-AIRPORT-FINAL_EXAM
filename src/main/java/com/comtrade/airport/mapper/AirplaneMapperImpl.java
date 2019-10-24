@@ -7,7 +7,9 @@ import com.comtrade.airport.entity.Airplane;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class AirplaneMapperImpl implements AirplaneMapper{
@@ -24,6 +26,11 @@ public class AirplaneMapperImpl implements AirplaneMapper{
         airplane.setMark(mark);
         airplane.setSeatingCapacity(seatingCapacity);
         airplane.setMaxDistance(maxDistance);
+        if(airplaneDto.getIdAirplane() == null){
+            airplane.setIdAirplane(null);
+        }else{
+            airplane.setIdAirplane(Long.parseLong(airplaneDto.getIdAirplane()));
+        }
         return airplane;
     }
 
@@ -55,5 +62,22 @@ public class AirplaneMapperImpl implements AirplaneMapper{
         airplaneDTO.setMaxFlyDistance(String.valueOf(a.getMaxDistance()));
         airplaneDTO.setSeatingCapacity(String.valueOf(a.getSeatingCapacity()));
         return airplaneDTO;
+    }
+
+    @Override
+    public Set<AirplaneDTO> convertSetToDTOSet(Set<Airplane> airplaneSet) {
+        Set<AirplaneDTO>airplaneDTOS = new HashSet<>();
+        for(Airplane a : airplaneSet){
+            AirplaneDTO airplaneDTO = new AirplaneDTO();
+            AirCompanyDTO airCompanyDTO = new AirCompanyDTO();
+            airCompanyDTO.setIdAirCompany(String.valueOf(a.getAirCompany().getIdAirCompany()));
+            airplaneDTO.setAirCompanyDTO(airCompanyDTO);
+            airplaneDTO.setIdAirplane(String.valueOf(a.getIdAirplane()));
+            airplaneDTO.setMark(a.getMark());
+            airplaneDTO.setMaxFlyDistance(String.valueOf(a.getMaxDistance()));
+            airplaneDTO.setSeatingCapacity(String.valueOf(a.getSeatingCapacity()));
+            airplaneDTOS.add(airplaneDTO);
+        }
+        return airplaneDTOS;
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Button } from 'semantic-ui-react'
 
-function AirCompanyTabsAirportSearchTable({searchResultAirports}) {
+function AirCompanyTabsAirportSearchTable({searchResultAirports,handleCheck,buttonDisabled}) {
     
     let searchResult = searchResultAirports.map((airport)=>{
         return (
@@ -11,7 +11,9 @@ function AirCompanyTabsAirportSearchTable({searchResultAirports}) {
                 <Table.Cell>{airport.airportDTO.city}</Table.Cell>
                 <Table.Cell>{airport.airportDTO.name}</Table.Cell>
                 <Table.Cell>{airport.distance} KM</Table.Cell>
-                <Table.Cell><Button id = {airport.id} color='green' style={{fontSize:'smaller'}}>Add</Button></Table.Cell>
+                <Table.Cell>
+                    <Button disabled={buttonDisabled} onClick={()=>handleCheck(airport.airportDTO.id)} color='green' style={{fontSize:'smaller'}}>Add</Button>
+                </Table.Cell>
             </Table.Row>        
 
         )

@@ -8,6 +8,7 @@ import com.comtrade.airport.entity.Airplane;
 import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.entity.FlightRequest;
 import com.comtrade.airport.enums.FlightRequestStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,6 +16,16 @@ import java.util.List;
 
 @Component
 public class FlightRequestMapperImpl implements FlightRequestMapper {
+
+    private final AirportMapper airportMapper;
+    private final AirCompanyMapper airCompanyMapper;
+    private final AirplaneMapper airplaneMapper;
+    @Autowired
+    public FlightRequestMapperImpl(AirportMapper airportMapper, AirCompanyMapper airCompanyMapper, AirplaneMapper airplaneMapper) {
+        this.airportMapper = airportMapper;
+        this.airCompanyMapper = airCompanyMapper;
+        this.airplaneMapper = airplaneMapper;
+    }
 
     @Override
     public List<FlightRequestDTO> convertToListDTOs(List<FlightRequest> list) {
@@ -47,16 +58,28 @@ public class FlightRequestMapperImpl implements FlightRequestMapper {
     @Override
     public FlightRequest convertDTOtoEntity(FlightRequestDTO flightRequestDTO) {
         FlightRequest flightRequest = new FlightRequest();
-        Airplane airplane = new Airplane();
+        Airplane airplane = airplaneMapper.convertDTOtoEntity(flightRequestDTO.getAirplaneDTO());
         Airport airport = new Airport();
         airplane.setIdAirplane(Long.parseLong(flightRequestDTO.getAirplaneDTO().getIdAirplane()));
         airport.setId(Long.parseLong(flightRequestDTO.getDestinationAirportDTO().getId()));
         flightRequest.setAirplane(airplane);
+        flightRequest.setStatus(checkStatus(flightRequestDTO.getStatus()));
         flightRequest.setDestinationAirort(airport);
         flightRequest.setDatum(flightRequestDTO.getDatum());
-        flightRequest.setStatus(FlightRequestStatus.PENDING);
         flightRequest.setDescription(flightRequestDTO.getDescription());
         return flightRequest;
+    }
+
+    private FlightRequestStatus checkStatus(String status) {
+        switch (status){
+            case "PENDING":
+                return FlightRequestStatus.PENDING;
+            case "DECLINED":
+                return FlightRequestStatus.DECLINED;
+            case "APROVED":
+                return FlightRequestStatus.APROVED;
+        }
+        return FlightRequestStatus.PENDING;
     }
 
 }

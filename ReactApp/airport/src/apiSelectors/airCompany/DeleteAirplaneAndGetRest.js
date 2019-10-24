@@ -2,14 +2,14 @@ import DataUtils from "../../DataUtils"
 import { getTokenFromSessionStorage } from "../../Helpers/AuthHelper"
 
 
-export const insertNewFlyRequest = async function (data) {
+export const deleteAirplaneAndGetRest = async function (id) {
     const token = getTokenFromSessionStorage()
     const headers = {
       'Authorization': token,
       'Content-Type': 'application/json'
     }
-    const result = await DataUtils.post('api/flightRequest/insertNewFR', data , { headers })
+    const result = await DataUtils.get('/api/airplane/deleteAndGetRest/'+id, { headers })
     return result
 }
 
-export default insertNewFlyRequest
+export default deleteAirplaneAndGetRest
