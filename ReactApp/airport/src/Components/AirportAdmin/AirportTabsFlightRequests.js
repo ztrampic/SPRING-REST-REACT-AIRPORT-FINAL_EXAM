@@ -17,6 +17,7 @@ class AirportTabsFlightRequests extends React.Component {
         this.closeFlightModal = this.closeFlightModal.bind(this)
         this.getAllPendingFlightRequsts = this.getAllPendingFlightRequsts.bind(this)
         this.deleteFlightRequest = this.deleteFlightRequest.bind(this)
+        this.declineFlightRequest = this.declineFlightRequest.bind(this)
     }
 
 
@@ -50,12 +51,17 @@ class AirportTabsFlightRequests extends React.Component {
     }
 
     deleteFlightRequest(id){
-        console.log(id,"IDDDDDDDDDDDDDDD");
-        
         select('deleteFlightRequest',id)
         .then(res=>{
             this.getAllFlightRequests();
         })
+    }
+
+    declineFlightRequest(id){
+        select('declineFlightRequest',id)
+            .then(res => {
+                this.getAllFlightRequests();
+            })
     }
 
     render() {
@@ -63,7 +69,7 @@ class AirportTabsFlightRequests extends React.Component {
         return (
             <div>
                 <Segment>
-                    <Button onClick={this.getAllFlightRequests} style={{ fontSize: 'smaller', color: 'white', backgroundColor: 'rgb(33, 186, 69)' }}>Get all</Button>
+                    <Button onClick={this.getAllFlightRequests} style={{ fontSize: 'smaller', color: 'white', backgroundColor: 'rgb(33, 186, 69)',position:'absolute',right:'1rem' }}>Get all</Button>
                     <Button onClick={this.getAllPendingFlightRequsts} style={{ fontSize: 'smaller', color: 'white', backgroundColor: 'rgb(33, 186, 69)' }}>Get Pending</Button>
                 </Segment>
                 <Segment>
@@ -77,6 +83,7 @@ class AirportTabsFlightRequests extends React.Component {
                     open={modalFlightIsOpen}
                     close={this.closeFlightModal}
                     flightRequest = {flightRequest}
+                    declineFlightRequest = {this.declineFlightRequest}
                     />
             </div>
             

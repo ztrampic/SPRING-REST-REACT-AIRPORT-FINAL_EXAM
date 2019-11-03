@@ -69,11 +69,14 @@ public class FlightRequestController {
         List<FlightRequestDTO> flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequests);
         return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS, HttpStatus.OK);
     }
-    @PutMapping("/declineFlightRequest/{id}")
+    @GetMapping("/declineFlightRequest/{id}")
     public ResponseEntity<?>declineFlightRequest(@PathVariable(value = "id") Long id){
-        List<FlightRequest>flightRequestList = flightRequestService.declineFlightRequest(id);
-        List<FlightRequestDTO>flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequestList);
-        return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+       try {
+           flightRequestService.declineFlightRequest(id);
+           return new ResponseEntity<>(HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
     @PutMapping("/acceptFlightRequest/{id}")
     public ResponseEntity<?>acceptFlightRequest(@PathVariable(value = "id") Long id){

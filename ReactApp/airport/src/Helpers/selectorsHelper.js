@@ -31,6 +31,7 @@ import getAllForDate from '../apiSelectors/flight/GetAllForDate'
 import insertNewFlight from '../apiSelectors/flight/InserNewFlight'
 import approveFlightRequest from '../apiSelectors/flightRequest/ApproveFlightRequest'
 import deleteFlightRequest from '../apiSelectors/flightRequest/DeleteFlightRequest'
+import declineFlightRequest from '../apiSelectors/flightRequest/DeclineFlightRequest'
 
 export default{
     userSingUp,
@@ -66,4 +67,5 @@ export default{
     insertNewFlight,
     approveFlightRequest,
     deleteFlightRequest,
+    declineFlightRequest,
 }

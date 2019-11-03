@@ -56,16 +56,7 @@ public class FlightRequsetServiceImpl implements FlightRequestService{
         return list;
     }
 
-    @Override
-    @Transactional
-    public List<FlightRequest> declineFlightRequest(Long id) {
-        FlightRequest flightRequest = flightRequsetRepository.getFlightRequestById(id);
-        flightRequest.setStatus(FlightRequestStatus.DECLINED);
-        flightRequsetRepository.save(flightRequest);
-        String status = String.valueOf(FlightRequestStatus.PENDING);
-        List<FlightRequest> list = flightRequsetRepository.findAllByFlightRequestStatus(status);
-        return list;
-    }
+
 
     @Override
     @Transactional
@@ -91,5 +82,13 @@ public class FlightRequsetServiceImpl implements FlightRequestService{
     @Transactional
     public void deleteFlightRequest(Long id) {
         flightRequsetRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void declineFlightRequest(Long id) {
+        FlightRequest flightRequest = flightRequsetRepository.getFlightRequestById(id);
+        flightRequest.setStatus(FlightRequestStatus.DECLINED);
+        flightRequsetRepository.save(flightRequest);
     }
 }

@@ -19,7 +19,7 @@ const DepartureTable = ({flights}) => {
     });
 
     return (
-        <div>
+        <div style={{overflowY:'scroll'}}>
             <Table celled fixed singleLine style={{textAlign:'center',fontSize:'11px'}}>
                 <Table.Header>
                     <Table.Row>

@@ -53,7 +53,7 @@ class FormNewFlight extends Component {
 
     render() {
         return (
-            <div style={{ display: 'flex' }}>
+            <div style={{marginTop:'0.5rem'}}>
               <Form style={{display:'flex'}} onSubmit={this.insertFlight}> 
                 <GridColumn style={{marginRight:'1rem'}}>
                     <Label style={{width:'100%',color:'white',backgroundColor:'rgb(33, 133, 208)'}}>Departure date</Label>
@@ -76,7 +76,7 @@ class FormNewFlight extends Component {
                     <Label style={{width:'100%',color:'white',backgroundColor:'rgb(33, 133, 208)'}}>{this.props.flightRequest.airplaneDTO.airCompanyDTO.name}</Label>
                     <Button type="submit" size='tiny' style={{fontSize:"10px",marginTop:'0.5rem',backgroundColor:'rgb(33, 186, 69)',color:'white'}}>Insert New Flight</Button>
                 </GridColumn>
-              </Form>   
+              </Form> 
             </div>
         )
     }

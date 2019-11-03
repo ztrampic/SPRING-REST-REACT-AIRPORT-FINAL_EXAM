@@ -49,7 +49,7 @@ class ModalInsertFlight extends React.Component {
         const flightRequest = this.props.flightRequest;
         return (
             <div>
-                <Modal dimmer='inverted' open={this.props.open} style={{ maxHeight: '50rem', position: 'absolute', width: '50%', left: "25%", right: '25%', top: '20%' }}>
+                <Modal dimmer='inverted' open={this.props.open} style={{ maxHeight: '40rem', position: 'absolute', width: '50%', left: "25%", right: '25%', top: '20%' }}>
                     <Modal.Header style={{ maxHeight: '5vh',backgroundColor:'rgb(33, 133, 208)',color:'white'}}>Flight Check and New Flight<span style={{color:'red',position:'absolute',right:1}}>Available termins:{availableTermins}</span></Modal.Header>
                     <Modal.Content>
                         <Grid.Row style={{borderColor: 'black', borderStyle: 'double' }}>    
@@ -76,7 +76,10 @@ class ModalInsertFlight extends React.Component {
                         </Grid.Row>
 
                     </Modal.Content>
-                    <Modal.Actions style={{ width: '100%', position: 'absolute', bottom: '0' }}><Button onClick={this.props.close}>Close</Button></Modal.Actions>
+                    <Modal.Actions style={{ width: '100%', position: 'absolute', bottom: '0',backgroundColor:'#2185d0' }}>
+                        <Button style={{backgroundColor:'white'}} onClick={this.props.close}>Close</Button>
+                        <Button onClick={()=>this.props.declineFlightRequest(flightRequest.idFR)} type="submit" size='tiny' style={{ position:'absolute',left:0, fontSize:"10px",marginTop:'0.5rem',backgroundColor:'red',color:'white'}}>Decline Flight</Button>
+                    </Modal.Actions>
                 </Modal>
             </div>
         )
