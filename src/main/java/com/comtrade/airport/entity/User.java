@@ -30,6 +30,8 @@ public class User {
     private Set<Role> roleSet = new HashSet<>();
     @ManyToMany(mappedBy = "setUsers")
     private Set<AirCompany>airCompanySet;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Reservation>reservationSet;
 
     public User(String firstName, String lastName, @Email String email, String password, String username, String phoneNumber) {
         this.firstName = firstName;
@@ -42,6 +44,10 @@ public class User {
 
     public User() {
     }
+
+    public Set<Reservation> getReservationSet() {return reservationSet;}
+
+    public void setReservationSet(Set<Reservation> reservationSet) {this.reservationSet = reservationSet;}
 
     public Set<AirCompany> getAirCompanySet() {
         return airCompanySet;

@@ -13,4 +13,6 @@ public interface FlightRequestService {
     List<FlightRequest> acceptFlightRequst(Long id);
     List<FlightRequest> getAllAccepted();
     List<FlightRequest> getAllDeclined();
+    void approveFlightRequest(Long id);
+    void deleteFlightRequest(Long id);
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Segment} from 'semantic-ui-react';
 
 import AirportTabs from '../Components/AirportAdmin/AirportTabs';
+import { select } from '../Helpers/DataUtilsHelper';
 
 
 
@@ -36,7 +37,16 @@ export class AdminHomePage extends Component {
   }
 
   componentDidMount() {
-  }  
+    this.getUserAirportData();
+}
+getUserAirportData(){
+    const  idUserAirport = 1;
+  select('getUserOfAppInfo',idUserAirport)
+      .then(res => {
+        let userAirportDataApi = res;
+        sessionStorage.setItem('userAirport', JSON.stringify(userAirportDataApi));       
+      })
+   } 
 
   render() {
     return (

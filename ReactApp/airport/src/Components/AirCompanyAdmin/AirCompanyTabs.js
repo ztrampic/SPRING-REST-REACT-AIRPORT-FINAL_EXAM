@@ -40,7 +40,6 @@ export default class AirCompanyTabs extends React.Component {
 
   openModalFlightRequest(airplane){
     this.setState({avion:airplane})
-    
     this.setState({modalAddFlightRequestOpen:true})
   }
   closeModalFlightRequest(){
@@ -67,7 +66,9 @@ export default class AirCompanyTabs extends React.Component {
   }
 
   insertAirplane(){
-    const airCompanyDTO = {idAirCompany:"1"}
+    const id = JSON.parse(sessionStorage.getItem('userAircompanyInfo'));
+    console.log(id.idAirCompany,"STA JE OVO");
+    const airCompanyDTO = {idAirCompany:id.idAirCompany}
     const mark = document.getElementById('mark').value;
     const seatingCapacity = document.getElementById('numberOfSeats').value;
     const maxFlyDistance = document.getElementById('maxFlyDistance').value;
@@ -89,8 +90,8 @@ export default class AirCompanyTabs extends React.Component {
 
 
   getAllAirplanes(){
-    const id = 1;
-    select('getAllAirplanes', id)
+    const id = JSON.parse(sessionStorage.getItem('userAircompanyInfo'));
+    select('getAllAirplanes', id.idAirCompany)
     .then(res=>{
       const apiAirplanes = res.data;
       this.setState({airplanes:apiAirplanes})

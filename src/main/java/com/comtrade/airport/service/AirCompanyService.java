@@ -11,4 +11,5 @@ public interface AirCompanyService {
     AirCompany getAirCompanyForAdminId(Long id);
     AirCompany findAirCompanyById(Long idAirCompany);
     Airplane findByIdAndUpdateFleet(long parseLong, Airplane airplaneWithId);
+    AirCompany findByAirplaneId(Long airplaneId);
 }

@@ -21,11 +21,16 @@ import insertNewAirplane from '../apiSelectors/airCompany/InsertNewAirplane'
 import getAllAirplanes from '../apiSelectors/airCompany/GetAllAirplanes'
 import insertNewFlyRequest from '../apiSelectors/airCompany/InsertNewFlyRequest'
 import getSearchAirportByCity from '../apiSelectors/airCompany/GetSerachAirportByCity'
+import getAllFlightRequests from '../apiSelectors/flightRequest/GetAllFlightRequests'
 import getApprovedFlightRequests from '../apiSelectors/flightRequest/GetApprovedFlightRequests'
 import getDeclinedFlightRequests from '../apiSelectors/flightRequest/GetDeclinedFlightRequests'
 import getPendingFlightRequests from '../apiSelectors/flightRequest/GetPendingFlightRequests'
 import checkAvailableTermin from '../apiSelectors/airport/CheckAvailableTermin'
 import deleteAirplaneAndGetRest from '../apiSelectors/airCompany/DeleteAirplaneAndGetRest'
+import getAllForDate from '../apiSelectors/flight/GetAllForDate'
+import insertNewFlight from '../apiSelectors/flight/InserNewFlight'
+import approveFlightRequest from '../apiSelectors/flightRequest/ApproveFlightRequest'
+import deleteFlightRequest from '../apiSelectors/flightRequest/DeleteFlightRequest'
 
 export default{
     userSingUp,
@@ -51,9 +56,14 @@ export default{
     getAllAirplanes,
     insertNewFlyRequest,
     getSearchAirportByCity,
+    getAllFlightRequests,
     getApprovedFlightRequests,
     getDeclinedFlightRequests,
     getPendingFlightRequests,
     checkAvailableTermin,
     deleteAirplaneAndGetRest,
+    getAllForDate,
+    insertNewFlight,
+    approveFlightRequest,
+    deleteFlightRequest,
 }

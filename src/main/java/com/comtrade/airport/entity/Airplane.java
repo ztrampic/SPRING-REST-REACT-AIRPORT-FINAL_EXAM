@@ -19,6 +19,17 @@ public class Airplane {
     @JsonIgnore
     @OneToMany(mappedBy = "airplane",orphanRemoval = true)
     private Set<FlightRequest>flightRequestSet;
+    @JsonIgnore
+    @OneToMany(mappedBy = "airplane",orphanRemoval = true)
+    private Set<Flight> flightSet;
+
+    public Set<Flight> getFlightSet() {
+        return flightSet;
+    }
+
+    public void setFlightSet(Set<Flight> flightSet) {
+        this.flightSet = flightSet;
+    }
 
     public Set<FlightRequest> getFlightRequestSet() {
         return flightRequestSet;
@@ -66,6 +77,16 @@ public class Airplane {
 
     public void setMaxDistance(Double maxDistance) {
         this.maxDistance = maxDistance;
+    }
+
+    public void addToFlightSet(Flight flight){
+        flightSet.add(flight);
+        flight.setAirplane(this);
+    }
+
+    public void removeFlightFromSet(Flight flight){
+        flightSet.remove(flight);
+        flight.setAirplane(null);
     }
 
 }

@@ -1,10 +1,8 @@
 package com.comtrade.airport.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Flight {
@@ -14,7 +12,7 @@ public class Flight {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idAirCompany")
     private AirCompany airCompany;
-    private String flightName;
+    private String flightNumber;
     private Double distance;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departureAirportId", referencedColumnName = "id")
@@ -22,10 +20,38 @@ public class Flight {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrivalAirportId", referencedColumnName = "id")
     private Airport arrivalAirport;
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
-    private LocalDate date;
-    private int numberOfTicket;
-    private Double priceOfTicket;
+    private int availableSeats;
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST},fetch = FetchType.LAZY)
+    @JoinTable(name = "flight_reservation",
+            joinColumns = { @JoinColumn(name = "id_flight") },
+            inverseJoinColumns = { @JoinColumn(name = "id_reservation") })
+    private Set<Reservation> reservationSet;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Airplane airplane;
+    @OneToOne(mappedBy = "flight")
+    private FlightSchedule flightSchedule;
+
+    public FlightSchedule getFlightSchedule() {
+        return flightSchedule;
+    }
+    public void setFlightSchedule(FlightSchedule flightSchedule) {
+        this.flightSchedule = flightSchedule;
+    }
+    public Airplane getAirplane() {
+        return airplane;
+    }
+
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
+    }
+
+    public Set<Reservation> getReservationSet() {
+        return reservationSet;
+    }
+
+    public void setReservationSet(Set<Reservation> reservationSet) {
+        this.reservationSet = reservationSet;
+    }
 
     public Long getIdFlight() {
         return idFlight;
@@ -43,12 +69,12 @@ public class Flight {
         this.airCompany = airCompany;
     }
 
-    public String getFlightName() {
-        return flightName;
+    public String getFlightNumber() {
+        return flightNumber;
     }
 
-    public void setFlightName(String flightName) {
-        this.flightName = flightName;
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber = flightNumber;
     }
 
     public Double getDistance() {
@@ -75,28 +101,12 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public int getNumberOfTicket() {
-        return numberOfTicket;
-    }
-
-    public void setNumberOfTicket(int numberOfTicket) {
-        this.numberOfTicket = numberOfTicket;
-    }
-
-    public Double getPriceOfTicket() {
-        return priceOfTicket;
-    }
-
-    public void setPriceOfTicket(Double priceOfTicket) {
-        this.priceOfTicket = priceOfTicket;
+    public void setAvailableSeats(int availableSeats) {
+        this.availableSeats = availableSeats;
     }
 
     @Override
@@ -109,6 +119,7 @@ public class Flight {
 
     @Override
     public int hashCode() {
-        return 31;
+        return Objects.hash(getIdFlight());
     }
+
 }

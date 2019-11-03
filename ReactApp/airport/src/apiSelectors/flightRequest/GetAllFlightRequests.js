@@ -1,15 +1,14 @@
 import DataUtils from "../../DataUtils"
 import { getTokenFromSessionStorage } from "../../Helpers/AuthHelper"
 
-
-export const updateUserOfAppAdmin = async function (userOfApplicationData) {
+export const getAllFlightRequests = async function () {
     const token = getTokenFromSessionStorage()
     const headers = {
       'Authorization': token,
       'Content-Type': 'application/json'
     }
-    const result = await DataUtils.put('/api/userAirport/updateUserOfApplicationData',userOfApplicationData,{ headers })
+    const result = await DataUtils.get('/api/flightRequest/getAll', { headers })
     return result
 }
 
-export default updateUserOfAppAdmin
+export default getAllFlightRequests

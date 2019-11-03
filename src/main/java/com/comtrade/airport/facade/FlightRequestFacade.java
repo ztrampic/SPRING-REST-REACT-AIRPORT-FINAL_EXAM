@@ -8,6 +8,8 @@ import com.comtrade.airport.service.FlightRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FlightRequestFacade {
     private final FlightRequestService flightRequestService;
@@ -27,5 +29,17 @@ public class FlightRequestFacade {
             e.printStackTrace();
         }
 
+    }
+
+    public List<FlightRequestDTO> getAllFR() {
+        List<FlightRequest> flightRequests = flightRequestService.getAll();
+        List<FlightRequestDTO> listDtos = flightRequestMapper.convertToListDTOs(flightRequests);
+        return listDtos;
+    }
+
+    public List<FlightRequestDTO> getAllPendingRequests() {
+        List<FlightRequest> flightRequests = flightRequestService.getAllPennding();
+        List<FlightRequestDTO> flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequests);
+        return flightRequestDTOS;
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class FlightRequsetServiceImpl implements FlightRequestService{
@@ -77,5 +76,20 @@ public class FlightRequsetServiceImpl implements FlightRequestService{
         String status = String.valueOf(FlightRequestStatus.PENDING);
         List<FlightRequest> list = flightRequsetRepository.findAllByFlightRequestStatus(status);
         return list;
+    }
+
+    @Override
+    @Transactional
+    public void approveFlightRequest(Long id) {
+        FlightRequest flightRequest = flightRequsetRepository.getFlightRequestById(id);
+        flightRequest.setStatus(FlightRequestStatus.APROVED);
+        flightRequsetRepository.save(flightRequest);
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteFlightRequest(Long id) {
+        flightRequsetRepository.deleteById(id);
     }
 }

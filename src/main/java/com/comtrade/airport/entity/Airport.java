@@ -27,15 +27,33 @@ public class Airport {
     @JsonIgnore
     @OneToMany(mappedBy = "destinationAirport")
     private Set<FlightRequest>flightRequestSet;
+    @OneToMany(mappedBy = "departureAirport")
+    private Set<Flight> departureFlights;
+    @OneToMany(mappedBy = "arrivalAirport")
+    private Set<Flight> arrivalFlights;
+
+    public Set<Flight> getDepartureFlights() {
+        return departureFlights;
+    }
+
+    public void setDepartureFlights(Set<Flight> departureFlights) {
+        this.departureFlights = departureFlights;
+    }
+
+    public Set<Flight> getArrivalFlights() {
+        return arrivalFlights;
+    }
+
+    public void setArrivalFlights(Set<Flight> arrivalFlights) {
+        this.arrivalFlights = arrivalFlights;
+    }
 
     public Set<FlightRequest> getFlightRequestSet() {
         return flightRequestSet;
     }
-
     public void setFlightRequestSet(Set<FlightRequest> flightRequestSet) {
         this.flightRequestSet = flightRequestSet;
     }
-
     public String getEmail() {
         return email;
     }
@@ -135,6 +153,25 @@ public class Airport {
     public void removeAirCompany(AirCompany airCompany){
         airCompanySet.remove(airCompany);
         airCompany.getAirportList().remove(this);
+    }
+    public void addArrivalFlight(Flight flight){
+        arrivalFlights.add(flight);
+        flight.setArrivalAirport(this);
+    }
+
+    public void removeArrivalFlight(Flight flight){
+        arrivalFlights.remove(flight);
+        flight.setArrivalAirport(null);
+    }
+
+    public void addDepartureFlight(Flight flight){
+        departureFlights.add(flight);
+        flight.setDepartureAirport(this);
+    }
+
+    public void removeDepartureFlight(Flight flight){
+        departureFlights.remove(this);
+        flight.setDepartureAirport(null);
     }
 
     @Override

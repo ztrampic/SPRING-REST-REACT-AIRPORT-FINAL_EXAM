@@ -43,8 +43,6 @@ searchAirCompanyByName(){
 }
 addUserAirCompany(id){
     const{userOfApplicationData} = this.state
-    console.log("USER",userOfApplicationData.data.airportDTO);
-    console.log("USER",id);
     const AirportAdminSearchDTO  = {airportDTO:userOfApplicationData.data.airportDTO,distance:id}
     console.log(AirportAdminSearchDTO);
     

@@ -12,4 +12,5 @@ public interface AirplaneService {
     Airplane insertNewAirplane(Airplane airplane);
     void removeAll(AirCompany airCompany);
     Set<Airplane> deleteAndGetRest(Long id);
+    Airplane getAirplaneById(long parseLong);
 }

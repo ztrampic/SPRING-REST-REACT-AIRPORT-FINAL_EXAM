@@ -41,15 +41,21 @@ public class FlightRequestController {
 
     @GetMapping("/getAll")
     public ResponseEntity<?>getAllFR(){
-        List<FlightRequest> flightRequests = flightRequestService.getAll();
-        List<FlightRequestDTO> listDtos = flightRequestMapper.convertToListDTOs(flightRequests);
-        return new ResponseEntity<List<FlightRequestDTO>>(listDtos, HttpStatus.OK);
+       try{
+           List<FlightRequestDTO> listDtos = flightRequestFacade.getAllFR();
+           return new ResponseEntity<List<FlightRequestDTO>>(listDtos, HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
     @GetMapping("/getAllPennding")
     public ResponseEntity<?>getAllPendding(){
-        List<FlightRequest> flightRequests = flightRequestService.getAllPennding();
-        List<FlightRequestDTO> flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequests);
-        return  new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+       try {
+           List<FlightRequestDTO>flightRequestDTOS = flightRequestFacade.getAllPendingRequests();
+           return  new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+       }catch (Exception e){
+           return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
     }
     @GetMapping("/getAllAccepted")
     public ResponseEntity<?>getAllAccepted(){
@@ -74,6 +80,24 @@ public class FlightRequestController {
         List<FlightRequest>flightRequestList = flightRequestService.acceptFlightRequst(id);
         List<FlightRequestDTO>flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequestList);
         return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
+    }
+    @GetMapping("/approve/{id}")
+    public ResponseEntity<?>approveFlightRequest(@PathVariable(value = "id")Long id){
+       try{
+           flightRequestService.approveFlightRequest(id);
+           return new ResponseEntity<>(HttpStatus.OK);
+       }catch (Exception e){
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+       }
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?>deleteFlightRequest(@PathVariable(value = "id")Long id){
+        try {
+            flightRequestService.deleteFlightRequest(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 

@@ -62,4 +62,9 @@ public class AirplaneServiceImpl implements AirplaneService{
         return updatedAirCompany.getFleet();
     }
 
+    @Override
+    public Airplane getAirplaneById(long id) {
+        Airplane airplane = airplaneRepository.getAirplaneById(id);
+        return airplane;
+    }
 }

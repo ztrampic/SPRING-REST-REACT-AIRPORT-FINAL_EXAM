@@ -1,7 +1,5 @@
 package com.comtrade.airport.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,7 +20,6 @@ public class AirCompany {
     @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Flight> flightList;
     @OneToMany(mappedBy = "airCompany",cascade = CascadeType.ALL)
-    @JsonIgnore
     private Set<Airplane> fleet ;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "AircompanyUsers", joinColumns = @JoinColumn(name = "idAirCompany"), inverseJoinColumns = @JoinColumn(name = "userId"))
