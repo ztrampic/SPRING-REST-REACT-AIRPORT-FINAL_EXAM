@@ -1,7 +1,6 @@
 package com.comtrade.airport.entity;
 
 import com.comtrade.airport.enums.TicketStatus;
-import com.comtrade.airport.enums.TicketType;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -12,10 +11,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
-    @Enumerated(EnumType.STRING)
-    @NaturalId
-    @Column(length = 60)
-    private TicketType ticketType;
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,optional = true)
+    @JoinColumn(name = "ticketValueId", referencedColumnName = "id")
+    private TicketValue ticketValue;
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 60)
@@ -23,23 +21,6 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reservation", referencedColumnName = "id")
     private Reservation reservation;
-    private Double price;
-
-    public TicketStatus getTicketStatus() {
-        return ticketStatus;
-    }
-
-    public void setTicketStatus(TicketStatus ticketStatus) {
-        this.ticketStatus = ticketStatus;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     public Long getId() {
         return id;
@@ -57,12 +38,20 @@ public class Ticket {
         this.number = number;
     }
 
-    public TicketType getTicketType() {
-        return ticketType;
+    public TicketValue getTicketValue() {
+        return ticketValue;
     }
 
-    public void setTicketType(TicketType ticketType) {
-        this.ticketType = ticketType;
+    public void setTicketValue(TicketValue ticketValue) {
+        this.ticketValue = ticketValue;
+    }
+
+    public TicketStatus getTicketStatus() {
+        return ticketStatus;
+    }
+
+    public void setTicketStatus(TicketStatus ticketStatus) {
+        this.ticketStatus = ticketStatus;
     }
 
     public Reservation getReservation() {

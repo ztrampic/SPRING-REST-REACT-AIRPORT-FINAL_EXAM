@@ -7,6 +7,15 @@ public class FlightScheduleDTO {
     private String arrivalTime;
     private String arrivalDate;
     private FlightDTO flight;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Long getId() {
         return id;

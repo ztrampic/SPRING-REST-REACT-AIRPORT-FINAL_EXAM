@@ -30,6 +30,7 @@ export class MojHeader extends Component {
             <header style={{height:'150px'}} className="header">
                 <div className="brand-box">
                      <a href="/" className="btn btn-white btn-animated">Home<span style={{marginLeft:'5px'}}></span>{this.state.time.toLocaleTimeString()}</a>
+                     <a href="/aerodrom" className="btn btn-white btn-animated">Temp Search All</a> 
                 </div>
                 <div className="text-box">
                     <h1 className="heading-primary">

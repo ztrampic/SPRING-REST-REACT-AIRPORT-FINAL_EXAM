@@ -2,7 +2,6 @@ import { checkIsAuth } from "../../Helpers/AuthHelper";
 import AdminHomePage from "../../Admin/AdminHomePage";
 import { Redirect, Route } from "react-browser-router";
 import React, { Component } from 'react'
-import PretragaAerodromaPage from "../../User/PretragaAerodromaPage";
 import AirCompanyAdminPage from "../../Admin/AirCompanyAdminPage";
 
 export default class CheckLoggedIn extends Component {
@@ -29,7 +28,6 @@ export default class CheckLoggedIn extends Component {
 const AdminRouter = ({ match }) => (
     <div>
         <Route exact path={match.url} component={AdminHomePage} />
-        <Route exact path={`${match.url}/aerodrom`} component={PretragaAerodromaPage} />
     </div>
        );
 const AdminAircompanyRouter = ({ match }) => (

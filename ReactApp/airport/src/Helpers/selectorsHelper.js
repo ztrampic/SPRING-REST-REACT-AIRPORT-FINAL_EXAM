@@ -32,6 +32,11 @@ import insertNewFlight from '../apiSelectors/flight/InserNewFlight'
 import approveFlightRequest from '../apiSelectors/flightRequest/ApproveFlightRequest'
 import deleteFlightRequest from '../apiSelectors/flightRequest/DeleteFlightRequest'
 import declineFlightRequest from '../apiSelectors/flightRequest/DeclineFlightRequest'
+import getAllForAirCompany from '../apiSelectors/flight/GetAllForAirCompany'
+import getAllTicketTypes from '../apiSelectors/tickets/GetAllTicketTypes'
+import addNewTicketValue from '../apiSelectors/tickets/AddNewTicketValue'
+import getAllTicketValues from '../apiSelectors/tickets/GetAllTicketValues'
+import getFirstFiveDepartureFlights from '../apiSelectors/flight/GetFirstFiveDepartureFlights'
 
 export default{
     userSingUp,
@@ -68,4 +73,9 @@ export default{
     approveFlightRequest,
     deleteFlightRequest,
     declineFlightRequest,
+    getAllForAirCompany,
+    getAllTicketTypes,
+    addNewTicketValue,
+    getAllTicketValues,
+    getFirstFiveDepartureFlights,
 }

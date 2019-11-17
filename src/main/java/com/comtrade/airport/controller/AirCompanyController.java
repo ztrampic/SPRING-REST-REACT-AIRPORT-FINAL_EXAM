@@ -2,6 +2,7 @@ package com.comtrade.airport.controller;
 
 import com.comtrade.airport.dto.AirCompanyDTO;
 import com.comtrade.airport.dto.AirportAdminSearchDTO;
+import com.comtrade.airport.dto.FlightDTO;
 import com.comtrade.airport.dto.SingUpDTO;
 import com.comtrade.airport.dto.responseLogin.ResponseMessage;
 import com.comtrade.airport.facade.AirCompanyFacade;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.ConstraintViolationException;
 import java.util.Set;
 
@@ -64,5 +66,14 @@ public class AirCompanyController {
        }catch (Exception e){
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
        }
+    }
+    @GetMapping("/getAllFlights/{id}")
+    public ResponseEntity<?>getFlights(@PathVariable(value = "id")Long id){
+        try {
+           Set<FlightDTO> flightDTOS = airCompanyFacade.getAllFlights(id);
+            return new ResponseEntity<Set<FlightDTO>>(flightDTOS,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

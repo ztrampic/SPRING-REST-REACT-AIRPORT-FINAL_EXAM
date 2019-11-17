@@ -7,6 +7,7 @@ import AirCompanyTabsAirplaneTable from './AirCompanyTabsAirplaneTable';
 import AirCompanyFlightRequestsTable from './AirCompanyFlightRequestsTable';
 import { select } from '../../Helpers/DataUtilsHelper';
 import ModalFlightRequest from '../modals/ModalFlightRequest';
+import FlightsAdministration from '../FlightsAdministration';
 
 
 
@@ -174,29 +175,7 @@ export default class AirCompanyTabs extends React.Component {
             </Row>
           </TabPane>
           <TabPane tabId="2">
-            <Row>
-              <Col sm="6">
-                <Card body>
-                  <CardTitle>Pretraga aerodroma na kojima smo korisnici</CardTitle>
-                  <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                  <Button>Go somewhere</Button>
-                </Card>
-              </Col>
-              <Col sm="6">
-              <Segment.Group>
-                <Segment>
-                  <Button onClick={this.loadAllApprovedFlights}>Load All Approved</Button>
-                  <Button onClick={this.loadAllDeclinedFlights}>Load All Declined</Button>
-                  <Button onClick={this.loadAllPendingFlights}>Load All Pending</Button>
-                </Segment>
-                <Segment>
-                  <AirCompanyFlightRequestsTable
-                      flightRequests={flightRequests}
-                  /> 
-                </Segment>
-              </Segment.Group>
-              </Col>
-            </Row>
+            <FlightsAdministration/>
           </TabPane>
           <TabPane tabId="3">
             <Row>

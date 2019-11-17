@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightFacade {
@@ -35,9 +36,9 @@ public class FlightFacade {
 
     public void insertNewFlight(FlightDTO flightDTO) throws ParseException {
         AirCompany airCompany = airCompanyService.findByAirplaneId(Long.parseLong(flightDTO.getIdAirplane()));
-        Airplane airplane = airplaneService.getAirplaneById(Long.valueOf(flightDTO.getIdAirplane()));
-        Airport departureAirport = airportService.findById(Long.valueOf(flightDTO.getHomeAirportId()));
-        Airport arrivalAirport = airportService.findById(Long.valueOf(flightDTO.getIdDestination()));
+        Airplane airplane = airplaneService.getAirplaneById(Long.parseLong(flightDTO.getIdAirplane()));
+        Airport departureAirport = airportService.findById(Long.parseLong(flightDTO.getHomeAirportId()));
+        Airport arrivalAirport = airportService.findById(Long.parseLong(flightDTO.getIdDestination()));
         Flight flight = flightMapper.createFlight(airCompany,airplane,departureAirport,arrivalAirport,flightDTO);
         FlightSchedule flightSchedule = flightScheduleMapper.createFlightSchedule(flightDTO);
         Flight flightWitId = flightService.insertNewFlight(flight);
@@ -51,14 +52,27 @@ public class FlightFacade {
 
     public Set<FlightDTO> getAllDepartureFlightsForDate(Long id, String date) throws ParseException {
         List<Flight> flights = flightService.getAllDepartureFlightsForDate(id,date);
-        Set<FlightDTO> flightDTOS = flightMapper.convertListToDTOSet(flights);
-        return flightDTOS;
+        return flightMapper.convertListToDTOSet(flights);
     }
 
     public FlightDTO getFlightById(Long id){
         Flight flight = flightService.getFlightById(id);
-        FlightDTO flightDTO = flightMapper.convertToDTO(flight);
-        return flightDTO;
+        return flightMapper.convertToDTO(flight);
     }
 
+    public Set<FlightDTO> getFiveDepartureFlights(Long id, FlightDTO flightDTO) {
+        Airport departureAirport = airportService.findById(id);
+        Set<Flight> flightSet = departureAirport.getDepartureFlights();
+        Set<Flight> result = flightSet.stream().filter(flight ->
+                String.valueOf(flight.getFlightSchedule().getDepartureDate()).equals(flightDTO.getDepartureDate()))
+                .collect(Collectors.toSet());
+        Set<FlightDTO> flightDTOS = result.stream().map(flight ->{
+            try {
+                return flightMapper.convertToDTO(flight);
+            }catch (Exception e){
+                return null;
+            }
+        }).collect(Collectors.toSet());
+        return flightDTOS;
+    }
 }

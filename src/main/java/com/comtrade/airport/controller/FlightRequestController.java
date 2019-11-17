@@ -78,12 +78,7 @@ public class FlightRequestController {
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
        }
     }
-    @PutMapping("/acceptFlightRequest/{id}")
-    public ResponseEntity<?>acceptFlightRequest(@PathVariable(value = "id") Long id){
-        List<FlightRequest>flightRequestList = flightRequestService.acceptFlightRequst(id);
-        List<FlightRequestDTO>flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequestList);
-        return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
-    }
+
     @GetMapping("/approve/{id}")
     public ResponseEntity<?>approveFlightRequest(@PathVariable(value = "id")Long id){
        try{
@@ -101,6 +96,13 @@ public class FlightRequestController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PutMapping("/acceptFlightRequest/{id}")
+    public ResponseEntity<?>acceptFlightRequest(@PathVariable(value = "id") Long id){
+        List<FlightRequest>flightRequestList = flightRequestService.acceptFlightRequst(id);
+        List<FlightRequestDTO>flightRequestDTOS = flightRequestMapper.convertToListDTOs(flightRequestList);
+        return new ResponseEntity<List<FlightRequestDTO>>(flightRequestDTOS,HttpStatus.OK);
     }
 
 

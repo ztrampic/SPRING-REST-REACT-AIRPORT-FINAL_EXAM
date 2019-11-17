@@ -10,4 +10,5 @@ public interface FlightService {
     List<Flight> getAllDepartureFlightsForDate(Long id, String date) throws ParseException;
     Flight insertNewFlight(Flight flight);
     Flight getFlightById(Long id);
+    Flight updateFlight(Flight flight);
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import HomePage from './HomePage';
+import PretragaAerodromaPage from './User/PretragaAerodromaPage'
 import MojHeader from './Components/MojHeader';
 import {
   BrowserRouter,
@@ -38,6 +39,7 @@ const PublicRouter = ({ match }) => (
     <Route exact path={match.url} component={HomePage} />
     <Route exact={true} path="/singUpForm" component={SingUpForm} />
     <Route exact={true} path="/loginForm" component={LoginForm} />
+    <Route exact={true} path="/aerodrom" component={PretragaAerodromaPage} />
   </div>
    );    
 

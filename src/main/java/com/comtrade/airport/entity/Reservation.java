@@ -12,10 +12,8 @@ public class Reservation {
     @JoinColumn(name = "userId")
     private User user;
     private Double finalPrice;
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation",orphanRemoval = true)
     private Set<Ticket> ticketSet;
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "reservationSet",fetch = FetchType.LAZY)
-    private Set<Flight> flightSet;
 
     public Long getId() {
         return id;
@@ -57,14 +55,6 @@ public class Reservation {
         this.ticketSet = ticketSet;
     }
 
-    public Set<Flight> getFlightSet() {
-        return flightSet;
-    }
-
-    public void setFlightSet(Set<Flight> flightSet) {
-        this.flightSet = flightSet;
-    }
-
     public void addTicket(Ticket ticket){
         ticketSet.add(ticket);
         ticket.setReservation(this);
@@ -74,15 +64,4 @@ public class Reservation {
         ticketSet.remove(ticket);
         ticket.setReservation(null);
     }
-
-    public void addFlight(Flight flight){
-        flightSet.add(flight);
-        flight.getReservationSet().add(this);
-    }
-
-    public void removeFlight(Flight flight){
-        flightSet.remove(flight);
-        flight.getReservationSet().remove(this);
-    }
-
 }

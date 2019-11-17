@@ -63,4 +63,11 @@ public class FlightServiceImpl implements FlightService{
         Flight flight = flightRepository.getFlightById(id);
         return flight;
     }
+
+    @Override
+    @Transactional
+    public Flight updateFlight(Flight flight) {
+        Flight updated = flightRepository.save(flight);
+        return updated;
+    }
 }

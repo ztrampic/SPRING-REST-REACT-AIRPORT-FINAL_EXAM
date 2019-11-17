@@ -1,35 +1,38 @@
 import React from 'react'
 import { Table } from 'semantic-ui-react'
 
-const HomePageTableDepartures = () => (
-  <Table celled inverted selectable>
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Time</Table.HeaderCell>
-        <Table.HeaderCell>Flight</Table.HeaderCell>
-        <Table.HeaderCell>To</Table.HeaderCell>
-        <Table.HeaderCell>Status</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
+const HomePageTableDepartures = ({ fiveDepartures }) => {
 
-    <Table.Body>
+  let flight = fiveDepartures.map((flight) => {
+    return (
       <Table.Row>
-        <Table.Cell>John</Table.Cell>
-        <Table.Cell>Approved</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        {/* <Table.Cell>{flight.id}</Table.Cell> */}
+        <Table.Cell>{flight.arrivalAirportDTO.city}</Table.Cell>
+        <Table.Cell>{flight.flightNumber}</Table.Cell>
+        <Table.Cell>{flight.flightScheduleDTO.departureTime}</Table.Cell>
+        <Table.Cell>{flight.airCompanyDTO.internationalName}</Table.Cell>
+        <Table.Cell>{flight.flightScheduleDTO.status}</Table.Cell>
+        {/* <Table.Cell>{flight.flightScheduleDTO.arrivalTime}</Table.Cell> */}
       </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jamie</Table.Cell>
-        <Table.Cell>Approved</Table.Cell>
-        <Table.Cell>Requires call</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jill</Table.Cell>
-        <Table.Cell>Denied</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
-)
 
+    )
+  });
+  return (
+    <Table celled inverted selectable style={{textAlign:'center',marginTop:'3px'}}>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell>Destination</Table.HeaderCell>
+          <Table.HeaderCell>Flight Nº</Table.HeaderCell>
+          <Table.HeaderCell>Scheduled</Table.HeaderCell>
+          <Table.HeaderCell>Airlines</Table.HeaderCell>
+          <Table.HeaderCell>Status</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+
+      <Table.Body>
+        {flight}
+      </Table.Body>
+    </Table>
+  )
+}
 export default HomePageTableDepartures;

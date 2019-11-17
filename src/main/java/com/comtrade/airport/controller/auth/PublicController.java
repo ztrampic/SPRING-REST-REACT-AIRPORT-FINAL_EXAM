@@ -6,6 +6,7 @@ import com.comtrade.airport.dto.responseLogin.ResponseMessage;
 import com.comtrade.airport.entity.User;
 import com.comtrade.airport.facade.AirCompanyFacade;
 import com.comtrade.airport.facade.AirportFacade;
+import com.comtrade.airport.facade.FlightFacade;
 import com.comtrade.airport.facade.UserAirportFacade;
 import com.comtrade.airport.mapper.UserMapper;
 import com.comtrade.airport.repository.UserRepository;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -34,10 +36,11 @@ public class PublicController {
     private final UserAirportFacade userAirportFacade;
     private final AirportFacade airportFacade;
     private final AirCompanyFacade airCompanyFacade;
+    private final FlightFacade flightFacade;
     @Autowired
     public PublicController(AuthenticationManager authenticationManager,
                             UserRepository userRepository, JwtProvider jwtProvider, UserMapper userMapper,
-                            UserAirportFacade userAirportFacade, AirportFacade airportFacade, AirCompanyFacade airCompanyFacade) {
+                            UserAirportFacade userAirportFacade, AirportFacade airportFacade, AirCompanyFacade airCompanyFacade, FlightFacade flightFacade) {
 
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -46,6 +49,7 @@ public class PublicController {
         this.userAirportFacade = userAirportFacade;
         this.airportFacade = airportFacade;
         this.airCompanyFacade = airCompanyFacade;
+        this.flightFacade = flightFacade;
     }
 
     @PostMapping("/login")
@@ -106,6 +110,12 @@ public class PublicController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/getFirstFiveDepartureFlights/{id}")
+    public ResponseEntity<?>getFirstFiveDepartureFlights(@PathVariable(value = "id")Long id,@RequestBody FlightDTO flightDTO){
+        Set<FlightDTO> firstFiveDeparture = flightFacade.getFiveDepartureFlights(id,flightDTO);
+        return new ResponseEntity<Set<FlightDTO>>(firstFiveDeparture,HttpStatus.OK);
     }
 
 

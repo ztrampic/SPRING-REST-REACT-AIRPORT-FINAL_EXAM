@@ -1,15 +1,14 @@
 package com.comtrade.airport.facade;
 
-import com.comtrade.airport.dto.AirCompanyDTO;
-import com.comtrade.airport.dto.AirportAdminSearchDTO;
-import com.comtrade.airport.dto.AirportDTO;
-import com.comtrade.airport.dto.SingUpDTO;
+import com.comtrade.airport.dto.*;
 import com.comtrade.airport.dto.responseLogin.ResponseMessage;
 import com.comtrade.airport.entity.AirCompany;
 import com.comtrade.airport.entity.Airport;
+import com.comtrade.airport.entity.Flight;
 import com.comtrade.airport.entity.User;
 import com.comtrade.airport.mapper.AirCompanyMapper;
 import com.comtrade.airport.mapper.AirportMapper;
+import com.comtrade.airport.mapper.FlightMapper;
 import com.comtrade.airport.mapper.UserMapper;
 import com.comtrade.airport.service.AirCompanyService;
 import com.comtrade.airport.service.AirportService;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AirCompanyFacade {
@@ -31,14 +31,16 @@ public class AirCompanyFacade {
     private final AirportMapper airportMapper;
     private final UserService userService;
     private final UserMapper userMapper;
+    private final FlightMapper flightMapper;
     @Autowired
-    public AirCompanyFacade(AirCompanyService airCompanyService, AirCompanyMapper airCompanyMapper, AirportService airportService, AirportMapper airportMapper, UserService userService, UserMapper userMapper) {
+    public AirCompanyFacade(AirCompanyService airCompanyService, AirCompanyMapper airCompanyMapper, AirportService airportService, AirportMapper airportMapper, UserService userService, UserMapper userMapper, FlightMapper flightMapper) {
         this.airCompanyService = airCompanyService;
         this.airCompanyMapper = airCompanyMapper;
         this.airportService = airportService;
         this.airportMapper = airportMapper;
         this.userService = userService;
         this.userMapper = userMapper;
+        this.flightMapper = flightMapper;
     }
 
     public Set<AirCompanyDTO> findByName(String name) {
@@ -96,5 +98,18 @@ public class AirCompanyFacade {
             listAirCompanyDTOwithIds.add(airCompanyDTO);
          }
         return listAirCompanyDTOwithIds;
+    }
+
+    public Set<FlightDTO> getAllFlights(Long id) {
+        AirCompany airCompany = airCompanyService.findAirCompanyById(id);
+        Set<Flight> flights = airCompany.getFlightList();
+        Set<FlightDTO> flightDTOS = flights.stream().map(flight ->{
+            try {
+                return flightMapper.convertToDTO(flight);
+            }catch (Exception e){
+                return null;
+            }
+        }).collect(Collectors.toSet());
+        return flightDTOS;
     }
 }

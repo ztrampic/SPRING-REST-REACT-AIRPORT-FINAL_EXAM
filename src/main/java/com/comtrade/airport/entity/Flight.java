@@ -21,37 +21,12 @@ public class Flight {
     @JoinColumn(name = "arrivalAirportId", referencedColumnName = "id")
     private Airport arrivalAirport;
     private int availableSeats;
-    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST},fetch = FetchType.LAZY)
-    @JoinTable(name = "flight_reservation",
-            joinColumns = { @JoinColumn(name = "id_flight") },
-            inverseJoinColumns = { @JoinColumn(name = "id_reservation") })
-    private Set<Reservation> reservationSet;
     @ManyToOne(fetch = FetchType.LAZY)
     private Airplane airplane;
     @OneToOne(mappedBy = "flight")
     private FlightSchedule flightSchedule;
-
-    public FlightSchedule getFlightSchedule() {
-        return flightSchedule;
-    }
-    public void setFlightSchedule(FlightSchedule flightSchedule) {
-        this.flightSchedule = flightSchedule;
-    }
-    public Airplane getAirplane() {
-        return airplane;
-    }
-
-    public void setAirplane(Airplane airplane) {
-        this.airplane = airplane;
-    }
-
-    public Set<Reservation> getReservationSet() {
-        return reservationSet;
-    }
-
-    public void setReservationSet(Set<Reservation> reservationSet) {
-        this.reservationSet = reservationSet;
-    }
+    @OneToMany(mappedBy = "flight",orphanRemoval = true,cascade = CascadeType.ALL)
+    private Set<TicketValue> setTicketValues;
 
     public Long getIdFlight() {
         return idFlight;
@@ -109,6 +84,30 @@ public class Flight {
         this.availableSeats = availableSeats;
     }
 
+    public Airplane getAirplane() {
+        return airplane;
+    }
+
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
+    }
+
+    public FlightSchedule getFlightSchedule() {
+        return flightSchedule;
+    }
+
+    public void setFlightSchedule(FlightSchedule flightSchedule) {
+        this.flightSchedule = flightSchedule;
+    }
+
+    public Set<TicketValue> getSetTicketValues() {
+        return setTicketValues;
+    }
+
+    public void setSetTicketValues(Set<TicketValue> setTicketValues) {
+        this.setTicketValues = setTicketValues;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,4 +121,13 @@ public class Flight {
         return Objects.hash(getIdFlight());
     }
 
+    public void addTicketValues(TicketValue ticketValue){
+        setTicketValues.add(ticketValue);
+        ticketValue.setFlight(this);
+    }
+
+    public void removeTicketValue(TicketValue ticketValue){
+        setTicketValues.remove(ticketValue);
+        ticketValue.setFlight(null);
+    }
 }

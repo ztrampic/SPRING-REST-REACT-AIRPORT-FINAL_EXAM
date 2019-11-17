@@ -1,6 +1,6 @@
 package com.comtrade.airport.dto;
 
-public class FlightRequestDTO {
+public class  FlightRequestDTO {
     private String idFR;
     private AirplaneDTO airplaneDTO;
     private AirportDTO destinationAirportDTO;

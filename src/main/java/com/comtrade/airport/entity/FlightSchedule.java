@@ -1,5 +1,7 @@
 package com.comtrade.airport.entity;
 
+import com.comtrade.airport.enums.FlightScheduleStatus;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,6 +21,16 @@ public class FlightSchedule {
     @OneToOne(fetch = FetchType.LAZY,orphanRemoval = true)
     @MapsId
     private Flight flight;
+    @Enumerated(EnumType.STRING)
+    private FlightScheduleStatus flightScheduleStatus;
+
+    public FlightScheduleStatus getFlightScheduleStatus() {
+        return flightScheduleStatus;
+    }
+
+    public void setFlightScheduleStatus(FlightScheduleStatus flightScheduleStatus) {
+        this.flightScheduleStatus = flightScheduleStatus;
+    }
 
     public Long getId() {
         return id;
