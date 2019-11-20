@@ -37,6 +37,8 @@ import getAllTicketTypes from '../apiSelectors/tickets/GetAllTicketTypes'
 import addNewTicketValue from '../apiSelectors/tickets/AddNewTicketValue'
 import getAllTicketValues from '../apiSelectors/tickets/GetAllTicketValues'
 import getFirstFiveDepartureFlights from '../apiSelectors/flight/GetFirstFiveDepartureFlights'
+import getPublicFlightsForDate from '../apiSelectors/public/GetPublicFlightsForDate'
+import searchFlights from '../apiSelectors/public/SearchFlights'
 
 export default{
     userSingUp,
@@ -78,4 +80,6 @@ export default{
     addNewTicketValue,
     getAllTicketValues,
     getFirstFiveDepartureFlights,
+    getPublicFlightsForDate,
+    searchFlights,
 }

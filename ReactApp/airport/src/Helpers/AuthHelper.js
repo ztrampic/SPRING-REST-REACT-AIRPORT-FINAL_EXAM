@@ -132,9 +132,22 @@ export const isAdminAirport = function () {
     try {
         if (checkIsAuth()) {
             const userRole = getAuthUserFromSessionStorage()
-            const isAdmin = userRole.roleSet[0].roleName === 'ROLE_ADMIN_AIRCOMPANY' ? true : false
+            const isAdminAirport = userRole.roleSet[0].roleName === 'ROLE_ADMIN_AIRCOMPANY' ? true : false
 
             return isAdminAirport
+        } else {     
+            return false
+        }
+    } catch (e) {
+        console.log('ERROR', e.toString())
+    }
+}
+export const isUser = function () {
+    try {
+        if (checkIsAuth()) {
+            const userRole = getAuthUserFromSessionStorage()
+            const isUser = userRole.roleSet[0].roleName === 'ROLE_USER' ? true : false
+            return isUser
         } else {     
             return false
         }

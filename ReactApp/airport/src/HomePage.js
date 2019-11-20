@@ -22,12 +22,12 @@ export class HomePage extends Component {
   this.getFiveArrivalsAndFiveDepartures();
   }
 
-   getFiveArrivalsAndFiveDepartures(){
+   async getFiveArrivalsAndFiveDepartures(){
    const {timeAndDate} = this.state;
    let date = moment(timeAndDate).format('YYYY-MM-DD')
    let time = moment(timeAndDate).format('hh:mm')
    const data =  {departureDate:date,departureTime:time}
-   select('getFirstFiveDepartureFlights',data).then(res=>{
+   await select('getFirstFiveDepartureFlights',data).then(res=>{
       let apiFlights = _.orderBy(res.data,['flightScheduleDTO.departureTime'],['asc']);
       this.setState({fiveDepartures:apiFlights}) 
    })

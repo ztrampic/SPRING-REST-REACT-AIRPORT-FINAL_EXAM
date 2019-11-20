@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Header, Button, Grid, Input, Form, Label } from 'semantic-ui-react'
+import { Modal, Button, Grid, Form} from 'semantic-ui-react'
 import DepartureTable from '../AirportAdmin/DepartureTable';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Grid, Message, Segment } from 'semantic-ui-react'
 import { select } from './Helpers/DataUtilsHelper'
-import { checkIsAuth, setTokenToSessionStorage, setAuthUserToSessionStorage, isAdmin, isAdminAirport } from './Helpers/AuthHelper'
+import { checkIsAuth, setTokenToSessionStorage, setAuthUserToSessionStorage, isAdmin, isAdminAirport,isUser } from './Helpers/AuthHelper'
 import HomeImg from './resources/img/home.jpg'
 
 class LoginForm extends React.Component{
@@ -24,6 +24,8 @@ class LoginForm extends React.Component{
                   this.props.history.push('/admin')
               }else if(isAdminAirport()){
                 this.props.history.push('/airCompanyAdmin')
+              }else if(isUser()){
+                this.props.history.push('/flights')
               }
           })
       })
