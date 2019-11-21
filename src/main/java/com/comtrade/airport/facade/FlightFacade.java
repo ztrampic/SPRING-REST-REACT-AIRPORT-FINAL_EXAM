@@ -1,6 +1,7 @@
 package com.comtrade.airport.facade;
 
 import com.comtrade.airport.dto.FlightDTO;
+import com.comtrade.airport.dto.SearchFlightsDto;
 import com.comtrade.airport.entity.*;
 import com.comtrade.airport.mapper.FlightMapper;
 import com.comtrade.airport.mapper.FlightScheduleMapper;
@@ -67,6 +68,18 @@ public class FlightFacade {
                 String.valueOf(flight.getFlightSchedule().getDepartureDate()).equals(flightDTO.getDepartureDate()))
                 .collect(Collectors.toSet());
         Set<FlightDTO> flightDTOS = result.stream().map(flight ->{
+            try {
+                return flightMapper.convertToDTO(flight);
+            }catch (Exception e){
+                return null;
+            }
+        }).collect(Collectors.toSet());
+        return flightDTOS;
+    }
+
+    public Set<FlightDTO> getSearchFlights(SearchFlightsDto searchFlightsDto) {
+        Set<Flight> getSearchFlights = flightService.getSearchedFlights(searchFlightsDto);
+        Set<FlightDTO> flightDTOS = getSearchFlights.stream().map(flight ->{
             try {
                 return flightMapper.convertToDTO(flight);
             }catch (Exception e){

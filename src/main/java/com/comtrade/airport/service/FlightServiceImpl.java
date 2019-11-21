@@ -1,8 +1,13 @@
 package com.comtrade.airport.service;
 
+import com.comtrade.airport.dto.SearchFlightsDto;
+import com.comtrade.airport.entity.AirCompany;
+import com.comtrade.airport.entity.Airport;
 import com.comtrade.airport.entity.Flight;
 import com.comtrade.airport.repository.*;
+import com.comtrade.airport.tools.SearchFlightSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightServiceImpl implements FlightService{
@@ -69,5 +76,20 @@ public class FlightServiceImpl implements FlightService{
     public Flight updateFlight(Flight flight) {
         Flight updated = flightRepository.save(flight);
         return updated;
+    }
+
+    @Override
+    @Transactional
+    public Set<Flight> getSearchedFlights(SearchFlightsDto searchFlightsDto) {
+        Airport airport = new Airport();
+        airport.setCity(searchFlightsDto.getCityDestination());
+        AirCompany airCompany = new AirCompany();
+        airCompany.setName(searchFlightsDto.getAirCompanyName());
+        List<Flight>searchList =  flightRepository.findAll(
+                Specification.where(SearchFlightSpecification.withAirCompanyName(airCompany))
+                  .and(SearchFlightSpecification.withDestinationCity(airport))
+                  .and(SearchFlightSpecification.withFlightNumber(searchFlightsDto.getFlightNumber()))
+        );
+        return searchList.stream().collect(Collectors.toSet());
     }
 }

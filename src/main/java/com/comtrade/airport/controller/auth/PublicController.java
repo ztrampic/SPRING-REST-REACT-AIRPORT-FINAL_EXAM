@@ -118,5 +118,20 @@ public class PublicController {
         return new ResponseEntity<Set<FlightDTO>>(firstFiveDeparture,HttpStatus.OK);
     }
 
+    @GetMapping("/getAllPublicFlights/{id}/{date}")
+    public ResponseEntity<?> getAllForDate(@PathVariable(value = "id")Long id,@PathVariable(value = "date")String date){
+        try{
+            Set<FlightDTO> flightDTOS = flightFacade.getAllDepartureFlightsForDate(id,date);
+            return new ResponseEntity<Set<FlightDTO>>(flightDTOS,HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PostMapping("/searchFlights")
+    public ResponseEntity<?>searchFlights(@RequestBody SearchFlightsDto searchFlightsDto){
+        Set<FlightDTO> flightDTOS = flightFacade.getSearchFlights(searchFlightsDto);
+        return new ResponseEntity<Set<FlightDTO>>(flightDTOS,HttpStatus.OK);
+    }
+
 
 }
